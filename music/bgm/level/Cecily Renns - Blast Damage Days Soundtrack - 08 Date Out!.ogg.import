@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://kn1ln35ja0os"
+path="res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 08 Date Out!.ogg-7fd884bc5b16dcd55a3b2997a8f6f4a9.oggvorbisstr"
+
+[deps]
+
+source_file="res://music/bgm/level/Cecily Renns - Blast Damage Days Soundtrack - 08 Date Out!.ogg"
+dest_files=["res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 08 Date Out!.ogg-7fd884bc5b16dcd55a3b2997a8f6f4a9.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

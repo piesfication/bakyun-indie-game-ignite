@@ -14,4 +14,5 @@ yuna: So you don't get to leave. Not like this.
 yuna: Not before I tell you that you're the first place that's ever felt like home.
 yuna: Please comeback, Baku.
 [wait time="2.0"]
+[signal arg="remember"]
 [signal arg="start_summon_phase_2"]

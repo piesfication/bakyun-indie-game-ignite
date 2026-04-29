@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://di87tnpeix8ml"]
+[gd_scene load_steps=21 format=3 uid="uid://di87tnpeix8ml"]
 
 [ext_resource type="Script" uid="uid://choj5g4n4p8cd" path="res://script/rooftopstory.gd" id="1_jxbns"]
 [ext_resource type="Script" uid="uid://dgxvxmitrd13o" path="res://script/parallax_background.gd" id="2_fk4pr"]
 [ext_resource type="Texture2D" uid="uid://71fsdc8fl4jf" path="res://assets/title/Untitled977_20260324075141.png" id="3_mtqe4"]
+[ext_resource type="Texture2D" uid="uid://d2k8sfyp2s2c8" path="res://assets/story/Illust/RooftopScene/Revised/Untitled1045_20260426055225.png" id="4_jxbns"]
 [ext_resource type="Script" uid="uid://b57hbvyj18rxn" path="res://script/parallax_background_2.gd" id="4_wrlmg"]
 [ext_resource type="Script" uid="uid://csf0dehln2qhw" path="res://scenes/title_background_float.gd" id="10_kwe6h"]
 [ext_resource type="Texture2D" uid="uid://dlcf2nmcjtpvj" path="res://assets/level/rain/Untitled698_20260407183657.png" id="10_nfmh3"]
@@ -13,10 +14,49 @@
 [ext_resource type="Texture2D" uid="uid://d3cu3rs4yd53l" path="res://assets/level/rain/Untitled698_20260407183634.png" id="13_8fhrg"]
 [ext_resource type="Texture2D" uid="uid://dssooydqpu272" path="res://assets/level/sea/Untitled694_20260115182142.png" id="13_ry7bl"]
 [ext_resource type="Texture2D" uid="uid://dhx2rv2ssyyuj" path="res://assets/level/sea/Untitled694_20260115180839.png" id="14_62lvu"]
+[ext_resource type="Texture2D" uid="uid://t1wkvi0uo41c" path="res://assets/story/Illust/RooftopScene/Untitled1045_20260425173232.png" id="14_ivfxb"]
+[ext_resource type="Texture2D" uid="uid://djx65pyijjxia" path="res://assets/story/Illust/RooftopScene/Revised/Untitled1045_20260425222844.png" id="15_jxbns"]
+[ext_resource type="Texture2D" uid="uid://cpwc875wk8l73" path="res://assets/story/Illust/RooftopScene/Revised/Untitled1045_20260425222855.png" id="16_fk4pr"]
+[ext_resource type="Texture2D" uid="uid://ko53h2fx7osh" path="res://assets/story/Illust/RooftopScene/Revised/Untitled1045_20260425222858.png" id="17_mtqe4"]
+[ext_resource type="Texture2D" uid="uid://cyejie0irsle7" path="res://assets/story/Illust/RooftopScene/Revised/Untitled1045_20260425222904.png" id="18_wrlmg"]
+[ext_resource type="Texture2D" uid="uid://wsrixb8afbkd" path="res://assets/story/Illust/RooftopScene/Revised/Untitled1045_20260426060603.png" id="19_fk4pr"]
 
 [node name="story_3" type="Node2D"]
 position = Vector2(0, -43)
 script = ExtResource("1_jxbns")
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+layer = 0
+script = ExtResource("4_wrlmg")
+scroll_speed = 60
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
+motion_mirroring = Vector2(1286.4, 0)
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+position = Vector2(640, 360)
+rotation = -3.1415925
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("3_mtqe4")
+
+[node name="Char" type="Node2D" parent="ParallaxBackground2"]
+position = Vector2(614, 347)
+scale = Vector2(0.5, 0.5)
+
+[node name="Leave" type="Sprite2D" parent="ParallaxBackground2/Char"]
+texture = ExtResource("4_jxbns")
+
+[node name="YunaChar" type="Sprite2D" parent="ParallaxBackground2/Char"]
+texture = ExtResource("15_jxbns")
+
+[node name="BakuChar" type="Sprite2D" parent="ParallaxBackground2/Char"]
+texture = ExtResource("16_fk4pr")
+
+[node name="Both" type="Sprite2D" parent="ParallaxBackground2/Char"]
+texture = ExtResource("17_mtqe4")
+
+[node name="None" type="Sprite2D" parent="ParallaxBackground2/Char"]
+texture = ExtResource("18_wrlmg")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = 0
@@ -32,19 +72,14 @@ position = Vector2(640, 368)
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("3_mtqe4")
 
-[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
-layer = 0
-script = ExtResource("4_wrlmg")
-scroll_speed = 60
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
-motion_mirroring = Vector2(1286.4, 0)
-
-[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
-position = Vector2(640, 360)
-rotation = -3.1415925
-scale = Vector2(0.67, 0.67)
-texture = ExtResource("3_mtqe4")
+[node name="Overlay" type="ColorRect" parent="ParallaxBackground"]
+visible = false
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 1368.0
+offset_bottom = 752.0
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="Node2D" parent="."]
 position = Vector2(-35, -122.00001)
@@ -124,3 +159,14 @@ position = Vector2(0, -10.999998)
 scale = Vector2(0.683, 0.683)
 texture = ExtResource("13_8fhrg")
 centered = false
+
+[node name="RoofTop" type="Node2D" parent="."]
+z_index = 30
+position = Vector2(626, 420)
+scale = Vector2(0.67, 0.67)
+
+[node name="DarkSky" type="Sprite2D" parent="RoofTop"]
+texture = ExtResource("19_fk4pr")
+
+[node name="Sky" type="Sprite2D" parent="RoofTop"]
+texture = ExtResource("14_ivfxb")

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ctemidwwful54"
+path="res://.godot/imported/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 09 I Believe in You (Reprise).wav-f081b775f398996ff56621aa336e99e0.sample"
+
+[deps]
+
+source_file="res://music/bgm/hitoribocchi/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 09 I Believe in You (Reprise).wav"
+dest_files=["res://.godot/imported/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 09 I Believe in You (Reprise).wav-f081b775f398996ff56621aa336e99e0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

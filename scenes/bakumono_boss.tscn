@@ -105,7 +105,7 @@ animations = [{
 "texture": ExtResource("19_u40dj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_bl0gs")
+"texture": ExtResource("2_0ipr7")
 }],
 "loop": false,
 "name": &"damaged",
@@ -462,7 +462,7 @@ visible = false
 position = Vector2(880.5, 243.75)
 scale = Vector2(6, 6)
 sprite_frames = SubResource("SpriteFrames_liulr")
-animation = &"hp_1"
+animation = &"weakened"
 autoplay = "hp_10"
 
 [node name="WeaknessBar" type="TextureProgressBar" parent="WeakContainer"]

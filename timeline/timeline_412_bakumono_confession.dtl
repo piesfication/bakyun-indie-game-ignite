@@ -1,37 +1,83 @@
+[signal arg="leave"]
+[wait time="2.0"]
+[signal arg="remove overlay"]
+[wait time="2.0"]
+[signal arg="join"]
+[wait time="2.0"]
+[signal arg="bt"]
+baku: ...you okay?
+[signal arg="yt"]
+yuna: Define "okay."
+[signal arg="bt"]
+baku: Yeah.
+baku: Fair.
+[wait time="3.0"]
+[signal arg="yt"]
 yuna: I meant it.
+[signal arg="bt"]
 baku: I know.
+[signal arg="yt"]
 yuna: I'm not saying it because of the situation. Or because I thought we were going to —
 yuna: I meant it before any of this. Before today. I just didn't know how to say it without it sounding like —
+[signal arg="bt"]
 baku: Like what?
+[signal arg="yt"]
 yuna: Like I was choosing to stay for the wrong reasons.
+[signal arg="bt"]
 baku: What's the wrong reason?
+[signal arg="yt"]
 yuna: Because I don't have anywhere else to go.
-[wait time="3.0"]
+[wait time="2.0"]
+[signal arg="bt"]
+[wait time="1.0"]
 baku: And the right reason?
+[signal arg="yt"]
 yuna: Because this is where I want to be.
 yuna: There's a difference. I needed to know which one it was.
+[signal arg="bt"]
 baku: And?
+[signal arg="yt"]
 yuna: It's the second one.
-[wait time="3.0"]
+[wait time="2.0"]
+[signal arg="bt"]
+[wait time="1.0"]
 baku: You said "we." Week two. When you were talking about the plan.
+[signal arg="yt"]
 yuna: ...you remembered that.
+[signal arg="bt"]
 baku: I noticed everything.
 baku: I think that's when I knew too.
+[signal arg="yt"]
 yuna: You could have said something.
+[signal arg="bt"]
 baku: (smiling)\
 You would have denied it.
 [wait time="2.0"]
+[signal arg="yt"]
+[wait time="1.0"]
 yuna: ...yes. I would have.
+[signal arg="bt"]
 baku: For what it's worth —
 baku: (looks at Yuna)
 baku: You're the first person who ever just saw me. Not the title. Not the power.
 baku: Just me.
 baku: I didn't know how much I needed that until you.
+[wait time="2.0"]
+[signal arg="leave"]
+[wait time="2.0"]
 narrator: Yuna looks at her.\
 For once, she doesn't have a correction ready.
+[wait time="1.0"]
+[signal arg="yt"]
+[signal arg="join"]
+[wait time="2.0"]
 yuna: I know.
 yuna: I see you.
-[wait time="3.0"]
+[wait time="2.0"]
+[signal arg="leave"]
+[wait time="2.0"]
+[signal arg="city"]
+[wait time="2.5"]
 yuna: I said it because I thought I was running out of time.
 yuna: But floating in the sea afterward — sky finally clear, Baku next to me —
 yuna: — I realized something.\

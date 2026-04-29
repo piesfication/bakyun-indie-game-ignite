@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bgs6oejmm5klk"
+path="res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 05 New Ark City.ogg-ba27bc2a435ece878db6f7689664a303.oggvorbisstr"
+
+[deps]
+
+source_file="res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 05 New Ark City.ogg"
+dest_files=["res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 05 New Ark City.ogg-ba27bc2a435ece878db6f7689664a303.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

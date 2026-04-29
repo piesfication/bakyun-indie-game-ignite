@@ -1,4 +1,5 @@
-yuna: This morning I opened my notebook to the first page I wrote in this city.
+[wait time="2.0"]
+yuna: This morning I opened my notebook to one of the first pages I wrote in this city.
 yuna: "Objective\: prove competence. Return to the association."
 yuna: Two lines. Clear. Measurable.
 yuna: I stared at them for a long time.
@@ -29,10 +30,11 @@ join yuna (Outlined) left
 yuna: You never said it would be this massive —
 update yuna (DarkenedOutlined)
 update baku (Outlined)
-baku: I told you, no witch has ever seen it before.  I didn't know it would be really big either.
+baku: I told you, no witch has ever seen it before.
+baku: I saw it once when I was eight… I think it’s grown since then.
 update yuna (Outlined)
 update baku (DarkenedOutlined)
-yuna: This isn't really big. This is —
+yuna: This isn’t just big. This is —
 update yuna (DarkenedOutlined)
 update baku (Outlined)
 baku: Oh — right, one more important thing!
@@ -58,13 +60,25 @@ update yuna (DarkenedOutlined)
 update baku (Outlined)
 baku: Break Sigil with Sever.
 baku: Break Sever with Sigil.
-baku: You understand, right?
+baku: But that’s the magic, not you.
 update yuna (Outlined)
 update baku (DarkenedOutlined)
-yuna: …I understand.
+yuna: …what?
 update yuna (DarkenedOutlined)
 update baku (Outlined)
-baku: Nice!
+baku: The types clash.
+baku: But every type has its own way of guiding you.
+baku: When you strike —
+baku: — don’t think. Trust your magic.
+baku: It’ll lead you to the right point.
+baku: Do you understand?
+update baku (DarkenedOutlined)
+update yuna (Outlined)
+yuna: It’ll lead me to the right point...
+yuna: …the one that matches me.
+yuna: I understand.
+update yuna (DarkenedOutlined)
+update baku (Outlined)
 baku: if that’s the case, let’s start the hunt!!
 update yuna (Outlined)
 update baku (DarkenedOutlined)

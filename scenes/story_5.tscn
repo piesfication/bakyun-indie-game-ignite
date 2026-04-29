@@ -1,18 +1,26 @@
-[gd_scene load_steps=25 format=3 uid="uid://6vj47blktuxo"]
+[gd_scene load_steps=38 format=3 uid="uid://6vj47blktuxo"]
 
 [ext_resource type="Script" uid="uid://0mweyt4bmj8m" path="res://script/resolution.gd" id="1_y2cug"]
 [ext_resource type="Script" uid="uid://dgxvxmitrd13o" path="res://script/parallax_background.gd" id="2_si1kx"]
 [ext_resource type="Texture2D" uid="uid://71fsdc8fl4jf" path="res://assets/title/Untitled977_20260324075141.png" id="3_8bhv1"]
+[ext_resource type="Texture2D" uid="uid://d2k8sfyp2s2c8" path="res://assets/story/Illust/RooftopScene/Revised/Untitled1045_20260426055225.png" id="4_qqt5y"]
 [ext_resource type="Script" uid="uid://b57hbvyj18rxn" path="res://script/parallax_background_2.gd" id="4_vvu4i"]
+[ext_resource type="Texture2D" uid="uid://djx65pyijjxia" path="res://assets/story/Illust/RooftopScene/Revised/Untitled1045_20260425222844.png" id="5_aqesv"]
 [ext_resource type="Texture2D" uid="uid://ccqnn6i6rs06m" path="res://assets/story/Illust/FlyingTogether/Untitled1027_20260412140625.png" id="5_c5iqn"]
 [ext_resource type="Texture2D" uid="uid://4dku33rudp81" path="res://assets/story/Epilogue/Untitled1003_20260421142204.png" id="5_vvu4i"]
 [ext_resource type="Texture2D" uid="uid://dcj0rjdeirtl0" path="res://assets/story/Epilogue/Untitled1003_20260421142212.png" id="6_c5iqn"]
 [ext_resource type="Texture2D" uid="uid://d310wexmhoama" path="res://assets/story/Illust/FlyingTogether/Untitled1027_20260412140641.png" id="6_wjy1d"]
+[ext_resource type="Texture2D" uid="uid://cpwc875wk8l73" path="res://assets/story/Illust/RooftopScene/Revised/Untitled1045_20260425222855.png" id="6_ww3bg"]
+[ext_resource type="Texture2D" uid="uid://ko53h2fx7osh" path="res://assets/story/Illust/RooftopScene/Revised/Untitled1045_20260425222858.png" id="7_68jfh"]
 [ext_resource type="Texture2D" uid="uid://bhdiylbgwteha" path="res://assets/story/Illust/FlyingTogether/Untitled1027_20260412140630.png" id="7_84jbh"]
 [ext_resource type="Texture2D" uid="uid://dtw0qbnx72g0e" path="res://assets/story/Epilogue/Untitled1003_20260421143729.png" id="7_wjy1d"]
 [ext_resource type="Texture2D" uid="uid://fihubi8a3hmv" path="res://assets/story/Illust/FlyingTogether/Untitled1027_20260412140646.png" id="8_3ehe6"]
+[ext_resource type="Texture2D" uid="uid://cyejie0irsle7" path="res://assets/story/Illust/RooftopScene/Revised/Untitled1045_20260425222904.png" id="8_m0ow0"]
+[ext_resource type="Texture2D" uid="uid://ux2etm7fgok6" path="res://assets/story/Illust/Together/Untitled1047_20260426214505.png" id="9_68jfh"]
 [ext_resource type="Texture2D" uid="uid://cl2t7bq0pxw0f" path="res://assets/story/Illust/FlyingTogether/Untitled1028_20260412141944.png" id="9_xna66"]
+[ext_resource type="Texture2D" uid="uid://chpvmxibvprmk" path="res://assets/story/Illust/Together/Untitled1047_20260426214535.png" id="10_m0ow0"]
 [ext_resource type="Script" uid="uid://csf0dehln2qhw" path="res://scenes/title_background_float.gd" id="10_wd66m"]
+[ext_resource type="Texture2D" uid="uid://cbb83kbxevxtf" path="res://assets/story/Illust/Together/Untitled1047_20260426214355.png" id="11_ek1gj"]
 [ext_resource type="Texture2D" uid="uid://i5asanwmdtcp" path="res://assets/level/sea/Untitled694_20260115180850.png" id="11_qqt5y"]
 [ext_resource type="Texture2D" uid="uid://4wksodnvgnvv" path="res://assets/level/sea/Untitled694_20260115181335.png" id="12_aqesv"]
 [ext_resource type="Texture2D" uid="uid://dssooydqpu272" path="res://assets/level/sea/Untitled694_20260115182142.png" id="13_ww3bg"]
@@ -22,6 +30,10 @@
 [ext_resource type="Texture2D" uid="uid://cjswbrucr22u0" path="res://assets/story/Illust/GrassField/Untitled1028_20260413100900.png" id="17_n5ru7"]
 [ext_resource type="Texture2D" uid="uid://djhbn5rsxyqe3" path="res://assets/story/Illust/GrassField/Untitled1028_20260413155418.png" id="18_dgwwx"]
 [ext_resource type="Texture2D" uid="uid://dje1y6fqqg51k" path="res://assets/story/Illust/GrassField/Untitled1028_20260413101328.png" id="19_yxmdg"]
+[ext_resource type="Texture2D" uid="uid://t1wkvi0uo41c" path="res://assets/story/Illust/RooftopScene/Untitled1045_20260425173232.png" id="29_n5ru7"]
+[ext_resource type="Texture2D" uid="uid://ckq65y1wlkflr" path="res://assets/story/Illust/Together/Untitled1047_20260426214137.png" id="32_n5ru7"]
+[ext_resource type="Texture2D" uid="uid://cdyatg8sbtcxq" path="res://assets/titleunified/Untitled1008_20260331190850.png" id="33_ek1gj"]
+[ext_resource type="FontFile" uid="uid://bjisq025387gx" path="res://assets/font/zrtw-hackynote-personal-use/ZRTW-HackynotePersonalUse.ttf" id="34_n5ru7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_iemms"]
 animations = [{
@@ -51,6 +63,11 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_dgwwx"]
+font = ExtResource("34_n5ru7")
+font_size = 61
+outline_size = 3
+
 [node name="story_5" type="Node2D"]
 position = Vector2(0, -43)
 script = ExtResource("1_y2cug")
@@ -69,12 +86,42 @@ rotation = -3.1415925
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("3_8bhv1")
 
+[node name="Char" type="Node2D" parent="ParallaxBackground2"]
+position = Vector2(614, 347)
+scale = Vector2(0.56, 0.56)
+
+[node name="Leave" type="Sprite2D" parent="ParallaxBackground2/Char"]
+texture = ExtResource("4_qqt5y")
+
+[node name="YunaChar" type="Sprite2D" parent="ParallaxBackground2/Char"]
+texture = ExtResource("5_aqesv")
+
+[node name="BakuChar" type="Sprite2D" parent="ParallaxBackground2/Char"]
+texture = ExtResource("6_ww3bg")
+
+[node name="None" type="Sprite2D" parent="ParallaxBackground2/Char"]
+texture = ExtResource("8_m0ow0")
+
+[node name="Both" type="Sprite2D" parent="ParallaxBackground2/Char"]
+texture = ExtResource("7_68jfh")
+
+[node name="NightChar" type="Node2D" parent="ParallaxBackground2"]
+visible = false
+position = Vector2(-31, -76.99999)
+scale = Vector2(1.1, 1.1)
+
+[node name="NightTogether" type="Sprite2D" parent="ParallaxBackground2/NightChar"]
+position = Vector2(626, 377)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("11_ek1gj")
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = 0
 script = ExtResource("2_si1kx")
 scroll_speed = 60
 
 [node name="Together" type="Sprite2D" parent="ParallaxBackground"]
+visible = false
 position = Vector2(622, 341)
 scale = Vector2(0.55, 0.55)
 texture = ExtResource("7_wjy1d")
@@ -87,6 +134,33 @@ motion_mirroring = Vector2(1286.4, 0)
 position = Vector2(640, 368)
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("3_8bhv1")
+
+[node name="BakuFrontNight" type="Node2D" parent="ParallaxBackground"]
+visible = false
+
+[node name="NightBaku" type="Sprite2D" parent="ParallaxBackground/BakuFrontNight"]
+z_index = 50
+position = Vector2(529, 446)
+texture = ExtResource("9_68jfh")
+
+[node name="NightYuna" type="Sprite2D" parent="ParallaxBackground/BakuFrontNight"]
+position = Vector2(845, 412.99997)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("10_m0ow0")
+
+[node name="YunaFrontNight" type="Node2D" parent="ParallaxBackground"]
+visible = false
+position = Vector2(12, 0)
+
+[node name="NightBaku" type="Sprite2D" parent="ParallaxBackground/YunaFrontNight"]
+position = Vector2(484, 476.99997)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("9_68jfh")
+
+[node name="NightYuna" type="Sprite2D" parent="ParallaxBackground/YunaFrontNight"]
+z_index = 50
+position = Vector2(785, 420)
+texture = ExtResource("10_m0ow0")
 
 [node name="CanvasLayer3" type="CanvasLayer" parent="."]
 layer = 0
@@ -115,10 +189,12 @@ scale = Vector2(0.6, 0.6)
 [node name="YunaTalking" type="AnimatedSprite2D" parent="CanvasLayer3/SpriteChar"]
 position = Vector2(-85.333374, -9.333252)
 sprite_frames = SubResource("SpriteFrames_iemms")
+autoplay = "default"
 
 [node name="BakuTalking" type="AnimatedSprite2D" parent="CanvasLayer3/SpriteChar"]
 position = Vector2(-85.333336, -9.333336)
 sprite_frames = SubResource("SpriteFrames_g2xsa")
+autoplay = "default"
 
 [node name="Overlay" type="ColorRect" parent="CanvasLayer3"]
 visible = false
@@ -136,7 +212,6 @@ scale = Vector2(0.72360003, 0.72360003)
 texture = ExtResource("9_xna66")
 
 [node name="Background" type="Node2D" parent="."]
-visible = false
 position = Vector2(-35, -122.00001)
 rotation = 0.025745109
 scale = Vector2(1.08, 1.08)
@@ -148,6 +223,7 @@ texture = ExtResource("11_qqt5y")
 centered = false
 
 [node name="Back" type="Sprite2D" parent="Background"]
+visible = false
 z_index = 10
 position = Vector2(0, 16)
 scale = Vector2(0.65, 0.65)
@@ -190,10 +266,50 @@ scale = Vector2(0.9, 0.9)
 texture = ExtResource("17_n5ru7")
 
 [node name="Char" type="Sprite2D" parent="GrassField"]
-visible = false
 position = Vector2(0, 111.940285)
 scale = Vector2(0.65, 0.65)
 texture = ExtResource("18_dgwwx")
 
 [node name="Grass" type="Sprite2D" parent="GrassField"]
 texture = ExtResource("19_yxmdg")
+
+[node name="RoofTop" type="Node2D" parent="."]
+z_index = 30
+position = Vector2(626, 420)
+scale = Vector2(0.67, 0.67)
+
+[node name="Sky" type="Sprite2D" parent="RoofTop"]
+texture = ExtResource("29_n5ru7")
+
+[node name="NightSky" type="Node2D" parent="."]
+z_index = 40
+position = Vector2(641, 472)
+scale = Vector2(0.7, 0.7)
+
+[node name="Sky" type="Sprite2D" parent="NightSky"]
+texture = ExtResource("32_n5ru7")
+
+[node name="EndScreen" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="EndScreen"]
+visible = false
+offset_left = -10.0
+offset_top = -6.0
+offset_right = 1293.0
+offset_bottom = 728.0
+color = Color(0, 0, 0, 1)
+
+[node name="Title" type="Sprite2D" parent="EndScreen"]
+visible = false
+position = Vector2(632, 316.00003)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("33_ek1gj")
+
+[node name="End" type="Label" parent="EndScreen"]
+visible = false
+offset_left = 541.0
+offset_top = 446.0
+offset_right = 737.0
+offset_bottom = 525.0
+text = "The End"
+label_settings = SubResource("LabelSettings_dgwwx")

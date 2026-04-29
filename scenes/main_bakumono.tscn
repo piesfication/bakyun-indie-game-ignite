@@ -339,7 +339,7 @@ enemy_scene = ExtResource("2_boss")
 max_enemies = 1
 spawn_interval = 9999.0
 
-[node name="Background" parent="." index="2"]
+[node name="Background" parent="." index="3"]
 position = Vector2(-18.000002, -9)
 
 [node name="Sky" parent="Background" index="0"]
@@ -357,13 +357,13 @@ texture = ExtResource("6_w11nr")
 [node name="Sea" parent="Background" index="4"]
 texture = ExtResource("7_f8mvy")
 
-[node name="EnemyContainer" parent="." index="3"]
+[node name="EnemyContainer" parent="." index="4"]
 position = Vector2(-8, -8)
 
 [node name="BakuMahou" parent="Player" index="0"]
 visible = false
 
-[node name="Crosshair" parent="." index="5"]
+[node name="Crosshair" parent="." index="6"]
 position = Vector2(-232, 296)
 
 [node name="AnimatedSprite2D" parent="Crosshair/Visual" index="0"]
@@ -371,14 +371,14 @@ animation = &"shooting_baku"
 frame = 2
 frame_progress = 1.0
 
-[node name="DamageHud" parent="." index="7"]
+[node name="DamageHud" parent="." index="8"]
 position = Vector2(641.00006, 366.00003)
 scale = Vector2(0.70937514, 0.7333333)
 
-[node name="UIMahouMeter" parent="." index="8"]
+[node name="UIMahouMeter" parent="." index="9"]
 visible = false
 
-[node name="UIKoisuruMeter" parent="." index="9"]
+[node name="UIKoisuruMeter" parent="." index="10"]
 visible = false
 
 [node name="AnimCard" parent="CardUI/CardControl/Card" index="0"]

@@ -4,6 +4,8 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if has_node("/root/StoryProgress"):
+		StoryProgress.apply_saved_dialogic_variables()
 	Dialogic.signal_event.connect(on_dialogic_signal);
 	Dialogic.start("res://timeline/timeline_4.dtl")
 

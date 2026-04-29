@@ -102,7 +102,7 @@ func play_crt_glitch_burst() -> void:
 	_apply_crt_burst_params(shader_material)
 
 	await get_tree().create_timer(_crt_burst_hold_duration).timeout
-
+	AudioManager.start_ui_sfx("res://music/sfx/glitch/dragon-studio-glitch-sound-effect-443130.wav", [0.8, 1.3], 15)
 	var restore_tween := create_tween()
 	restore_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	restore_tween.tween_method(func(value: float) -> void:

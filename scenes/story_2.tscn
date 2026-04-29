@@ -91,10 +91,12 @@ scale = Vector2(0.6, 0.6)
 [node name="BakuTalking" type="AnimatedSprite2D" parent="CanvasLayer3/SpriteChar"]
 position = Vector2(-85.333336, -9.333336)
 sprite_frames = SubResource("SpriteFrames_7ctad")
+autoplay = "default"
 
 [node name="YunaTalking" type="AnimatedSprite2D" parent="CanvasLayer3/SpriteChar"]
 position = Vector2(-85.333336, -9.333336)
 sprite_frames = SubResource("SpriteFrames_nx7o3")
+autoplay = "default"
 
 [node name="Overlay" type="ColorRect" parent="CanvasLayer3"]
 visible = false

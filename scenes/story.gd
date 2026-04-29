@@ -23,21 +23,27 @@ var _shake_target: Node2D
 
 @onready var overlay = $CanvasLayer3/Overlay
 
+@onready var bakusroom = $BakusRoom
+
+
 var base_pos := {}
 
-	
-
+var bakusroom_pos 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	bakusroom_pos = bakusroom.position
+	if has_node("/root/StoryProgress"):
+		StoryProgress.apply_saved_dialogic_variables()
 	Dialogic.signal_event.connect(on_dialogic_signal);
 	Dialogic.start("res://timeline/timeline.dtl")
 	overlay.visible = false
-
+	AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 02 Main Menu.ogg", 1, false, false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
 	time += delta * speed
+	bakusroom.position.y = bakusroom_pos.y + sin(time * 1) * 5
 	
 	if _shake_target == null:
 		return
@@ -79,17 +85,34 @@ func on_dialogic_signal(arg: String):
 		birdstrike.visible = true
 		birdstrike.play("strike")
 		
+		
 	if (arg == "yuna wake up") :
 		print("wake")
+		bakusroom.modulate.a = 0
+		bakusroom.visible = true
+		fade_in(bakusroom, 0)
 		fade_overlay(0.0, 1.0) # fade out
+		AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 04 Kristine's Theme ~ -Mornings of Nausea-.ogg", 5, true, true)
 		
 	if (arg == "level menu") :
 		if has_node("/root/StoryProgress"):
 			StoryProgress.mark_chapter_completed(1)
 		LoadingManager.set_target_scene("res://scenes/level_menu.tscn")
 		await Transition.fade_out()
+		await AudioManager.stop_bgm(5)
 		get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 		await Transition.fade_in() # fade out
+		
+	if (arg == "fade audio") :
+		pass
+		
+	if (arg == "baku appears") :
+		AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 04 Kristine's Theme ~ -Mornings of Nausea-.ogg", 1, true, true)
+
+func fade_in(arg, dur):
+	var tween = create_tween()
+	tween.tween_property(arg, "modulate:a", 1.0, dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		
 
 
 func _on_bird_strike_animation_finished() -> void:
@@ -118,6 +141,7 @@ func _on_bird_strike_frame_changed() -> void:
 		
 		overlay.modulate.a = 0.0
 		overlay.visible = true
+		await AudioManager.stop_bgm(1)
 		await get_tree().create_timer(0.3).timeout
 	
 		fade_overlay(1.0, 1.0) # fade in

@@ -245,6 +245,16 @@ func explode_mark(radius: float, damage: int) -> void:
 func apply_slow(_duration: float, _factor: float) -> void:
 	pass
 
+func apply_nova_pull_effect(target_pos: Vector2, target_depth: float, pull_speed: float, duration: float) -> void:
+	if is_dead or neutralized:
+		return
+	
+	# Animate orb towards target position over duration
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_LINEAR)
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "global_position", target_pos, duration)
+
 func pull_towards(target_pos: Vector2, strength: float = 0.55) -> void:
 	global_position = global_position.lerp(target_pos, clampf(strength, 0.0, 1.0))
 

@@ -10,6 +10,7 @@ extends "res://scenes/level_menu_float.gd"
 @onready var _cancel_button: BaseButton = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button2
 @onready var _confirm_button_label: Label = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button/Label2
 @onready var _note: Node2D = $CanvasLayer2/ChapterDetail
+@onready var _ui_layer: CanvasLayer = $CanvasLayer2
 
 @export var note_float_amplitude: float = 6.0
 @export var note_float_speed: float = 2.0
@@ -22,6 +23,7 @@ var _pending_scene_path: String = ""
 var _pending_chapter_number: int = 1
 var _pending_chapter_title: String = ""
 var _pending_locked: bool = false
+var _debug_reset_button: Button = null
 
 var _chapter_config: Dictionary = {
 	"Chapter1": {
@@ -65,6 +67,7 @@ func _ready() -> void:
 	super()
 	if _note != null:
 		note_position = _note.position
+	_setup_debug_reset_button()
 	_connect_story_icons()
 	if _chapter_detail.has_signal("start_pressed") and not _chapter_detail.start_pressed.is_connected(_on_start_pressed):
 		_chapter_detail.start_pressed.connect(_on_start_pressed)
@@ -74,6 +77,36 @@ func _ready() -> void:
 		_cancel_button.pressed.connect(_on_cancel_pressed)
 	if has_node("/root/StoryProgress") and not StoryProgress.progress_changed.is_connected(_refresh_chapter_visibility):
 		StoryProgress.progress_changed.connect(_refresh_chapter_visibility)
+	_refresh_chapter_visibility()
+	_close_chapter_confirmation()
+	if _chapter_config.has("Chapter1"):
+		_apply_chapter("Chapter1")
+
+func _setup_debug_reset_button() -> void:
+	# Editor-only helper for playtest; excluded from exported builds.
+	if not OS.has_feature("editor"):
+		return
+	if _ui_layer == null or not is_instance_valid(_ui_layer):
+		return
+	if _debug_reset_button != null and is_instance_valid(_debug_reset_button):
+		return
+
+	_debug_reset_button = Button.new()
+	_debug_reset_button.name = "DebugResetStoryButton"
+	_debug_reset_button.text = "DEBUG: RESET STORY"
+	_debug_reset_button.tooltip_text = "Reset StoryProgress ke Chapter 1 untuk playtest"
+	_debug_reset_button.focus_mode = Control.FOCUS_NONE
+	_debug_reset_button.size = Vector2(210, 40)
+	_debug_reset_button.position = Vector2(18, 18)
+	_debug_reset_button.modulate = Color(1.0, 0.76, 0.76, 0.92)
+	_debug_reset_button.pressed.connect(_on_debug_reset_story_pressed)
+	_ui_layer.add_child(_debug_reset_button)
+
+func _on_debug_reset_story_pressed() -> void:
+	if not has_node("/root/StoryProgress"):
+		return
+
+	StoryProgress.reset_progress()
 	_refresh_chapter_visibility()
 	_close_chapter_confirmation()
 	if _chapter_config.has("Chapter1"):
@@ -193,10 +226,12 @@ func _on_confirm_pressed() -> void:
 
 	_is_loading = true
 	LoadingManager.set_target_scene(_pending_scene_path)
+	
 	await Transition.fade_out()
+	await AudioManager.stop_bgm(5)
 	get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 	await Transition.fade_in()
-
+	
 func _on_cancel_pressed() -> void:
 	_close_chapter_confirmation()
 

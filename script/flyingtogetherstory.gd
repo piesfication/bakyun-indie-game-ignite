@@ -18,6 +18,8 @@ var first_speak
 var base_pos := {}
 
 func _ready():
+	if has_node("/root/StoryProgress"):
+		StoryProgress.apply_saved_dialogic_variables()
 	Dialogic.signal_event.connect(on_dialogic_signal);
 	Dialogic.start("res://timeline/timeline_2.dtl")
 	base_pos[chapter2background] = chapter2background.position

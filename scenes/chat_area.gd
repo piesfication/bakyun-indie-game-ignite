@@ -508,6 +508,7 @@ func _on_level_confirmation_button_pressed() -> void:
 
 	LoadingManager.set_target_scene(target_scene)
 	await Transition.fade_out()
+	AudioManager.stop_bgm(5)
 	get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 	await Transition.fade_in()
 

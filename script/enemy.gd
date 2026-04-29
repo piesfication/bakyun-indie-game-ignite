@@ -915,6 +915,8 @@ func apply_damage(amount: int) -> void:
 
 	set_state(State.DAMAGED)
 	hp -= amount
+	AudioManager.play_ui_sfx_with_pitch("res://music/sfx/glitch/virtual_vibes-digital-glitch-noise-hd-379465.wav")
+	
 	_show_health_exclusive()
 	_play_health_state_animation()
 	_play_health_squeeze_stretch()
@@ -1089,6 +1091,7 @@ func die():
 	marked = false
 	is_attacking = false
 	_close_explode_triggered = true
+	AudioManager.start_ui_sfx("res://music/sfx/glitch/delon_boomkin-glitch-explosion-422490.wav", [0.9, 1.2], 5)
 
 	if hitbox_area:
 		hitbox_area.monitoring = false

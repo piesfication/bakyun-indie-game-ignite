@@ -1,36 +1,30 @@
-[gd_scene load_steps=14 format=3 uid="uid://cd7jpto51hat0"]
+[gd_scene load_steps=22 format=3 uid="uid://cd7jpto51hat0"]
 
 [ext_resource type="Script" uid="uid://bj4eu4vu2ijt1" path="res://script/story_4_1.gd" id="1_2mskh"]
 [ext_resource type="Script" uid="uid://dgxvxmitrd13o" path="res://script/parallax_background.gd" id="2_kjt3e"]
 [ext_resource type="Texture2D" uid="uid://71fsdc8fl4jf" path="res://assets/title/Untitled977_20260324075141.png" id="3_rb0iq"]
 [ext_resource type="Script" uid="uid://b57hbvyj18rxn" path="res://script/parallax_background_2.gd" id="4_j3h4b"]
+[ext_resource type="Texture2D" uid="uid://2pmnyhpqe066" path="res://assets/story/Illust/RevisedSeaConfession/Untitled1046_20260424200440.png" id="5_bu6y1"]
 [ext_resource type="Script" uid="uid://csf0dehln2qhw" path="res://scenes/title_background_float.gd" id="5_bw0al"]
 [ext_resource type="Texture2D" uid="uid://i5asanwmdtcp" path="res://assets/level/sea/Untitled694_20260115180850.png" id="6_7opjc"]
+[ext_resource type="Texture2D" uid="uid://bctrtpufej0dp" path="res://assets/story/Illust/RevisedSeaConfession/Untitled1046_20260424200952.png" id="6_38s57"]
 [ext_resource type="Texture2D" uid="uid://4wksodnvgnvv" path="res://assets/level/sea/Untitled694_20260115181335.png" id="7_2pov2"]
+[ext_resource type="Texture2D" uid="uid://dtw433li31dqn" path="res://assets/story/Illust/RevisedSeaConfession/Untitled1046_20260424200957.png" id="7_s1msp"]
 [ext_resource type="Texture2D" uid="uid://dssooydqpu272" path="res://assets/level/sea/Untitled694_20260115182142.png" id="8_1o4eo"]
+[ext_resource type="Texture2D" uid="uid://dyxxspv6tj1qb" path="res://assets/story/Illust/RevisedSeaConfession/Untitled1046_20260424201001.png" id="8_txvf7"]
 [ext_resource type="Texture2D" uid="uid://dhx2rv2ssyyuj" path="res://assets/level/sea/Untitled694_20260115180839.png" id="9_bu6y1"]
+[ext_resource type="Texture2D" uid="uid://ewi6tuj4uojg" path="res://assets/story/Illust/RevisedSeaConfession/Untitled1046_20260424201004.png" id="9_gkt5y"]
 [ext_resource type="Texture2D" uid="uid://dlcf2nmcjtpvj" path="res://assets/level/rain/Untitled698_20260407183657.png" id="10_38s57"]
+[ext_resource type="Texture2D" uid="uid://cehrhnrmxs50i" path="res://assets/story/Illust/RevisedSeaConfession/Untitled1046_20260424201010.png" id="10_wfq1r"]
 [ext_resource type="Texture2D" uid="uid://bimeyer1kxnm8" path="res://assets/level/rain/Untitled698_20260407183643.png" id="11_s1msp"]
 [ext_resource type="Texture2D" uid="uid://bv8igeel6h5of" path="res://assets/level/rain/Untitled698_20260407183650.png" id="12_txvf7"]
 [ext_resource type="Texture2D" uid="uid://d3cu3rs4yd53l" path="res://assets/level/rain/Untitled698_20260407183634.png" id="13_gkt5y"]
+[ext_resource type="Texture2D" uid="uid://cv3g16obdidmi" path="res://assets/story/Illust/SeaConfession/Untitled1046_20260424171809.png" id="17_bu6y1"]
+[ext_resource type="Texture2D" uid="uid://tc0vwoambuar" path="res://assets/story/Illust/SeaConfession/Untitled1046_20260424171813.png" id="18_38s57"]
 
 [node name="story_4" type="Node2D"]
 position = Vector2(0, -43)
 script = ExtResource("1_2mskh")
-
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-layer = 0
-script = ExtResource("2_kjt3e")
-scroll_speed = 60
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-z_index = 50
-motion_mirroring = Vector2(1286.4, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(640, 368)
-scale = Vector2(0.67, 0.67)
-texture = ExtResource("3_rb0iq")
 
 [node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
 layer = 0
@@ -45,6 +39,59 @@ position = Vector2(640, 360)
 rotation = -3.1415925
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("3_rb0iq")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = 0
+script = ExtResource("2_kjt3e")
+scroll_speed = 60
+
+[node name="Node2D" type="Node2D" parent="ParallaxBackground"]
+z_index = 30
+position = Vector2(645, 350)
+scale = Vector2(0.67, 0.67)
+
+[node name="SeaBack" type="Sprite2D" parent="ParallaxBackground/Node2D"]
+position = Vector2(0, -24.179077)
+texture = ExtResource("5_bu6y1")
+
+[node name="All" type="Node2D" parent="ParallaxBackground/Node2D"]
+position = Vector2(0, 34.328358)
+
+[node name="BakuChar" type="Sprite2D" parent="ParallaxBackground/Node2D/All"]
+texture = ExtResource("6_38s57")
+
+[node name="YunaChar" type="Sprite2D" parent="ParallaxBackground/Node2D/All"]
+texture = ExtResource("7_s1msp")
+
+[node name="Out" type="Sprite2D" parent="ParallaxBackground/Node2D/All"]
+visible = false
+texture = ExtResource("8_txvf7")
+
+[node name="Both" type="Sprite2D" parent="ParallaxBackground/Node2D/All"]
+visible = false
+texture = ExtResource("9_gkt5y")
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Node2D"]
+texture = ExtResource("10_wfq1r")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 50
+motion_mirroring = Vector2(1286.4, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(640, 368)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("3_rb0iq")
+
+[node name="Overlay" type="ColorRect" parent="ParallaxBackground"]
+z_index = 50
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 1368.0
+offset_bottom = 752.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="Node2D" parent="."]
 position = Vector2(-35, -122.00001)
@@ -124,3 +171,16 @@ position = Vector2(0, -10.999998)
 scale = Vector2(0.683, 0.683)
 texture = ExtResource("13_gkt5y")
 centered = false
+
+[node name="Node2D" type="Node2D" parent="."]
+z_index = 30
+
+[node name="Sky" type="Sprite2D" parent="Node2D"]
+position = Vector2(645, 376.80002)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("17_bu6y1")
+
+[node name="Tower" type="Sprite2D" parent="Node2D"]
+position = Vector2(645, 376.80002)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("18_38s57")

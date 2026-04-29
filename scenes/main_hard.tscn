@@ -1,4 +1,4 @@
-[gd_scene load_steps=179 format=3 uid="uid://d02efykwojcm5"]
+[gd_scene load_steps=186 format=3 uid="uid://d02efykwojcm5"]
 
 [ext_resource type="Script" uid="uid://yo261lliy8q7" path="res://main_hard.gd" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://i5asanwmdtcp" path="res://assets/level/sea/Untitled694_20260115180850.png" id="2_tbgi4"]
@@ -9,27 +9,37 @@
 [ext_resource type="Texture2D" uid="uid://dhx2rv2ssyyuj" path="res://assets/level/sea/Untitled694_20260115180839.png" id="5_tipki"]
 [ext_resource type="Script" uid="uid://bypc15arg18pu" path="res://script/crosshair.gd" id="6_85g3d"]
 [ext_resource type="Script" uid="uid://cbds8yq855re0" path="res://script/player.gd" id="7_eb6dy"]
+[ext_resource type="Texture2D" uid="uid://bj01p5dal5u5n" path="res://assets/event/Mission Clear/Untitled983_20260426162608.png" id="9_4tf2p"]
 [ext_resource type="Script" uid="uid://vi3g0npkg8fp" path="res://script/baku_mahou.gd" id="9_ids8r"]
 [ext_resource type="Texture2D" uid="uid://3wdskvbgu0ay" path="res://assets/event/Notification/Untitled976_20260319232216.png" id="9_qr8e4"]
 [ext_resource type="Texture2D" uid="uid://c2hm2cby8red6" path="res://assets/event/Notification/Untitled976_20260319232220.png" id="10_d7502"]
+[ext_resource type="Texture2D" uid="uid://dd2eydg76i5i6" path="res://assets/event/Mission Clear/Untitled983_20260426162610.png" id="10_daiwp"]
 [ext_resource type="Texture2D" uid="uid://ba250vyhdrhr4" path="res://assets/hando/Revised_baku/Untitled755_20260125101754.png" id="10_dnhof"]
 [ext_resource type="Texture2D" uid="uid://bxjh4tkbrrsca" path="res://assets/crosshair_revised/Yuna/Base/Untitled700_20260122213306.png" id="10_jbj1t"]
 [ext_resource type="Texture2D" uid="uid://7h15qh4icxa8" path="res://assets/hando/Revised_baku/Untitled755_20260125095512.png" id="11_1v6qk"]
 [ext_resource type="Texture2D" uid="uid://xiubl204nqj8" path="res://assets/event/Notification/Untitled976_20260319232225.png" id="11_avynn"]
+[ext_resource type="Texture2D" uid="uid://bl7o8tm8njcyu" path="res://assets/event/Mission Clear/Untitled983_20260426162612.png" id="11_m0lr6"]
+[ext_resource type="Texture2D" uid="uid://dvy2kav4otpp1" path="res://assets/event/Mission Clear/Untitled983_20260426162614.png" id="12_357qf"]
 [ext_resource type="Texture2D" uid="uid://cxv01v4khwppx" path="res://assets/hando/Revised_baku/Untitled755_20260125095507.png" id="12_augu2"]
 [ext_resource type="Texture2D" uid="uid://cnu13dtg7564a" path="res://assets/event/Notification/Untitled976_20260319232228.png" id="12_eo1ke"]
+[ext_resource type="Texture2D" uid="uid://djmroxvycm8mc" path="res://assets/event/Mission Clear/Untitled983_20260426162616.png" id="13_0q0ua"]
 [ext_resource type="Texture2D" uid="uid://b7w8e5idmv8g1" path="res://assets/event/Notification/Untitled976_20260319232249.png" id="13_j5vj0"]
 [ext_resource type="Texture2D" uid="uid://d3ip8k1h16k11" path="res://assets/hando/Revised_baku/Untitled755_20260125095502.png" id="13_tm6hj"]
 [ext_resource type="Script" uid="uid://doexit5jdu47l" path="res://script/card.gd" id="14_cardg"]
 [ext_resource type="Script" uid="uid://cvkf7dgtjqhem" path="res://script/yuna_mahou.gd" id="14_dnhof"]
 [ext_resource type="Texture2D" uid="uid://cxa12ffm1nqgx" path="res://assets/event/Notification/Untitled976_20260319232259.png" id="14_kec7f"]
 [ext_resource type="Texture2D" uid="uid://b8opdn5gdsi2v" path="res://assets/crosshair_revised/Yuna/Shoot/Untitled700_20260122213831.png" id="14_muem4"]
+[ext_resource type="Texture2D" uid="uid://dr56eq4111qd8" path="res://assets/event/Mission Clear/Untitled983_20260426162618.png" id="14_yamka"]
+[ext_resource type="Texture2D" uid="uid://djdy3jx7nba8c" path="res://assets/event/Mission Clear/Untitled983_20260426162620.png" id="15_co4rk"]
 [ext_resource type="Texture2D" uid="uid://dkubcfd0qcs1h" path="res://assets/crosshair_revised/Yuna/Shoot/Untitled700_20260122214019.png" id="15_dp3eg"]
 [ext_resource type="Texture2D" uid="uid://dhjevns5lqib3" path="res://assets/hando/Revised_yuna/Untitled755_20260125101615.png" id="15_kf5aa"]
 [ext_resource type="Texture2D" uid="uid://dv8v8ulyidhwp" path="res://assets/crosshair_revised/Yuna/Shoot/Untitled700_20260122214119.png" id="16_0ld40"]
+[ext_resource type="Texture2D" uid="uid://jab0wykiecd8" path="res://assets/event/Mission Clear/Untitled983_20260426162625.png" id="16_2j8fm"]
 [ext_resource type="Texture2D" uid="uid://c5ootot5gk1sw" path="res://assets/hando/Revised_yuna/Untitled755_20260125101601.png" id="16_t5ykj"]
 [ext_resource type="Texture2D" uid="uid://c334pmx0fd5rw" path="res://assets/hando/Revised_yuna/Untitled755_20260125101557.png" id="17_e755i"]
+[ext_resource type="Texture2D" uid="uid://ceo6pab7npcn0" path="res://assets/event/Mission Clear/Untitled983_20260426162627.png" id="17_lvi85"]
 [ext_resource type="Script" uid="uid://duksqsxut430w" path="res://script/mahoumeter.gd" id="17_yc10j"]
+[ext_resource type="Texture2D" uid="uid://dmu72xvl3bv20" path="res://assets/event/Mission Clear/Untitled983_20260426162628.png" id="18_3m7ym"]
 [ext_resource type="Texture2D" uid="uid://bba112slcr6kw" path="res://assets/hando/Revised_yuna/Untitled755_20260125101554.png" id="18_ro3en"]
 [ext_resource type="Texture2D" uid="uid://dtt6fu4scae1j" path="res://assets/ui/Mahou-meter (template)/Size revised/Untitled748_20260124095928.png" id="18_yc10j"]
 [ext_resource type="Texture2D" uid="uid://dvhyjn7iqk6xw" path="res://assets/ui/Mahou-meter (template)/Size revised/Untitled748_20260124095934.png" id="19_jscy8"]
@@ -37,14 +47,10 @@
 [ext_resource type="Texture2D" uid="uid://inkaltnponon" path="res://assets/crosshair_revised/Baku/Aim/Untitled700_20260122214839.png" id="20_xrs0c"]
 [ext_resource type="Texture2D" uid="uid://ex2gkaong76j" path="res://assets/crosshair_revised/Baku/Aim/Untitled700_20260122214705.png" id="21_xljpf"]
 [ext_resource type="Texture2D" uid="uid://cnim5kwajc2ng" path="res://assets/ui/Mahou-meter (template)/Size revised/Untitled748_20260124095931.png" id="21_y6deb"]
-[ext_resource type="Texture2D" uid="uid://b6y43xiv7ttaf" path="res://assets/crosshair_revised/Baku/Weakness/Untitled700_20260122214857.png" id="22_j4bwh"]
 [ext_resource type="Texture2D" uid="uid://3i4li4mekuax" path="res://assets/ui/Mahou-meter (revised)/Untitled736_20260122193218.png" id="22_og1vs"]
 [ext_resource type="Texture2D" uid="uid://c0oqowivafsit" path="res://assets/ui/Mahou-meter (revised)/Untitled736_20260122193344.png" id="23_2wyq8"]
-[ext_resource type="Texture2D" uid="uid://xuqvfphddht3" path="res://assets/crosshair_revised/Baku/Weakness/Untitled700_20260122214844.png" id="23_ksmap"]
 [ext_resource type="Texture2D" uid="uid://nyouqdc56u8e" path="res://assets/ui/Mahou-meter (revised)/Untitled736_20260122193308.png" id="24_vxglm"]
-[ext_resource type="Texture2D" uid="uid://ctbtpx0fijwcv" path="res://assets/crosshair_revised/Yuna/Weakness/Untitled700_20260122214553.png" id="24_ygd8o"]
 [ext_resource type="Texture2D" uid="uid://3mm5mntnuq57" path="res://assets/ui/Mahou-meter (revised)/Untitled736_20260122193257.png" id="25_2f3dj"]
-[ext_resource type="Texture2D" uid="uid://chn7lh4jgdgnd" path="res://assets/crosshair_revised/Yuna/Weakness/Untitled700_20260122214258.png" id="25_2s0kr"]
 [ext_resource type="Texture2D" uid="uid://i04fippoq1pl" path="res://assets/crosshair_revised/Yuna/Aim/Untitled700_20260122214213.png" id="26_xaipn"]
 [ext_resource type="Script" uid="uid://ddrlomumxynia" path="res://script/koisuru_meter.gd" id="27_cjqg0"]
 [ext_resource type="Texture2D" uid="uid://fb71scvtv1k7" path="res://assets/crosshair_revised/Yuna/Aim/Untitled700_20260122213306.png" id="27_ndrjj"]
@@ -187,6 +193,44 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_hkoal"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_4tf2p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_daiwp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_m0lr6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_357qf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_0q0ua")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_yamka")
+}, {
+"duration": 7.0,
+"texture": ExtResource("15_co4rk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_2j8fm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_lvi85")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_3m7ym")
+}],
+"loop": false,
+"name": &"clear",
+"speed": 10.0
+}]
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_jgau6"]
 animations = [{
 "frames": [{
@@ -305,10 +349,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("22_j4bwh")
+"texture": ExtResource("20_xrs0c")
 }, {
 "duration": 1.0,
-"texture": ExtResource("23_ksmap")
+"texture": ExtResource("21_xljpf")
 }],
 "loop": true,
 "name": &"aim_weakness_baku",
@@ -316,10 +360,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("24_ygd8o")
+"texture": ExtResource("26_xaipn")
 }, {
 "duration": 1.0,
-"texture": ExtResource("25_2s0kr")
+"texture": ExtResource("27_ndrjj")
 }],
 "loop": true,
 "name": &"aim_weakness_yuna",
@@ -394,7 +438,6 @@ outline_size = 3
 outline_color = Color(1, 0.3254902, 0.42745098, 1)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2f3dj"]
-load_path = "res://.godot/imported/Untitled736_20260122175858.png-a489637bab31d787319b5d21eb65ceb9.ctex"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yq6so"]
 animations = [{
@@ -984,7 +1027,7 @@ batch_spawn_cooldown = 3.2
 enemy_scene = ExtResource("2_ya4ey")
 bird_strike_chance = 0.3
 bird_strike_shoot_lock_duration = 2.0
-level_duration_seconds = 300.0
+level_duration_seconds = 240.0
 
 [node name="BirdStrike" type="AnimatedSprite2D" parent="."]
 z_index = 500
@@ -993,6 +1036,14 @@ scale = Vector2(0.9, 0.9)
 sprite_frames = SubResource("SpriteFrames_2cjf7")
 animation = &"strike"
 frame = 5
+frame_progress = 1.0
+
+[node name="MissionClear" type="AnimatedSprite2D" parent="."]
+z_index = 500
+position = Vector2(640, 369)
+sprite_frames = SubResource("SpriteFrames_hkoal")
+animation = &"clear"
+frame = 9
 frame_progress = 1.0
 
 [node name="BirdStrikeAlert" type="AnimatedSprite2D" parent="."]
@@ -1092,7 +1143,7 @@ script = ExtResource("6_85g3d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Crosshair/Visual"]
 sprite_frames = SubResource("SpriteFrames_trceg")
-animation = &"default_yuna"
+animation = &"default_baku"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Crosshair"]
 

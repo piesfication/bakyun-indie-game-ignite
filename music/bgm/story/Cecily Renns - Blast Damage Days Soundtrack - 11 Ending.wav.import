@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c7tcgrqvcwlk4"
+path="res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 11 Ending.wav-0d118d9192d3503b8eaa68fcdf6ea3b6.sample"
+
+[deps]
+
+source_file="res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 11 Ending.wav"
+dest_files=["res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 11 Ending.wav-0d118d9192d3503b8eaa68fcdf6ea3b6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

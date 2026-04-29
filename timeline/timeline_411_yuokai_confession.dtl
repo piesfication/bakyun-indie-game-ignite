@@ -1,28 +1,62 @@
+[signal arg="leave"]
+[wait time="2.0"]
+[signal arg="remove overlay"]
+[wait time="2.0"]
+[signal arg="join"]
+[wait time="2.0"]
+[signal arg="bt"]
+baku: ...you okay?
+[signal arg="yt"]
+yuna: Define "okay."
+[signal arg="bt"]
+baku: Yeah.
+baku: Fair.
+[wait time="3.0"]
+[signal arg="bt"]
 baku: I meant it.
+[signal arg="yt"]
 yuna: I know.
+[signal arg="bt"]
 baku: Not because things got bad up there. Not because I thought —
 baku: I meant it before. I kept telling myself it wasn't the right time.
+[signal arg="yt"]
 yuna: There wasn't going to be a right time.
+[signal arg="bt"]
 baku: No.
 baku: There never is.
 [wait time="2.0"]
+[signal arg="yt"]
+[wait time="1.0"]
 yuna: I wasn't planning to leave. I should have told you that earlier.
+[signal arg="bt"]
 baku: Why didn't you?
+[signal arg="yt"]
 yuna: I was afraid it was the wrong reason.
 yuna: That I was staying because I don't have anywhere else — not because I actually wanted to be here.
+[signal arg="bt"]
 baku: And now?
+[signal arg="yt"]
 yuna: I know the difference now.
 yuna: It's the second one.
-[wait time="3.0"]
+[wait time="2.0"]
+[signal arg="bt"]
+[wait time="1.0"]
 baku: You said "we." Week two. When you were talking about the plan.
+[signal arg="yt"]
 yuna: ...you noticed.
+[signal arg="bt"]
 baku: I noticed everything.
 baku: I think that's when I knew.
+[signal arg="yt"]
 yuna: I was hoping you hadn't.
+[signal arg="bt"]
 baku: (smiling)\
 I know. You got very busy explaining tactical assessments.
 [wait time="2.0"]
+[signal arg="yt"]
+[wait time="1.0"]
 yuna: ...I did.
+[signal arg="bt"]
 baku: For what it's worth —
 baku: (looks at Yuna)
 baku: You're the first person who ever just saw me. Not the title. Not the power.
@@ -30,13 +64,22 @@ baku: Just me.
 baku: You're the first person who ever asked what they called me.
 baku: Like it mattered what I thought about it.
 baku: Nobody ever did that before.
+[wait time="2.0"]
+[signal arg="yt"]
+[wait time="1.0"]
 narrator: Yuna looks back at her.
 yuna: It matters.
+[wait time="2.0"]
+[signal arg="leave"]
+[wait time="1.0"]
 narrator: Something in Baku's expression — just for a second —
 narrator: — is the expression of someone hearing something they didn't know they needed.
+[wait time="2.0"]
 baku: Yeah.
 baku: Me too.
-[wait time="3.0"]
+[wait time="2.0"]
+[signal arg="city"]
+[wait time="2.5"]
 yuna: There's a part of sinking that can't be explained to someone who hasn't been through it.
 yuna: Not the dark. Not the depth.
 yuna: But the voice from above the surface — faint, but there.
@@ -54,3 +97,4 @@ yuna: "Revised."
 [signal arg="end of confession"]
 [wait time="3.0"]
 [signal arg="level menu"]
+[wait time="2.0"]

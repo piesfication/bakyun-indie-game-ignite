@@ -4,7 +4,7 @@ signal hp_changed(old_hp: int, new_hp: int)
 signal character_switched(character_name: String)
 signal died
 
-@export var max_hp := 30000000
+@export var max_hp := 3000000000
 var current_hp := max_hp
 var invulnerable: bool = false
 
@@ -22,6 +22,10 @@ var switch_locked: bool = false
 @export var bird_strike_shake_strength: float = 95.0
 @export var bird_strike_shake_frequency: float = 155.0
 @export var bird_strike_shake_falloff_power: float = 0.55
+@export var recoil_shake_duration: float = 0.08
+@export var recoil_shake_strength: float = 10.0
+@export var recoil_shake_frequency: float = 120.0
+@export var recoil_shake_falloff_power: float = 1.35
 @export var damage_hud_path: NodePath = NodePath("../DamageHud")
 @export var damage_hud_flash_duration: float = 0.22
 @export_range(0.02, 0.3, 0.01, "suffix:s") var bird_strike_hud_flicker_interval: float = 0.14
@@ -185,6 +189,19 @@ func trigger_screen_shake() -> void:
 	_shake_frequency_current = maxf(bird_strike_shake_frequency, 0.0)
 	_shake_falloff_power_current = maxf(bird_strike_shake_falloff_power, 0.1)
 	_shake_time_left = maxf(_shake_time_left, _shake_duration_current)
+	_shake_phase = randf() * TAU
+
+func trigger_recoil_shake() -> void:
+	if _shake_target == null or not is_instance_valid(_shake_target):
+		_shake_target = get_tree().current_scene as Node2D
+	if _shake_target == null:
+		return
+
+	_shake_duration_current = maxf(_shake_duration_current, maxf(recoil_shake_duration, 0.001))
+	_shake_strength_current = maxf(_shake_strength_current, maxf(recoil_shake_strength, 0.0))
+	_shake_frequency_current = maxf(_shake_frequency_current, maxf(recoil_shake_frequency, 0.0))
+	_shake_falloff_power_current = minf(_shake_falloff_power_current, maxf(recoil_shake_falloff_power, 0.1))
+	_shake_time_left = maxf(_shake_time_left, maxf(recoil_shake_duration, 0.001))
 	_shake_phase = randf() * TAU
 
 func _update_damage_shake(delta: float) -> void:

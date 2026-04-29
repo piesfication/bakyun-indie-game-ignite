@@ -29,6 +29,7 @@ const ORB_COLOR_BLUE := 1
 @export var intro_ui_return_delay: float = 1.1
 @export var intro_ui_pull_distance: float = 900.0
 @export var intro_ui_return_anim_duration: float = 0.45
+@export var enable_intro_ui_pull: bool = true
 
 @export var move_area_left: float = 80.0
 @export var move_area_right: float = 1200.0
@@ -126,6 +127,7 @@ var _forced_weakness_pending: bool = false
 var _forced_weakness_duration: float = 5.0
 var _shield_base_scale: Vector2 = Vector2.ONE
 var _shield_pulse_tween: Tween
+var _weakness_type_pattern: Array[bool] = []  # Cached pattern: true=red, false=blue
 var weakness_bar_tween: Tween = null
 var weakness_bar_pulse_tween: Tween = null
 var hp_tween: Tween = null
@@ -162,17 +164,21 @@ func _ready() -> void:
 
 	player_node = _find_player_node()
 	crosshair_node = _find_crosshair_node()
-	_set_battle_ui_pulled_out(true)
+	if enable_intro_ui_pull:
+		_set_battle_ui_pulled_out(true)
 	_set_player_action_enabled(false)
 
 	await _run_intro_phase()
 	if state == BossState.DEAD:
 		return
 
-	await _set_battle_ui_pulled_out(false)
+	if enable_intro_ui_pull:
+		await _set_battle_ui_pulled_out(false)
 	_show_health_ui()
 	if intro_ui_return_delay > 0.0:
-		await get_tree().create_timer(intro_ui_return_delay).timeout
+		var tree := get_tree()
+		if tree != null:
+			await tree.create_timer(intro_ui_return_delay).timeout
 	_set_player_action_enabled(true)
 	emit_signal("bossfight_started")
 	_choose_new_move_target()
@@ -261,7 +267,10 @@ func _run_intro_phase() -> void:
 			global_position = intro_target_position
 			state = BossState.SUMMON
 			break
-		await get_tree().process_frame
+		var tree := get_tree()
+		if tree == null:
+			return
+		await tree.process_frame
 
 func _setup_intro_entry_path() -> void:
 	var viewport_rect := get_viewport_rect()
@@ -278,13 +287,19 @@ func _setup_bar_pivot() -> void:
 	if weak_container == null:
 		return
 
-	await get_tree().process_frame
+	var tree := get_tree()
+	if tree == null:
+		return
+	await tree.process_frame
 	weak_container.pivot_offset = weak_container.size / 2.0
 
 func _run_boss_loop() -> void:
 	while state != BossState.DEAD:
 		state = BossState.SUMMON
-		var phase_timer := get_tree().create_timer(maxf(weakened_state_interval, 0.1))
+		var tree := get_tree()
+		if tree == null:
+			return
+		var phase_timer := tree.create_timer(maxf(weakened_state_interval, 0.1))
 		while state != BossState.DEAD and phase_timer.time_left > 0.0:
 			if _forced_weakness_pending:
 				break
@@ -318,7 +333,10 @@ func _wait_with_forced_check(duration: float) -> bool:
 			return true
 		if _forced_weakness_pending:
 			return true
-		await get_tree().process_frame
+		var tree := get_tree()
+		if tree == null:
+			return true
+		await tree.process_frame
 		remaining -= get_physics_process_delta_time()
 	return false
 
@@ -331,7 +349,10 @@ func _run_summon_phase() -> void:
 			return
 		await _summon_orb_batch()
 		if i < summon_cycles - 1:
-			await get_tree().create_timer(randf_range(summon_gap_min, summon_gap_max)).timeout
+			var tree := get_tree()
+			if tree == null:
+				return
+			await tree.create_timer(randf_range(summon_gap_min, summon_gap_max)).timeout
 
 func _run_weakness_phase(duration_override: float = -1.0, allow_early_clear: bool = true) -> bool:
 	# Store original state before approaching
@@ -353,7 +374,10 @@ func _run_weakness_phase(duration_override: float = -1.0, allow_early_clear: boo
 		weakness_duration = duration_override
 	else:
 		weakness_duration = weakness_duration_layer2 if current_layer == 2 else weakness_duration_layer1
-	var timeout_timer := get_tree().create_timer(maxf(weakness_duration, 0.1))
+	var tree := get_tree()
+	if tree == null:
+		return false
+	var timeout_timer := tree.create_timer(maxf(weakness_duration, 0.1))
 	if health_anim != null and health_anim.sprite_frames != null and health_anim.sprite_frames.has_animation("weakened"):
 		health_anim.play("weakened")
 	_sync_weakness_bar_visibility()
@@ -373,7 +397,10 @@ func _run_weakness_phase(duration_override: float = -1.0, allow_early_clear: boo
 		if timeout_timer.time_left <= 0.0:
 			timed_out = true
 			break
-		await get_tree().process_frame
+		tree = get_tree()
+		if tree == null:
+			return false
+		await tree.process_frame
 
 	# Retreat and scale back
 	await _retreat_from_weakness_state()
@@ -413,7 +440,10 @@ func _approach_weakness_state() -> void:
 		
 		scale = start_scale.lerp(start_scale * weakness_approach_scale, progress)
 		
-		await get_tree().process_frame
+		var tree := get_tree()
+		if tree == null:
+			return
+		await tree.process_frame
 
 func _retreat_from_weakness_state() -> void:
 	"""Smoothly scale down after weakness state while continuing random movement"""
@@ -429,14 +459,20 @@ func _retreat_from_weakness_state() -> void:
 		
 		scale = current_scale.lerp(weakness_original_scale, progress)
 		
-		await get_tree().process_frame
+		var tree := get_tree()
+		if tree == null:
+			return
+		await tree.process_frame
 
 func _run_attack_punish_phase() -> void:
 	if state == BossState.DEAD:
 		return
 	state = BossState.ATTACK
 	_play_action_animation("attack")
-	await get_tree().create_timer(attack_anim_duration).timeout
+	var tree := get_tree()
+	if tree == null:
+		return
+	await tree.create_timer(attack_anim_duration).timeout
 
 	if player_node != null and is_instance_valid(player_node) and player_node.has_method("take_damage"):
 		player_node.take_damage(attack_damage)
@@ -484,7 +520,10 @@ func _summon_orb_batch() -> void:
 				leader = null
 			leader = _spawn_single_orb(container, leader)
 			if i < count_for_this - 1 and spawn_stagger > 0.0:
-				await get_tree().create_timer(spawn_stagger).timeout
+				var tree := get_tree()
+				if tree == null:
+					return
+				await tree.create_timer(spawn_stagger).timeout
 
 	_set_summon_fx_idle()
 	await _finish_summon_action_sequence()
@@ -524,15 +563,19 @@ func _finish_summon_action_sequence() -> void:
 
 	_stop_action_animation()
 
-func _spawn_single_orb(container: Node2D, follow_leader: Node2D = null) -> Node2D:
+func _spawn_single_orb(container: Node2D, follow_leader: Variant = null) -> Node2D:
 	if homing_orb_scene == null:
-		return follow_leader
+		return null
 	if container == null:
-		return follow_leader
+		return null
+
+	var follow_leader_node: Node2D = null
+	if follow_leader is Node2D and is_instance_valid(follow_leader):
+		follow_leader_node = follow_leader as Node2D
 
 	var orb := homing_orb_scene.instantiate()
 	if orb == null:
-		return follow_leader
+		return follow_leader_node
 
 	var orb_color := _pick_spawn_orb_color()
 	_apply_vortex_color(container, orb_color)
@@ -547,7 +590,7 @@ func _spawn_single_orb(container: Node2D, follow_leader: Node2D = null) -> Node2
 	if spawn_parent == null:
 		spawn_parent = get_tree().current_scene
 	if spawn_parent == null:
-		return follow_leader
+		return follow_leader_node
 
 	spawn_parent.add_child(orb)
 	orb.global_position = container.global_position
@@ -555,7 +598,10 @@ func _spawn_single_orb(container: Node2D, follow_leader: Node2D = null) -> Node2
 	_global_orb_spawn_order += 1
 
 	if orb.has_method("setup"):
-		orb.setup(player_node, follow_leader)
+		# Re-validate again right before use in case leader got freed this frame.
+		if follow_leader_node != null and not is_instance_valid(follow_leader_node):
+			follow_leader_node = null
+		orb.setup(player_node, follow_leader_node)
 
 	return orb
 
@@ -598,6 +644,9 @@ func _spawn_weakness_points() -> void:
 	_clear_weakness_points()
 	if _template_weak_shapes.is_empty():
 		return
+
+	# Generate random weakness pattern (always 2 of one color, 1 of the other)
+	_generate_weakness_pattern()
 
 	var pool: Array = _template_weak_shapes.duplicate()
 	# Remove any freed/invalid nodes before using pool
@@ -696,11 +745,20 @@ func _collect_weakness_templates() -> void:
 
 			_template_weak_shapes.append(weak_point)
 
+func _generate_weakness_pattern() -> void:
+	# Generate random pattern: either [red, blue, red] or [blue, red, blue]
+	# This ensures 2 of one color, 1 of the other
+	var use_red_majority := randf() < 0.5
+	_weakness_type_pattern = [use_red_majority, not use_red_majority, use_red_majority]
+
+
 func _determine_weakness_type(index: int) -> Dictionary:
 	# Returns {"is_red": bool, "character": string}
-	# Alternate red/blue each time for variety
-	var is_red := (index % 2) == 0
+	# Uses pre-generated pattern for this weakness phase
+	if index < 0 or index >= _weakness_type_pattern.size():
+		return {"is_red": true, "character": "baku"}
 
+	var is_red := _weakness_type_pattern[index]
 	return {
 		"is_red": is_red,
 		"character": "baku" if is_red else "yuna"
@@ -849,7 +907,9 @@ func _apply_boss_damage(amount: int) -> void:
 
 	var old_hp := hp
 	hp = max(hp - amount, 0)
+	
 	_play_action_animation("damaged")
+	AudioManager.play_ui_sfx_with_pitch("res://music/sfx/glitch/virtual_vibes-digital-glitch-noise-hd-379465.wav")
 	if hp <= hp_per_layer and current_layer == 2:
 		current_layer = 1
 		await _play_second_phase_transition()
@@ -883,15 +943,22 @@ func _die() -> void:
 	await _move_to_death_center()
 
 	if death_anim_delay > 0.0:
-		await get_tree().create_timer(death_anim_delay).timeout
+		var tree := get_tree()
+		if tree == null:
+			return
+		await tree.create_timer(death_anim_delay).timeout
 
 	if action_anim != null and action_anim.sprite_frames != null and action_anim.sprite_frames.has_animation("dead"):
 		_play_action_animation("dead")
+		AudioManager.play_ui_sfx_with_pitch("res://music/sfx/glitch/delon_boomkin-glitch-explosion-422490.wav")
 		await _trigger_health_dead_at_action_frame(1)
 		if not action_anim.sprite_frames.get_animation_loop("dead"):
 			await action_anim.animation_finished
 		else:
-			await get_tree().create_timer(1.0).timeout
+				var tree := get_tree()
+				if tree == null:
+					return
+				await tree.create_timer(1.0).timeout
 	elif not _health_dead_sequence_started:
 		_health_dead_sequence_started = true
 		await _play_health_dead_then_hide()
@@ -915,7 +982,10 @@ func _move_to_death_center() -> void:
 	while is_instance_valid(self) and global_position.distance_to(target) > 6.0:
 		var step := move_speed * get_process_delta_time()
 		global_position = global_position.move_toward(target, step)
-		await get_tree().process_frame
+		var tree := get_tree()
+		if tree == null:
+			return
+		await tree.process_frame
 
 func _trigger_health_dead_at_action_frame(target_frame: int) -> void:
 	if _health_dead_sequence_started:
@@ -933,7 +1003,10 @@ func _trigger_health_dead_at_action_frame(target_frame: int) -> void:
 			break
 		if action_anim.frame >= target_frame:
 			break
-		await get_tree().process_frame
+		var tree := get_tree()
+		if tree == null:
+			break
+		await tree.process_frame
 		guard -= 1
 
 	if _health_dead_sequence_started:
@@ -955,7 +1028,10 @@ func _play_health_dead_then_hide() -> void:
 		if health_anim.sprite_frames.get_frame_count("dead") > 0:
 			await health_anim.animation_finished
 		else:
-			await get_tree().process_frame
+			var tree := get_tree()
+			if tree == null:
+				return
+			await tree.process_frame
 
 	health_anim.hide()
 

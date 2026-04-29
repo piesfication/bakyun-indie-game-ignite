@@ -213,6 +213,8 @@ func shoot():
 func shoot_baku():
 	sprite.play("shooting_baku")
 	hand_baku.play("shooting")
+	if queued_skill == SkillShot.NONE:
+		_trigger_recoil_shake()
 	
 	var hitbox = get_enemy_under_cursor()
 	if hitbox:
@@ -247,6 +249,8 @@ func shoot_baku():
 func shoot_yuna():
 	sprite.play("shooting_yuna")
 	hand_yuna.play("shooting")
+	if queued_skill == SkillShot.NONE:
+		_trigger_recoil_shake()
 
 	var hitbox = get_enemy_under_cursor()
 	if hitbox:
@@ -556,9 +560,16 @@ func cast_skill_shot_now() -> void:
 
 	if enemy == null and queued_skill != SkillShot.PIERCE and queued_skill != SkillShot.NOVA:
 		# Jangan konsumsi skill kalau benar-benar tidak ada target.
+		queued_skill = SkillShot.NONE
 		return
 
+	var was_skill_executed := queued_skill != SkillShot.NONE
 	apply_skill_shot(enemy, hitbox, get_global_mouse_position())
+	
+	# Trigger audio feedback for skill shot
+	if was_skill_executed:
+		var character_name := "baku" if current_mode == CharacterMode.CHAR_BAKU else "yuna"
+		_notify_combo_counter_hit(character_name)
 
 
 func apply_skill_shot(enemy: Node, hitbox: Node, cast_position: Vector2) -> void:
@@ -567,6 +578,8 @@ func apply_skill_shot(enemy: Node, hitbox: Node, cast_position: Vector2) -> void
 	if target_enemy == null and queued_skill != SkillShot.PIERCE and queued_skill != SkillShot.NOVA:
 		return
 
+	_trigger_recoil_shake()
+
 	match queued_skill:
 		SkillShot.OVERDRIVE:
 			var overdrive_delay := SKILL_DELAY_OVERDRIVE
@@ -574,7 +587,12 @@ func apply_skill_shot(enemy: Node, hitbox: Node, cast_position: Vector2) -> void
 				overdrive_delay = target_enemy.play_red3_effect()
 			if target_enemy != null and target_enemy.has_method("play_redhit_effect"):
 					target_enemy.play_redhit_effect()
-			if target_enemy != null and target_enemy.has_method("instakill"):
+			# Trigger shield/hit feedback on boss before attempting instakill
+			if target_enemy != null and _is_boss_enemy(target_enemy, hitbox):
+				if target_enemy.has_method("on_hit"):
+					target_enemy.on_hit(hitbox)
+			elif target_enemy != null and target_enemy.has_method("instakill"):
+				# Only instakill non-boss enemies
 				target_enemy.instakill(overdrive_delay)
 
 		SkillShot.PIERCE:
@@ -589,6 +607,9 @@ func apply_skill_shot(enemy: Node, hitbox: Node, cast_position: Vector2) -> void
 		SkillShot.CHAIN:
 			if target_enemy != null and target_enemy.has_method("play_bluehit_effect"):
 					target_enemy.play_bluehit_effect()
+			# Apply hit/damage to trigger boss shield before chain bounces
+			if target_enemy != null:
+				_apply_skill_hit_or_damage(target_enemy, hitbox, 1)
 			apply_chain_mark(target_enemy)
 
 		SkillShot.NOVA:
@@ -611,6 +632,13 @@ func apply_skill_shot(enemy: Node, hitbox: Node, cast_position: Vector2) -> void
 			apply_nova_pull(center_pos, target_enemy, target_depth)
 
 	queued_skill = SkillShot.NONE
+
+func _trigger_recoil_shake() -> void:
+	var player_node := get_node_or_null("../Player")
+	if player_node == null or not is_instance_valid(player_node):
+		return
+	if player_node.has_method("trigger_recoil_shake"):
+		player_node.trigger_recoil_shake()
 
 func _apply_skill_hit_or_damage(enemy: Node, hitbox: Node, damage: int) -> void:
 	if enemy == null or not is_instance_valid(enemy) or damage <= 0:

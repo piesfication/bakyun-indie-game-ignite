@@ -18,6 +18,7 @@ const HARD_BATCH_WEIGHT_SPIKE_MIX := 2
 
 var _hard_boss_spawned: bool = false
 var _hard_boss_phase_active: bool = false
+var _hard_boss_spawn_pending: bool = false
 
 func _ready() -> void:
 	batch_spawn_cooldown = maxf(hard_batch_spawn_cooldown, 0.1)
@@ -31,6 +32,24 @@ func _finish_spawn() -> void:
 	spawn_allowed = false
 	_hard_boss_phase_active = true
 	_set_bird_strike_allowed(false)
+	_hard_boss_spawn_pending = true
+	_try_spawn_hard_boss_when_clear()
+
+func _process(delta: float) -> void:
+	_try_spawn_hard_boss_when_clear()
+	super._process(delta)
+
+func _try_spawn_hard_boss_when_clear() -> void:
+	if not _hard_boss_phase_active:
+		return
+	if _hard_boss_spawned:
+		return
+	if not _hard_boss_spawn_pending:
+		return
+	if current_enemy_count > 0:
+		return
+
+	_hard_boss_spawn_pending = false
 	_spawn_hard_boss_once()
 
 func _run_random_weighted_batch() -> void:
@@ -117,6 +136,11 @@ func _spawn_hard_boss_once() -> void:
 	boss.position = boss_spawn_position
 	boss.z_index = max(next_z_index, z_front_min)
 	next_z_index -= 1
+	
+	# Disable UI pull animation for hard mode boss
+	if "enable_intro_ui_pull" in boss:
+		boss.enable_intro_ui_pull = false
+	
 	enemy_container.add_child(boss)
 	current_enemy_count += 1
 	boss.tree_exited.connect(Callable(self, "_on_enemy_removed"))

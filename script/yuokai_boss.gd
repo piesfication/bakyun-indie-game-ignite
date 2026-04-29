@@ -254,13 +254,10 @@ func _ready() -> void:
 	if intro_ui_return_delay > 0.0:
 		await get_tree().create_timer(intro_ui_return_delay).timeout
 	_set_player_action_enabled(_combat_active)
+	_set_hitbox_enabled(_combat_active)
+	set_health_bar_visible(false)
 	if not _combat_active:
-		_set_hitbox_enabled(false)
-		set_health_bar_visible(false)
 		state = BossState.NEUTRAL
-	else:
-		# Show health bar hanya jika combat active
-		_show_health_ui()
 	emit_signal("bossfight_started")
 	_choose_new_move_target()
 	await _run_boss_loop()
@@ -292,6 +289,8 @@ func _play_hp_squash_stretch() -> void:
 	
 
 func _physics_process(delta: float) -> void:
+	if state == BossState.DEAD:
+		return
 	if player_node == null or not is_instance_valid(player_node):
 		player_node = _find_player_node()
 
@@ -319,7 +318,6 @@ func set_combat_active(active: bool) -> void:
 		_set_player_action_enabled(true)
 		if not weakness_active:
 			_set_hitbox_enabled(true)
-		set_health_bar_visible(true)
 		if state == BossState.NEUTRAL:
 			state = BossState.SUMMON
 		return
@@ -354,7 +352,11 @@ func set_health_bar_visible(visible: bool) -> void:
 	if not visible:
 		_stop_weakness_bar()
 		_stop_weakness_bar_pulse()
-		_play_health_bar_visibility_animation(false)
+		if _health_bar_visibility_tween != null and is_instance_valid(_health_bar_visibility_tween):
+			_health_bar_visibility_tween.kill()
+		health_anim.scale = _health_bar_base_scale
+		health_anim.visible = false
+		health_anim.modulate = Color(1, 1, 1, 1)
 		return
 
 func _play_health_bar_visibility_animation(show: bool) -> void:
@@ -515,7 +517,10 @@ func _run_boss_loop() -> void:
 		if not _combat_active:
 			if state != BossState.NEUTRAL:
 				state = BossState.NEUTRAL
-			await get_tree().process_frame
+			var tree := get_tree()
+			if tree == null:
+				return
+			await tree.process_frame
 			continue
 
 		state = BossState.SUMMON
@@ -580,7 +585,16 @@ func _wait_until_all_orbs_cleared() -> bool:
 		if wait_elapsed >= wait_timeout:
 			_force_clear_active_orbs_for_weaken_transition()
 			return false
-		await get_tree().process_frame
+		
+		var tree := get_tree()
+		if tree == null or not is_instance_valid(tree):
+			return true
+
+		await tree.process_frame
+		
+		if not is_inside_tree():
+			return true
+			
 		wait_elapsed += get_process_delta_time()
 	return false
 
@@ -617,11 +631,20 @@ func _force_clear_active_orbs_for_weaken_transition() -> void:
 func _wait_with_forced_check(duration: float) -> bool:
 	var remaining := maxf(duration, 0.0)
 	while remaining > 0.0:
-		if state == BossState.DEAD:
+		if state == BossState.DEAD or not is_instance_valid(self):
 			return true
 		if _forced_weakness_pending:
 			return true
-		await get_tree().process_frame
+			
+		var tree := get_tree()
+		if tree == null:
+			return true
+			
+		await tree.process_frame
+		
+		if not is_instance_valid(self):
+			return true
+			
 		remaining -= get_physics_process_delta_time()
 	return false
 
@@ -667,6 +690,9 @@ func _run_weakness_phase(duration_override: float = -1.0, allow_early_clear: boo
 	# Approach screen and scale up
 	await _approach_weakness_state()
 	
+	if not is_instance_valid(self) or get_tree() == null:
+		return false
+	
 	# Now enter weakness state
 	state = BossState.WEAKNESS
 	weakness_active = true
@@ -685,12 +711,22 @@ func _run_weakness_phase(duration_override: float = -1.0, allow_early_clear: boo
 	_start_weakness_bar(weakness_duration)
 	_start_weakness_bar_pulse()
 
-  
-	var timeout_timer := get_tree().create_timer(maxf(weakness_duration, 0.1))
+	var tree := get_tree()
+	if tree == null:
+		return false
+
+	var timeout_timer := tree.create_timer(maxf(weakness_duration, 0.1))
 
 	while true:
 		if state == BossState.DEAD:
 			return false
+			
+		if not is_instance_valid(self):
+			return false
+			
+		if get_tree() == null:
+			return false
+			
 		if allow_early_clear and active_weak_areas.is_empty():
 			weakness_active = false
 			_clear_weakness_points()
@@ -698,8 +734,12 @@ func _run_weakness_phase(duration_override: float = -1.0, allow_early_clear: boo
 			_stop_weakness_bar()
 			_stop_weakness_bar_pulse()
 			break
+			
 		if timeout_timer.time_left <= 0.0:
 			break
+			
+		if get_tree() == null:
+			return false
 		await get_tree().process_frame
 
 	# Retreat and scale back
@@ -720,8 +760,6 @@ func _run_weakness_phase(duration_override: float = -1.0, allow_early_clear: boo
 	
 	if not success:
 		await _run_attack_punish_phase()
-	
-	
 	
 	return success
 
@@ -744,7 +782,10 @@ func _approach_weakness_state() -> void:
 		
 		scale = start_scale.lerp(start_scale * weakness_approach_scale, progress)
 		
-		await get_tree().process_frame
+		var tree := get_tree()
+		if tree == null:
+			return
+		await tree.process_frame
 
 func _retreat_from_weakness_state() -> void:
 	var elapsed := 0.0
@@ -759,7 +800,14 @@ func _retreat_from_weakness_state() -> void:
 		
 		scale = current_scale.lerp(weakness_original_scale, progress)
 		
-		await get_tree().process_frame
+		var tree := get_tree()
+		if tree == null:
+			return
+		
+		await tree.process_frame
+		
+		if not is_instance_valid(self) or not is_inside_tree():
+			return
 
 @onready var animattack: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D2") as AnimatedSprite2D
 
@@ -772,8 +820,15 @@ func _run_attack_punish_phase() -> void:
 
 	_play_body_attack_animation()
 		
+	var tree := get_tree()
+	if tree == null:
+		return
+
+	await tree.create_timer(attack_anim_duration).timeout
+
+	if not is_inside_tree():
+		return
 		
-	await get_tree().create_timer(attack_anim_duration).timeout
 	_attack_damage_armed = false
 	_stop_weakness_bar()
 	_stop_weakness_bar_pulse()
@@ -862,7 +917,16 @@ func _play_summon_until_spawn_frame() -> void:
 			return
 		if body_anim.frame >= target_frame:
 			return
-		await get_tree().process_frame
+			
+		var tree := get_tree()
+		if tree == null:
+			return
+
+		await tree.process_frame
+
+		if not is_inside_tree():
+			return
+			
 		elapsed += get_process_delta_time()
 
 func _wait_for_summon_animation_finish() -> void:
@@ -889,7 +953,12 @@ func _wait_for_summon_animation_finish() -> void:
 			return
 		if body_anim.frame >= last_frame and body_anim.frame_progress >= 0.99:
 			return
-		await get_tree().process_frame
+		
+		var tree := get_tree()
+		if tree == null:
+			return
+
+		await tree.process_frame
 		elapsed += get_process_delta_time()
 
 func _play_body_idle_animation() -> void:
@@ -932,6 +1001,7 @@ func _play_body_damaged_animation() -> void:
 
 	if body_anim.sprite_frames.has_animation("damaged"):
 		body_anim.play("damaged")
+		AudioManager.play_ui_sfx_with_pitch("res://music/sfx/glitch/virtual_vibes-digital-glitch-noise-hd-379465.wav")
 	else:
 		_play_body_default_animation()
 
@@ -1478,6 +1548,7 @@ func _die() -> void:
 	if body_anim != null and is_instance_valid(body_anim):
 		if body_anim.sprite_frames != null and body_anim.sprite_frames.has_animation("dead"):
 			body_anim.play("dead")
+			AudioManager.play_ui_sfx_with_pitch("res://music/sfx/glitch/delon_boomkin-glitch-explosion-422490.wav")
 		else:
 			_play_body_default_animation()
 

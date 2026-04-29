@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b8cj2mm4yfmhs"
+path="res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 12 Kill the Band (Clean).ogg-0df28ad41bc8ea7a6e65b24a83e5c47e.oggvorbisstr"
+
+[deps]
+
+source_file="res://music/bgm/level/Cecily Renns - Blast Damage Days Soundtrack - 12 Kill the Band (Clean).ogg"
+dest_files=["res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 12 Kill the Band (Clean).ogg-0df28ad41bc8ea7a6e65b24a83e5c47e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

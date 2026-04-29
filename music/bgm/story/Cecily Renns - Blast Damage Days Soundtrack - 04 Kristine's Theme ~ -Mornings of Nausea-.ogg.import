@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cts7ll5o8pisq"
+path="res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 04 Kristine's Theme ~ -Mornings of Nausea-.ogg-e7661c273291108827792132b35f3fe8.oggvorbisstr"
+
+[deps]
+
+source_file="res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 04 Kristine's Theme ~ -Mornings of Nausea-.ogg"
+dest_files=["res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 04 Kristine's Theme ~ -Mornings of Nausea-.ogg-e7661c273291108827792132b35f3fe8.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

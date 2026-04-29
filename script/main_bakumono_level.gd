@@ -1,8 +1,12 @@
 extends "res://script/main_boss_level.gd"
 
 func _ready() -> void:
+	
 	super._ready()
 	_configure_yuna_only_mode()
+	
+func _play_stage_bgm() -> void:
+	pass
 
 func _configure_yuna_only_mode() -> void:
 	if player_node != null and is_instance_valid(player_node):
@@ -26,8 +30,12 @@ func _spawn_boss_once() -> void:
 func on_dialogic_signal(arg: String):
 	super.on_dialogic_signal(arg)
 	
+	if (arg == "remember"):
+		AudioManager.play_bgm("res://music/bgm/hitoribocchi/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 09 I Believe in You (Reprise).wav", 1,false,false)
+	
 	if (arg == "remove overlay") :
 		
+		AudioManager.play_bgm("res://music/bgm/hitoribocchi/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 01 Hitoribocchi Overture.wav", 1,false,false)
 		fade_out(overlay_bakumono, 3)
 
 		pass
@@ -37,7 +45,7 @@ func on_dialogic_signal(arg: String):
 		fade_in(overlay_bakumono, 2)
 		
 	if (arg == "post bakumono"):
-		LoadingManager.set_target_scene("res://scenes/story_4_1.tscn")
+		LoadingManager.set_target_scene("res://scenes/story_4_2.tscn")
 		await Transition.fade_out()
 		get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 		await Transition.fade_in() # fade out

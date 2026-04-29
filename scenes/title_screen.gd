@@ -5,11 +5,11 @@ extends Node2D
 @export_range(0.1, 10.0, 0.01) var float_speed: float = 1.6
 @export_range(0.0, TAU, 0.01) var phase_offset: float = PI * 0.65
 
-var char_float_amplitude: float = 5
+var char_float_amplitude: float = 6
 
 @onready var ba: AnimatedSprite2D = $CanvasLayer2/Title/Ba
 @onready var kyun: AnimatedSprite2D = $CanvasLayer2/Title/Kyun
-@onready var char: AnimatedSprite2D = $CanvasLayer2/CharAnim
+@onready var charAnim: AnimatedSprite2D = $CanvasLayer2/CharAnim
 @onready var baku_click_area: Area2D = $CanvasLayer2/CharAnim/BakuClick
 @onready var yuna_click_area: Area2D = $CanvasLayer2/CharAnim/YunaClick
 @onready var exit_click_area: Area2D = $CanvasLayer3/ExitClick
@@ -31,16 +31,14 @@ var _clicked := false
 func _ready() -> void:
 	_ba_base_position = ba.position
 	_kyun_base_position = kyun.position
-	_char_base_position = char.position
+	_char_base_position = charAnim.position
 	set_process_input(true)
-	
-	MusicManager.play_music(preload("res://assets/music/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 03 Kind Girl, Honest Girl.mp3"))
 
 	if LoadingManager.gettitleOpened() == false:
+		AudioManager.play_bgm("res://assets/music/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 03 Kind Girl, Honest Girl.mp3", 1.5, false, false)
 		LoadingManager.setOpenedTrue()
 		titleCard.visible = true
 		intro.visible = true
-		
 		intro.modulate = Color.BLACK
 		white.visible = true
 		white.scale = Vector2(1,1) * 0.7
@@ -143,4 +141,4 @@ func _process(delta: float) -> void:
 	_time_accum += delta
 	ba.position.y = _ba_base_position.y + sin(_time_accum * float_speed) * ba_float_amplitude
 	kyun.position.y = _kyun_base_position.y + sin(_time_accum * float_speed + phase_offset) * kyun_float_amplitude
-	char.position.y = _char_base_position.y + sin(_time_accum * float_speed + phase_offset) * char_float_amplitude
+	charAnim.position.y = _char_base_position.y + sin(_time_accum * float_speed + phase_offset) * char_float_amplitude

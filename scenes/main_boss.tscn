@@ -205,11 +205,20 @@ post_boss_damage_hud_fade_duration = 0.35
 post_boss_parallax_move_duration = 0.35
 post_boss_parallax_bg_target = Vector2(640, 368)
 post_boss_parallax_bg2_target = Vector2(640, 360)
+post_boss_timeline = "timeline_41"
+play_intro_timeline_before_boss = false
+intro_timeline = ""
+intro_spawn_signal = "spawn_boss"
+spawn_boss_in_neutral_mode = true
+start_summon_signal = "start_summon"
+phase_transition_timeline = ""
+phase_transition_resume_signal = "start_summon_phase_2"
+hide_health_bar_on_phase_transition = true
 enemy_scene = ExtResource("2_boss")
 max_enemies = 1
 spawn_interval = 9999.0
 
-[node name="Background" parent="." index="2"]
+[node name="Background" parent="." index="3"]
 position = Vector2(-18.000002, -9)
 
 [node name="Sky" parent="Background" index="0"]
@@ -227,13 +236,13 @@ texture = ExtResource("6_jjwca")
 [node name="Sea" parent="Background" index="4"]
 texture = ExtResource("7_i2qsl")
 
-[node name="EnemyContainer" parent="." index="3"]
+[node name="EnemyContainer" parent="." index="4"]
 position = Vector2(-8, -8)
 
-[node name="Crosshair" parent="." index="5"]
+[node name="Crosshair" parent="." index="6"]
 position = Vector2(-232, 296)
 
-[node name="DamageHud" parent="." index="7"]
+[node name="DamageHud" parent="." index="8"]
 position = Vector2(641.00006, 366.00003)
 scale = Vector2(0.70937514, 0.7333333)
 

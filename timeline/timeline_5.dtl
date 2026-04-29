@@ -1,5 +1,5 @@
-jump timeline_5/together
 [signal arg="start chapter 5"]
+[wait time="2.0"]
 baku: No mission today.
 baku: First time in — I don't even know how long. Years, maybe.
 baku: This city feels different this morning.
@@ -11,6 +11,7 @@ baku: I make two cups. Sit in the other chair. Hand her one.
 baku: She takes it without looking away from the city.
 baku: We sit like that for a while.
 baku: It's the best morning I've had in a long time.
+[wait time="2.0"]
 [signal arg="start convo"]
 [wait time="1.0"]
 [signal arg="move"]
@@ -50,7 +51,7 @@ yuna: Baku.
 baku: Hm?
 [signal arg="yt"]
 yuna: The witch from the rumor.
-yuna: The one who drove all the monsters back alone when she was seven.
+yuna: The one who drove all the monsters back to this city alone.
 yuna: That's you.
 [signal arg="bt"]
 baku: ....where'd you hear that?
@@ -63,73 +64,103 @@ Why not?
 [signal arg="yt"]
 yuna: You didn't ask.
 [signal arg="bt"]
-baku: ( laughs) Okay. Fair.
+baku: ( laughs)
+baku: Okay.
+baku: Fair.
 [wait time="2.0"]
 [signal arg="out"]
-narrator: Still Flying, morning Into afternoon.
-narrator: They've been up here for hours. Neither has suggested going back.
-[wait time="2.0"]
-[signal arg="bt"]
-[signal arg="in"]
-yuna: Can I tell you something?
-[signal arg="yt"]
+[signal arg="grassfield"]
+[wait time="4.0"]
+[signal arg="leave grassfield"]
+[wait time="1.5"]
+join baku (Outlined) right
+baku: Can I tell you something?
+update baku (DarkenedOutlined)
+join yuna (Outlined) left
 yuna: You're going to tell me regardless.
-[signal arg="bt"]
+update yuna (DarkenedOutlined)
+update baku (Outlined)
 baku: I didn't stay here because I was brave, or because it was the right thing to do.
 baku: I stayed because I didn't know where else to go.
-baku: I was seven. I'd just done something no one thought was possible.
+baku: I was eight. I'd just done something no one thought was possible.
 baku: And everyone wanted something from me after that — the association, the government, everyone.
 baku: So I just... didn't go back.
-[signal arg="yt"]
+update baku (DarkenedOutlined)
+update yuna (Outlined)
 yuna: You've been here since then.
 yuna: Alone. For years.
-[signal arg="bt"]
+update yuna (DarkenedOutlined)
+update baku (Outlined)
 baku: It wasn't bad. I like this city.
-[signal arg="yt"]
+update baku (DarkenedOutlined)
+update yuna (Outlined)
 yuna: Baku.
-[signal arg="bt"]
+update yuna (DarkenedOutlined)
+update baku (Outlined)
 baku: I really do —
-[signal arg="yt"]
-yuna: You were seven.
-[wait time="2.5"]
-[signal arg="bt"]
+update baku (DarkenedOutlined)
+update yuna (Outlined)
+yuna: You were eight.
+[wait time="1.0" hide_text="false"]
+[wait time="1.0"]
+update yuna (DarkenedOutlined)
+update baku (Outlined)
 baku: Yeah.
 baku: But it's fine now.
 baku: (glances at Yuna)\
 It's actually pretty good now.
-[signal arg="out"]
+[wait time="1.0"]
+leave --All--
+[wait time="1.0"]
 narrator: Yuna looks at her.
 narrator: Then looks ahead.
-[signal arg="yt"]
-[signal arg="in"]
+[wait time="2.0"]
+join yuna (Outlined) left
+[wait time="1.0"]
 yuna: I'm not going back to the association.
-[signal arg="bt"]
+update yuna (DarkenedOutlined)
+join baku (Outlined) right
 baku: I know.
-[signal arg="yt"]
+update baku (DarkenedOutlined)
+update yuna (Outlined)
 yuna: I'll need to send them a report, about the alpha.
 yuna: They'll probably try to recall me.
-[signal arg="bt"]
+update yuna (DarkenedOutlined)
+update baku (Outlined)
 baku: Probably.
-[signal arg="yt"]
+update baku (DarkenedOutlined)
+update yuna (Outlined)
 yuna: I'll tell them I'm staying for extended documentation of post-alpha spawn behavior.
-[signal arg="bt"]
-baku: (slowly grinning)\
-That's very official.
-[signal arg="yt"]
+update yuna (DarkenedOutlined)
+update baku (Outlined)
+baku: (slowly grinning)
+baku: That's very official.
+update baku (DarkenedOutlined)
+update yuna (Outlined)
 yuna: I'm a very official person.
-[signal arg="bt"]
+update yuna (DarkenedOutlined)
+update baku (Outlined)
 baku: Is that what you're calling it?
-[signal arg="yt"]
+update baku (DarkenedOutlined)
+update yuna (Outlined)
 yuna: Do you want me to stay or not?
-[signal arg="bt"]
+update yuna (DarkenedOutlined)
+update baku (Outlined)
 baku: Of course I want to!
-[wait time="3.0"]
-[signal arg="out"]
-join baku right
+[wait time="2.0"]
+leave --All-- [animation="Fade Out Down" wait="true"]
+[wait time="1.0"]
+[signal arg="rooftop"]
+[wait time="5.0"]
+[signal arg="bt rt"]
 baku: Hey, Yuna.
-leave baku [animation="Instant Out" wait="true"]
+[signal arg="yt rt"]
 yuna: Hm?
-join baku (Outlined) right [animation="Instant In"]
+[wait time="1.0"]
+[signal arg="leave rooftop"]
+[wait time="2.0"]
+join baku (Outlined) right
+[wait time="2.0"]
 baku: This city is ours now. Let’s give it a name.
 join yuna (Outlined) left
 update baku (DarkenedOutlined)
@@ -168,14 +199,22 @@ update baku (DarkenedOutlined)
 update yuna (Outlined)
 yuna: A name with both of us in it…
 yuna: Hmm…
+[wait time="2.0"]
 leave --All-- [animation="Fade Out Down" wait="true"]
 [wait time="2.0"]
 yuna: Then I’ll name this city…
+[wait time="1.5"]
+[signal arg="both"]
+[signal arg="join rooftop"]
+[wait time="3.0"]
 yuna: “Bakyun”
 label epilogue
-[signal arg="epilogue"]
+[wait time="2.0" hide_text="false"]
+[wait time="1.0"]
+[signal arg="night"]
 [wait time="3.0"]
 [signal arg="yuna epilogue"]
+[wait time="2.0"]
 yuna: We fly until the sky goes orange.
 yuna: It's the most ordinary afternoon I've had since before the banishment. Maybe longer.
 yuna: We land back at the basecamp as the first stars show up.
@@ -185,12 +224,14 @@ yuna: I'll write it tomorrow. Or the day after.
 yuna: The spawn behavior documentation is genuinely ongoing, after all.
 yuna: Baku makes tea again — two cups, without asking —
 yuna: — and I think about how this started with a bowl of food and a "bird" knocking me unconscious and somehow led here.
-yuna: I think about the two lines I wrote on my first day.
+yuna: I think about the words I wrote in my early days here.
 yuna: "Objective\: prove competence. Return to the association."
 yuna: And the one line underneath.
 yuna: "Revised."
 yuna: I don't think I need to write anything else.
+[wait time="2.0"]
 [signal arg="baku epilogue"]
+[wait time="2.0"]
 baku: She's going to stay.
 baku: I knew before she said it. I think I knew for a while.
 baku: This city has been mine for a long time —
@@ -207,6 +248,35 @@ baku: There will be patrols and weird monster encounters and Yuna asking me to d
 baku: But tonight —
 baku: — tonight we're just here.
 baku: Above the ground, above everything.
-label together
+[wait time="2.0"]
 [signal arg="together"]
+[wait time="3.0"]
 baku: Together.
+[wait time="5.0"]
+[signal arg="end"]
+[wait time="8.0"]
+[signal arg="post"]
+[wait time="4.0"]
+baku: Yuna.
+yuna: Hm?
+baku: What did you even do to get banished out here?
+yuna: I....
+[signal arg="kill"]
+yuna: I... killed my friend.
+[wait time="2.0"]
+baku: ......
+[wait time="2.0"]
+[signal arg="kidding"]
+yuna: Just kidding.
+baku: I WAS ABOUT TO CRY —
+yuna: You were not.
+baku: I WAS ALMOST —
+yuna: You're so dramatic.
+baku: YOU'RE HORRIBLE —
+yuna: You asked a heavy question at midnight.
+baku: ...I was just curious.
+[wait time="2.0"]
+yuna: I'll tell you eventually.
+yuna: When I'm ready.
+[wait time="4.0"]
+[signal arg="level menu"]

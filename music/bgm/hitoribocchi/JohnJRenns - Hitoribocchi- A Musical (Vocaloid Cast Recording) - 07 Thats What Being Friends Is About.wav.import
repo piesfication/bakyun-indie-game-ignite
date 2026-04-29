@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://04h2gpxc3h3a"
+path="res://.godot/imported/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 07 Thats What Being Friends Is About.wav-c7bec2a0b7c132997e1be267a68a46b3.sample"
+
+[deps]
+
+source_file="res://music/bgm/hitoribocchi/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 07 Thats What Being Friends Is About.wav"
+dest_files=["res://.godot/imported/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 07 Thats What Being Friends Is About.wav-c7bec2a0b7c132997e1be267a68a46b3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

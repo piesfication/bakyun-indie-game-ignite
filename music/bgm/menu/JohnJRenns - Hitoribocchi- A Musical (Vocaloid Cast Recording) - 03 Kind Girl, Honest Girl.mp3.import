@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b5ynuxlvfjb0y"
+path="res://.godot/imported/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 03 Kind Girl, Honest Girl.mp3-32fdfd26ec83e86c8ce76bab5eb2c5e0.mp3str"
+
+[deps]
+
+source_file="res://music/bgm/menu/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 03 Kind Girl, Honest Girl.mp3"
+dest_files=["res://.godot/imported/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 03 Kind Girl, Honest Girl.mp3-32fdfd26ec83e86c8ce76bab5eb2c5e0.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

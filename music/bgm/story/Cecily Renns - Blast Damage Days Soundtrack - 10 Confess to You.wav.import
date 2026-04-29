@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://x2e0sa4a7y8x"
+path="res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 10 Confess to You.wav-d3716512b7170c1bbf328bc19f8d04cc.sample"
+
+[deps]
+
+source_file="res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 10 Confess to You.wav"
+dest_files=["res://.godot/imported/Cecily Renns - Blast Damage Days Soundtrack - 10 Confess to You.wav-d3716512b7170c1bbf328bc19f8d04cc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -29,6 +29,7 @@ var _timeline_mode_active: bool = false
 var _damage_hud_was_visible_before_timeline: bool = false
 
 func _ready() -> void:
+	_play_stage_bgm()
 	Dialogic.signal_event.connect(on_dialogic_signal);
 	next_z_index = base_z_index
 	_setup_main_runtime_systems()
@@ -36,10 +37,15 @@ func _ready() -> void:
 		await _start_intro_timeline_or_spawn_fallback()
 	else:
 		_spawn_boss_once()
+		
+func _play_stage_bgm() -> void:
+	AudioManager.play_bgm("res://music/bgm/level/Cecily Renns - Blast Damage Days Soundtrack - 08 Date Out!.ogg", 1,false, false)
 
 func _begin_level_end_sequence(is_loss: bool) -> void:
 	if not is_loss and has_node("/root/StoryProgress"):
 		StoryProgress.mark_chapter_completed(4)
+	if is_loss:
+		_set_boss_combat_active(false)
 	super._begin_level_end_sequence(is_loss)
 
 enum AnimMode {
@@ -201,7 +207,8 @@ func _spawn_boss_once() -> void:
 func _on_boss_removed() -> void:
 	current_enemy_count = 0
 	_boss_ref = null
-	await _run_post_boss_sequence()
+	if level_end_sequence_running or level_ended:
+		return
 
 func _on_boss_defeated() -> void:
 	await _run_post_boss_sequence()
@@ -211,14 +218,20 @@ func _run_post_boss_sequence() -> void:
 		return
 	_post_boss_sequence_started = true
 
+	var tree := get_tree()
+	if tree == null:
+		return
+
 	# Delay after boss dies
-	await get_tree().create_timer(post_boss_delay_before_ui_hide).timeout
+	await tree.create_timer(post_boss_delay_before_ui_hide).timeout
 
 	await _enter_timeline_mode()
 	_disable_and_hide_combo_counter(true)
 	
 	# Delay antara UI hide dan parallax move
-	await get_tree().create_timer(post_boss_delay_after_ui_hide).timeout
+	if tree == null:
+		return
+	await tree.create_timer(post_boss_delay_after_ui_hide).timeout
 	
 	await _move_parallax_story_focus()
 	_start_post_boss_timeline()
@@ -451,10 +464,10 @@ func _on_boss_hp_changed(old_hp: int, new_hp: int) -> void:
 	await _enter_timeline_mode()
 	Dialogic.start(timeline_name)
 
-func on_player_hit(character: String = "baku") -> void:
+func on_player_hit(character: String = "baku", force_max_pitch: bool = false) -> void:
 	if _combo_counter_disabled:
 		return
-	super.on_player_hit(character)
+	super.on_player_hit(character, force_max_pitch)
 
 func on_player_miss() -> void:
 	if _combo_counter_disabled:

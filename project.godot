@@ -21,9 +21,10 @@ LevelData="*res://data/LevelData.gd"
 LoadingDialogue="*res://script/loading_dialogue.gd"
 LoadingManager="*res://script/loading_manager.gd"
 Transition="*res://scenes/transition.tscn"
-MusicManager="*res://scenes/music_manager.tscn"
+MusicManager="res://scenes/music_manager.tscn"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 StoryProgress="*res://script/story_progress.gd"
+AudioManager="*res://audio/world_audio_manager.tscn"
 
 [dialogic]
 
@@ -56,6 +57,18 @@ glossary/default_case_sensitive=true
 layout/style_list=["res://style/style_1.tres"]
 layout/default_style="res://style/style_1.tres"
 variables={
+"ChapChoose": {
+"Chap1Choose": 0,
+"Chap2Choose": 0,
+"Chap3Choose": 0
+},
+"ChapterRead": {
+"ReadChap1": false,
+"ReadChap2": false,
+"ReadChap3": false,
+"ReadChap4": false,
+"ReadChap5": false
+},
 "StoryBranch": {
 "FirstOption": 0,
 "SecondOption": 0

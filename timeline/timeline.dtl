@@ -1,4 +1,4 @@
-[wait time="3.0"]
+[wait time="2.0"]
 baku: This city never had guests.
 baku: That's one of the things I like about this place.
 baku: People out there have plenty of stories about this city —
@@ -6,14 +6,15 @@ baku: — monsters, ruins, phenomena nobody can explain. Enough to make anyone c
 baku: So when someone actually showed up at the city entrance this morning —
 baku: — backpack on, assignment letter in hand, expression working very hard to not look completely terrified —
 baku: I was surprised enough to stand up from my bed. That's already an achievement.
-[wait time="3.0"]
+[signal arg="baku appears"]
+[wait time="2.0"]
 join baku (Outlined) right [animation="Fade In Up" wait="true"]
 baku (Outlined): New witch?!
 baku: From the association?!
 join yuna (Outlined) left [animation="Fade In Up" wait="true"]
 update baku (DarkenedOutlined) right [fade="Fade Cross"]
 yuna: I'm Yuna. Transferred to this city, effective today.
-yuna:  Is there anyone I should report to —
+yuna: Is there anyone I should report to —
 update yuna (DarkenedOutlined) left [fade="Fade Cross"]
 update baku (Outlined) right [fade="Fade Cross"]
 baku: Welcome!
@@ -35,17 +36,20 @@ baku: Oh right — watch out for the bird attacks around here.
 update yuna (Outlined)
 update baku (DarkenedOutlined)
 yuna: ...what do you mean by —
-label birdstrikestart (birdstrikestart)
 update baku (Outlined)
 update yuna (DarkenedOutlined)
 baku: Ah! There's one now.
 leave --All-- [animation="Instant Out" length="0.2" wait="true"]
-[wait time="0.3"]
+[wait time="2.0"]
 [signal arg="bird strike"]
+[signal arg="fade audio"]
 [wait time="4.0"]
 yuna (Outlined): Uughh... my head...
 baku: Oh, you're up?
+[wait time="2.0"]
 [signal arg="yuna wake up"]
+[signal arg="bakus room"]
+[wait time="2.5"]
 yuna: Where am I...
 join baku (Outlined) right
 baku: My place. You were out for about ten minutes.
@@ -103,55 +107,72 @@ update yuna (Outlined) left
 yuna: Then what are you doing here?
 update baku (Outlined) right
 update yuna (DarkenedOutlined) left
-baku: I live here
+baku: I live here.
+[wait time="1.0"]
 leave --All-- [animation="Fade Out Down" wait="true"]
 [wait time="2.0"]
 narrator: Yuna stares at her again.
-narrator: Trying to find the part that makes sense. Not finding it.
+narrator: Trying to find the part that makes sense.
+narrator: Not finding it.
+[wait time="2.0"]
 yuna: ...the food's decent.
 update yuna (DarkenedOutlined)
 baku (Outlined): (grins)
 baku (Outlined): Decent.
 [wait time="2.0"]
-label testjump (testjump)
 join baku (Outlined) right
-- "You come here because you wanted to, or because you had to?"
-	set {StoryBranch.FirstOption} += 1.0
-	baku (Outlined): You come here because you wanted to, or because you had to?
-	update baku (DarkenedOutlined)
-	join yuna (Outlined) left
-	yuna: (stops eating)
-	yuna: Had to.
-	update baku (Outlined)
-	update yuna (DarkenedOutlined)
-	baku: Mmhm.
-	leave --All-- [animation="Fade Out Down" wait="true"]
-	[wait time="2.0"]
-	baku: I didn't push further.
-	baku: One word, fast — like she'd been rehearsing it the whole trip here.
-	baku: People who answer like that usually have a story they're not ready to tell yet.
-	baku: That's fine. This city has a way of bringing things out eventually.
-- (Say nothing. Refill Yuna's bowl.)
-	set {StoryBranch.SecondOption} += 1.0
-	baku (Outlined): (Say nothing. Refill Yuna's bowl.)
-	join yuna (Outlined) left
-	update baku (DarkenedOutlined)
-	yuna (Outlined): You're not going to ask why I'm here?
-	update yuna (DarkenedOutlined)
-	update baku (Outlined)
-	baku: You'll tell me eventually.
-	leave --All-- [animation="Fade Out Down" wait="true"]
-	[wait time="2.0"]
-	baku: She didn't respond.
-	baku: But she finished everything in the bowl.
-	baku: That felt like enough for now.
+[wait time="1.0"]
+if {ChapterRead.ReadChap1} == false:
+	- "You come here because you wanted to, or because you had to?"
+		set {StoryBranch.FirstOption} += 1.0
+		set {ChapChoose.Chap1Choose} = 1.0
+		label FirstOption
+		baku (Outlined): You come here because you wanted to, or because you had to?
+		update baku (DarkenedOutlined)
+		join yuna (Outlined) left
+		yuna: (stops eating)
+		yuna: Had to.
+		update baku (Outlined)
+		update yuna (DarkenedOutlined)
+		baku: Mmhm.
+		[wait time="1.0"]
+		leave --All-- [animation="Fade Out Down" wait="true"]
+		[wait time="2.0"]
+		baku: I didn't push further.
+		baku: One word, fast — like she'd been rehearsing it the whole trip here.
+		baku: People who answer like that usually have a story they're not ready to tell yet.
+		baku: That's fine. This city has a way of bringing things out eventually.
+		baku: That felt like enough for now.
+	- (Say nothing. Refill Yuna's bowl.)
+		set {StoryBranch.SecondOption} += 1.0
+		set {ChapChoose.Chap1Choose} = 2.0
+		label SecondOption
+		baku (Outlined): (Refill Yuna's bowl.)
+		[wait time="1.0"]
+		join yuna (Outlined) left
+		update baku (DarkenedOutlined)
+		yuna (Outlined): You're not going to ask why I'm here?
+		update yuna (DarkenedOutlined)
+		update baku (Outlined)
+		baku: You'll tell me eventually.
+		[wait time="1.0"]
+		leave --All-- [animation="Fade Out Down" wait="true"]
+		[wait time="2.0"]
+		baku: She didn't respond.
+		baku: But she finished everything in the bowl.
+		baku: That felt like enough for now.
+elif {ChapterRead.ReadChap1} == true:
+	if {ChapChoose.Chap1Choose} == 1.0:
+		jump FirstOption
+	elif {ChapChoose.Chap1Choose} == 2.0:
+		jump SecondOption
 [wait time="2.0"]
 baku: Her assignment letter said "transferred."
 baku: I've been around long enough to know what that word usually means.
 baku: But that's her story to tell.
 baku: What I know\: she arrived with a backpack too heavy for its contents —
-baku:  — a hat too big for her head —
-baku:  — and the expression of someone who made a decision and isn't sure yet if it was the right one.
+baku: — a hat too big for her head —
+baku: — and the expression of someone who made a decision and isn't sure yet if it was the right one.
 [wait time="2.0"]
 baku: This city has plenty of monsters.
 baku: But somewhere out there —
@@ -160,4 +181,5 @@ baku: — something else has been sitting still for a very long time.
 baku: I've been waiting for a reason to go find it.
 baku: Maybe she's it.
 [wait time="3.0"]
+set {ChapterRead.ReadChap1} = true
 [signal arg="level menu"]

@@ -13,6 +13,8 @@ signal level_finished
 @onready var bird_strike_alert_node: AnimatedSprite2D = $BirdStrikeAlert
 @onready var koisuru_meter_node: Node = $UIKoisuruMeter/KoisuruMeter
 @onready var ultimate_anim_node: AnimatedSprite2D = $UltimateAnim
+@onready var mission_clear_node: AnimatedSprite2D = $MissionClear
+@onready var level_end_overlay_layer: CanvasLayer = $LevelEndOverlay
 @onready var level_end_overlay: ColorRect = $LevelEndOverlay/ColorRect
 @onready var combo_counter_node: Node = $LevelEndOverlay/ComboCounter
 
@@ -33,8 +35,15 @@ signal level_finished
 @export_range(0.1, 20.0, 0.1, "suffix:s") var level_end_win_delay_seconds: float = 5.0
 @export_range(0.1, 20.0, 0.1, "suffix:s") var level_end_lose_delay_seconds: float = 3.0
 @export_range(0.0, 20.0, 0.1, "suffix:s") var level_end_ui_pull_delay_seconds: float = 3.0
+@export_range(0.0, 10.0, 0.05, "suffix:s") var level_end_mission_clear_pre_delay_seconds: float = 0.3
+@export_range(0.0, 10.0, 0.05, "suffix:s") var level_end_mission_clear_post_delay_seconds: float = 0.45
 @export_range(0.1, 5.0, 0.05, "suffix:s") var level_end_lose_fade_duration: float = 1.5
 @export_range(0.0, 5.0, 0.05, "suffix:s") var level_end_lose_hold_seconds: float = 2.0
+@export var shot_hit_sfx_path: String = "res://music/sfx/shooting/u_qoe8xdq7hm-beam-fire-282361.wav"
+@export var shot_miss_sfx_path: String = "res://music/sfx/shooting/zehendrew-infinity-castle-gate-opening-sound-muzan-463491.wav"
+@export_range(0.5, 3.0, 0.01, "suffix:x") var shot_hit_pitch_start: float = 0.85
+@export_range(0.01, 1.0, 0.01, "suffix:x") var shot_hit_pitch_step: float = 0.2
+@export_range(0.5, 3.0, 0.01, "suffix:x") var shot_hit_pitch_max: float = 2
 
 var current_enemy_count: int = 0
 var spawn_timer := 0.0
@@ -55,8 +64,12 @@ var next_z_index: int
 var _ultimate_ui_names: Array[String] = ["CardUI", "UIKoisuruMeter", "UIMahouMeter", "Player", "Crosshair"]
 var _ultimate_ui_original_pos: Dictionary = {}
 var _ultimate_ui_pulled_out: bool = false
+var _debug_force_win_button: Button = null
+var _shot_hit_pitch_scale: float = 1.0
 
 func _ready():
+	_shot_hit_pitch_scale = maxf(shot_hit_pitch_start, 0.01)
+	AudioManager.play_bgm("res://music/bgm/level/Cecily Renns - Blast Damage Days Soundtrack - 08 Date Out!.ogg", 1, false, false)
 	next_z_index = base_z_index
 	_setup_main_runtime_systems()
 	_start_level_intro_flow()
@@ -106,6 +119,10 @@ func _setup_main_runtime_systems() -> void:
 		if not ultimate_anim_node.animation_finished.is_connected(_on_ultimate_anim_finished):
 			ultimate_anim_node.animation_finished.connect(_on_ultimate_anim_finished)
 
+	if mission_clear_node != null:
+		mission_clear_node.stop()
+		mission_clear_node.visible = false
+
 	if koisuru_meter_node != null and koisuru_meter_node.has_signal("ultimate_casted"):
 		if not koisuru_meter_node.is_connected("ultimate_casted", Callable(self, "_on_ultimate_casted")):
 			koisuru_meter_node.connect("ultimate_casted", Callable(self, "_on_ultimate_casted"))
@@ -127,6 +144,36 @@ func _setup_main_runtime_systems() -> void:
 		# Initialize combo counter
 		if combo_counter_node.has_method("reset"):
 			combo_counter_node.reset()
+
+	_setup_debug_force_win_button()
+
+func _setup_debug_force_win_button() -> void:
+	# Editor-only helper for QA playtest, excluded from exported builds.
+	if not OS.has_feature("editor"):
+		return
+	if level_end_overlay_layer == null or not is_instance_valid(level_end_overlay_layer):
+		return
+	if _debug_force_win_button != null and is_instance_valid(_debug_force_win_button):
+		return
+
+	_debug_force_win_button = Button.new()
+	_debug_force_win_button.name = "DebugForceWinButton"
+	_debug_force_win_button.text = "DEBUG: FORCE WIN"
+	_debug_force_win_button.tooltip_text = "Langsung menang level (untuk tes)"
+	_debug_force_win_button.focus_mode = Control.FOCUS_NONE
+	_debug_force_win_button.size = Vector2(200, 40)
+	_debug_force_win_button.position = Vector2(16, 16)
+	_debug_force_win_button.modulate = Color(0.78, 1.0, 0.82, 0.95)
+	_debug_force_win_button.pressed.connect(_on_debug_force_win_pressed)
+	level_end_overlay_layer.add_child(_debug_force_win_button)
+
+func _on_debug_force_win_pressed() -> void:
+	if level_end_sequence_running or level_ended:
+		return
+	if _debug_force_win_button != null and is_instance_valid(_debug_force_win_button):
+		_debug_force_win_button.disabled = true
+
+	_begin_level_end_sequence(false)
 
 func spawn_enemy():
 	_spawn_enemy_instance(_pick_random_enemy_scene())
@@ -263,10 +310,13 @@ func _begin_level_end_sequence(is_loss: bool) -> void:
 		await get_tree().create_timer(remaining_delay).timeout
 
 	if is_loss:
+		AudioManager.start_ui_sfx("res://music/sfx/glitch/dragon-studio-glitch-effect-1-397982.wav", [1,1], 10 )
 		await _play_level_end_screen_fade(Color(0, 0, 0, 1))
+	
 	else:
 		if has_node("/root/StoryProgress"):
 			StoryProgress.record_mission_win()
+		await _play_mission_clear_sequence()
 		await _play_level_end_screen_fade(Color(1, 1, 1, 1))
 
 	level_ended = true
@@ -275,8 +325,9 @@ func _begin_level_end_sequence(is_loss: bool) -> void:
 
 	if not is_inside_tree():
 		return
-
+	
 	LoadingManager.set_target_scene("res://scenes/level_menu.tscn")
+	await AudioManager.stop_bgm(5)
 	get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 
 
@@ -297,6 +348,33 @@ func _play_level_end_screen_fade(target_color: Color) -> void:
 	if hold_time > 0.0:
 		await get_tree().create_timer(hold_time).timeout
 
+func _play_mission_clear_sequence() -> void:
+	if mission_clear_node == null or not is_instance_valid(mission_clear_node):
+		return
+
+	var pre_delay := maxf(level_end_mission_clear_pre_delay_seconds, 0.0)
+	if pre_delay > 0.0:
+		await get_tree().create_timer(pre_delay).timeout
+
+	mission_clear_node.visible = true
+	mission_clear_node.frame = 0
+	mission_clear_node.frame_progress = 0.0
+
+	var clear_anim := StringName("clear")
+	if mission_clear_node.sprite_frames != null and mission_clear_node.sprite_frames.has_animation(clear_anim):
+		mission_clear_node.play(clear_anim)
+		await mission_clear_node.animation_finished
+	elif mission_clear_node.animation != StringName(""):
+		mission_clear_node.play(mission_clear_node.animation)
+		await mission_clear_node.animation_finished
+
+	mission_clear_node.stop()
+	mission_clear_node.visible = false
+
+	var post_delay := maxf(level_end_mission_clear_post_delay_seconds, 0.0)
+	if post_delay > 0.0:
+		await get_tree().create_timer(post_delay).timeout
+
 func _ensure_bird_strike_alert_hidden_when_idle() -> void:
 	if bird_strike_alert_node == null or not is_instance_valid(bird_strike_alert_node):
 		return
@@ -313,17 +391,33 @@ func spawn_batch_enemies():
 func _on_enemy_removed():
 	current_enemy_count = max(current_enemy_count - 1, 0)
 
-func on_player_hit(character: String = "baku") -> void:
+func on_player_hit(character: String = "baku", force_max_pitch: bool = false) -> void:
 	"""Called when player successfully hits a target"""
+	_play_shot_hit_sfx(force_max_pitch)
 	if combo_counter_node != null and is_instance_valid(combo_counter_node):
 		if combo_counter_node.has_method("on_hit"):
 			combo_counter_node.on_hit(character)
 
 func on_player_miss() -> void:
 	"""Called when player shoots but misses"""
+	_play_shot_miss_sfx()
+	_shot_hit_pitch_scale = maxf(shot_hit_pitch_start, 0.01)
 	if combo_counter_node != null and is_instance_valid(combo_counter_node):
 		if combo_counter_node.has_method("on_miss"):
 			combo_counter_node.on_miss()
+
+func _play_shot_hit_sfx(force_max_pitch: bool = false) -> void:
+	if shot_hit_sfx_path.is_empty():
+		return
+	var pitch_scale := shot_hit_pitch_max if force_max_pitch else _shot_hit_pitch_scale
+	AudioManager.play_ui_sfx_with_pitch(shot_hit_sfx_path, pitch_scale)
+	if not force_max_pitch:
+		_shot_hit_pitch_scale = minf(_shot_hit_pitch_scale + shot_hit_pitch_step, shot_hit_pitch_max)
+
+func _play_shot_miss_sfx() -> void:
+	if shot_miss_sfx_path.is_empty():
+		return
+	AudioManager.start_ui_sfx(shot_miss_sfx_path, [0.8,1.2], 6)
 
 func combo_counter_fade_out() -> void:
 	"""Called when combo counter should fade out due to UI events (like ultimate)"""
