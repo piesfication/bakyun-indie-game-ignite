@@ -35,7 +35,7 @@ func _ready() -> void:
 	set_process_input(true)
 
 	if LoadingManager.gettitleOpened() == false:
-		AudioManager.play_bgm("res://assets/music/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 03 Kind Girl, Honest Girl.mp3", 1.5, false, false)
+		AudioManager.play_bgm_sequence("res://assets/music/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 03 Kind Girl, Honest Girl.mp3","res://music/bgm/level/Cecily Renns - Blast Damage Days Soundtrack - 12 Kill the Band (Clean).ogg", 1)
 		LoadingManager.setOpenedTrue()
 		titleCard.visible = true
 		intro.visible = true

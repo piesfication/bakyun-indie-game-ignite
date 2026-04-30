@@ -15,6 +15,10 @@ run/main_scene="uid://unffs1vlk3ih"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://audio/audio_bus_layout.tres"
+
 [autoload]
 
 LevelData="*res://data/LevelData.gd"
@@ -31,6 +35,7 @@ AudioManager="*res://audio/world_audio_manager.tscn"
 directories/dch_directory={
 "baku": "res://char/baku.dch",
 "narrator": "res://char/narrator.dch",
+"unknown": "res://char/unknown.dch",
 "yuna": "res://char/yuna.dch"
 }
 directories/dtl_directory={
@@ -116,6 +121,8 @@ text/absolute_autopauses=true
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="ignore"
 
 [editor_plugins]
 

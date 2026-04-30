@@ -80,5 +80,6 @@ func _process(delta):
 func on_dialogic_signal(arg: String):
 	
 	if arg == "boss entrance":
+		AudioManager.pause_bgm(4)
 		trigger_move()
 	

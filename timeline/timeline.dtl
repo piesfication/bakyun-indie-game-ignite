@@ -1,33 +1,34 @@
 [wait time="2.0"]
-baku: This city never had guests.
-baku: That's one of the things I like about this place.
-baku: People out there have plenty of stories about this city —
-baku: — monsters, ruins, phenomena nobody can explain. Enough to make anyone choose a different route.
-baku: So when someone actually showed up at the city entrance this morning —
-baku: — backpack on, assignment letter in hand, expression working very hard to not look completely terrified —
-baku: I was surprised enough to stand up from my bed. That's already an achievement.
+unknown: This city never had guests.
+unknown: That's one of the things I like about this place.
+unknown: People out there have plenty of stories about this city —
+unknown: — monsters, ruins, phenomena nobody can explain. Enough to make anyone choose a different route.
+unknown: So when someone actually showed up at the city entrance this morning —
+unknown: — backpack on, assignment letter in hand, expression working very hard to not look completely terrified —
+unknown: I was surprised enough to stand up from my bed. That's already an achievement.
 [signal arg="baku appears"]
 [wait time="2.0"]
 join baku (Outlined) right [animation="Fade In Up" wait="true"]
-baku (Outlined): New witch?!
-baku: From the association?!
+unknown: New witch?!
+unknown: From the association?!
 join yuna (Outlined) left [animation="Fade In Up" wait="true"]
 update baku (DarkenedOutlined) right [fade="Fade Cross"]
 yuna: I'm Yuna. Transferred to this city, effective today.
 yuna: Is there anyone I should report to —
 update yuna (DarkenedOutlined) left [fade="Fade Cross"]
 update baku (Outlined) right [fade="Fade Cross"]
-baku: Welcome!
-baku (Outlined): Welcome to this city  — monster capital of the known world!
-baku: No neighbors, no noise complaints. Just ruins, things that want to eat you, and the best view you'll ever see from a rooftop!
+unknown: Welcome!
+unknown: Welcome to this city  — monster capital of the known world!
+unknown: No neighbors, no noise complaints. Just ruins, things that want to eat you...
+unknown: ...and the best view you'll ever see from a rooftop!
 update yuna (Outlined)
 update baku (DarkenedOutlined)
 yuna (Outlined): ...is there a commanding officer I should —
 update yuna (DarkenedOutlined)
 update baku (Outlined)
-baku (Outlined): Oh, and me! There's me.
-baku: Ah, right —
-baku: (laughs a little)\
+unknown: Oh, and me! There's me.
+unknown: Ah, right —
+unknown: (laughs a little)\
 Been a while since I've had to introduce myself.
 baku: I'm Baku. I run things around here. Loosely, very loosely.
 baku: Monsters show up, I deal with them!  that's pretty much the whole job description.
@@ -43,7 +44,7 @@ leave --All-- [animation="Instant Out" length="0.2" wait="true"]
 [wait time="2.0"]
 [signal arg="bird strike"]
 [signal arg="fade audio"]
-[wait time="4.0"]
+[wait time="6.0"]
 yuna (Outlined): Uughh... my head...
 baku: Oh, you're up?
 [wait time="2.0"]
@@ -52,6 +53,7 @@ baku: Oh, you're up?
 [wait time="2.5"]
 yuna: Where am I...
 join baku (Outlined) right
+[signal arg="my place"]
 baku: My place. You were out for about ten minutes.
 baku: Bird got you pretty good.
 join yuna (Outlined) left

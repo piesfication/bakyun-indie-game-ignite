@@ -3,6 +3,7 @@ extends "res://script/main_boss_level.gd"
 func _ready() -> void:
 	
 	super._ready()
+	AudioManager.play_bgm("res://music/sfx/etc/freesound_community-underwater-6236.mp3", 0, false, false)
 	_configure_yuna_only_mode()
 	
 func _play_stage_bgm() -> void:
@@ -30,12 +31,15 @@ func _spawn_boss_once() -> void:
 func on_dialogic_signal(arg: String):
 	super.on_dialogic_signal(arg)
 	
+	if (arg == "water"):
+		AudioManager.start_ui_sfx("res://music/sfx/etc/universfield-water-splash-199583.mp3", [0.8,1.2], 15)
+		
 	if (arg == "remember"):
-		AudioManager.play_bgm("res://music/bgm/hitoribocchi/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 09 I Believe in You (Reprise).wav", 1,false,false)
+		pass
 	
 	if (arg == "remove overlay") :
 		
-		AudioManager.play_bgm("res://music/bgm/hitoribocchi/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 01 Hitoribocchi Overture.wav", 1,false,false)
+		AudioManager.play_bgm_sequence("res://music/bgm/hitoribocchi/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 01 Hitoribocchi Overture.wav", "res://music/bgm/level/50838754-sad_guitar-359666.wav", 0)
 		fade_out(overlay_bakumono, 3)
 
 		pass
@@ -47,6 +51,7 @@ func on_dialogic_signal(arg: String):
 	if (arg == "post bakumono"):
 		LoadingManager.set_target_scene("res://scenes/story_4_2.tscn")
 		await Transition.fade_out()
+		AudioManager.stop_bgm(2)
 		get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 		await Transition.fade_in() # fade out
 		

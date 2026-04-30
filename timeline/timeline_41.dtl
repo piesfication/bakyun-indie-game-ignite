@@ -11,9 +11,11 @@ yuna: It went down too easy.
 update baku (Outlined)
 update yuna (DarkenedOutlined)
 baku (Outlined): Maybe we're just that good.
+[signal arg="just that good"]
 leave --All-- [animation="Fade Out Down" wait="true"]
-[wait time="3.0"]
+[wait time="4.0"]
 join yuna (Outlined) left
+[signal arg="glad"]
 yuna: ...I'm glad we made it through this.
 yuna: Together.  Obviously.
 join baku (Outlined) right

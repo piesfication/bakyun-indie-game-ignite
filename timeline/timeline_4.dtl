@@ -10,13 +10,15 @@ yuna: She didn't wake me immediately.
 yuna: She made tea first, set it on my table, then knocked on my door.
 yuna: I didn't say anything about that.
 yuna: But I drank every last drop.
-yuna: I keep telling myself I want to go back to the association. I've stopped being sure that's true.
+yuna: I keep telling myself I want to go back to the association.
+yuna: I've stopped being sure that's true.
 [wait time="2.0"]
 narrator: Sky dark since morning. Wind from every direction.
 narrator: They fly into the city center — the tallest ruins, the densest vines, a place even regular spawns rarely enter.
 [wait time="1.0"]
 [signal arg="boss entrance"]
 [wait time="5.0"]
+[signal arg="boss music"]
 narrator: The alpha is there.
 narrator: Larger than words can describe —
 narrator: — round, its hand-shaped wings spread wide, its face a set of concentric rings that feels like it's looking back.
@@ -77,12 +79,15 @@ update yuna (Outlined)
 yuna: It’ll lead me to the right point...
 yuna: …the one that matches me.
 yuna: I understand.
+[signal arg="understand"]
 update yuna (DarkenedOutlined)
 update baku (Outlined)
-baku: if that’s the case, let’s start the hunt!!
+baku: if that’s the case...
+[signal arg="banzai"]
+baku: ....LET'S START THE HUNT!!!
 update yuna (Outlined)
 update baku (DarkenedOutlined)
-yuna: Wait —
+yuna: WAIT —
 update yuna (DarkenedOutlined)
 update baku (Outlined)
 baku: BANZAAAAIIII!!!!

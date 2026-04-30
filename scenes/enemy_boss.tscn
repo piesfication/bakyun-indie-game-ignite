@@ -664,7 +664,7 @@ visible = false
 position = Vector2(800, 0)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_1bod0")
-animation = &"dead"
+animation = &"weakened"
 autoplay = "hp_10"
 
 [node name="WeaknessBar" type="TextureProgressBar" parent="WeakContainer"]

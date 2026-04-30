@@ -29,6 +29,12 @@ func pause_bgm(fade_time: float = 0.5):
 	
 	background_music.stop()
 	_is_transitioning = false
+
+func is_bgm_playing() -> bool:
+	return background_music.playing
+
+func get_current_bgm_path() -> String:
+	return _current_bgm_path
 	
 func resume_bgm(fade_time: float = 0.5):
 	if _current_bgm_path == "":

@@ -476,5 +476,7 @@ scale = Vector2(6, 6)
 texture_under = ExtResource("44_ijuq6")
 texture_progress = ExtResource("45_0u3xx")
 
+[connection signal="animation_changed" from="Node2D/BodyAnim" to="." method="_on_body_anim_animation_changed"]
 [connection signal="animation_finished" from="Node2D/BodyAnim" to="." method="_on_body_anim_animation_finished"]
+[connection signal="frame_changed" from="Node2D/BodyAnim" to="." method="_on_body_anim_frame_changed"]
 [connection signal="animation_finished" from="Node2D/HandAnim" to="." method="_on_hand_anim_animation_finished"]

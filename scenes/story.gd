@@ -77,7 +77,6 @@ func _process(delta: float) -> void:
 
 		_shake_target.position += offset
 		_shake_prev_offset = offset
-	
 
 
 func on_dialogic_signal(arg: String):
@@ -92,12 +91,14 @@ func on_dialogic_signal(arg: String):
 		bakusroom.visible = true
 		fade_in(bakusroom, 0)
 		fade_overlay(0.0, 1.0) # fade out
-		AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 04 Kristine's Theme ~ -Mornings of Nausea-.ogg", 5, true, true)
-		
+		#AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 04 Kristine's Theme ~ -Mornings of Nausea-.ogg", 5, true, true)
+	
+	if (arg == "my place") :
+		AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 05 New Ark City.ogg", 1, false, false)
 	if (arg == "level menu") :
 		if has_node("/root/StoryProgress"):
 			StoryProgress.mark_chapter_completed(1)
-		LoadingManager.set_target_scene("res://scenes/level_menu.tscn")
+		LoadingManager.set_target_scene("res://scenes/story_menu.tscn")
 		await Transition.fade_out()
 		await AudioManager.stop_bgm(5)
 		get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")

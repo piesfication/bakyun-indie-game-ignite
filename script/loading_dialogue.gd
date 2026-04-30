@@ -4,16 +4,16 @@ const LINES = [
 
 	{ "speaker": "baku", "text": "The sky’s clear, perfect for a run!" },
 	{ "speaker": "baku", "text": "Whatever’s out there, I’m ready!" },
-	{ "speaker": "baku", "text": "Let’s see what’s waiting this time, *evil laugh*" },
+	{ "speaker": "baku", "text": "Let’s see what’s waiting this time..." },
 	{ "speaker": "baku", "text": "No time to think, just move!" },
 	{ "speaker": "baku", "text": "Another run, let’s go!" },
 	{ "speaker": "baku", "text": "I’ll figure it out on the way..." },
 	{ "speaker": "baku", "text": "Something’s out there, I can feel it..." },
 	{ "speaker": "baku", "text": "Doesn’t matter what it is, I’m going." },
 	{ "speaker": "baku", "text": " *evil laugh* " },
-	{ "speaker": "baku", "text": "TATAKAE!!!!" },
+	{ "speaker": "baku", "text": "RRAAAAAHHHH!!!" },
 	{ "speaker": "baku", "text": "No hesitation, just forward!" },
-	{ "speaker": "baku", "text": "Shinzou wo sasageyo!" },
+	{ "speaker": "baku", "text": "Muehehehehe *smirks*" },
 	{ "speaker": "baku", "text": "This’ll be fun, I know it! *smirks*"},
 	{ "speaker": "baku", "text": "Let’s make this quick *smirks*"},
 	{ "speaker": "baku", "text": "I’m already moving!" },
@@ -22,7 +22,7 @@ const LINES = [
 	{ "speaker": "baku", "text": "As long as we’re together, we’ll make it." },
 
 	
-	{ "speaker": "yuna", "text": "Even now… the sky feels calm." },
+	{ "speaker": "yuna", "text": "The sky feels calm..." },
 	{ "speaker": "yuna", "text": "Let’s… try not to die..." },
 	{ "speaker": "yuna", "text": "EEEEEEHHHH-!!!" },
 	{ "speaker": "yuna", "text": "This doesn’t feel right…" },

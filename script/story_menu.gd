@@ -64,6 +64,7 @@ func _process(_delta: float) -> void:
 		_note.position = note_position + Vector2(0.0, sin(t * note_float_speed) * note_float_amplitude)
 
 func _ready() -> void:
+	
 	super()
 	if _note != null:
 		note_position = _note.position

@@ -222,6 +222,9 @@ func on_dialogic_signal(arg: String):
 		await get_tree().create_timer(2).timeout
 		fade_out(overlay, 1)
 	
+	if (arg == "endbgm") :
+		AudioManager.stop_bgm(10)
+		
 	if (arg == "night") :
 		overlay.modulate.a = 0.0
 		overlay.visible = true
@@ -254,25 +257,34 @@ func on_dialogic_signal(arg: String):
 		
 	if(arg == "end") :
 		fade_in(endOverlay, 2)
-		AudioManager.play_bgm("res://music/bgm/hitoribocchi/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 10 Going Home - Monologue (Finale).wav", 0, false, false)
 		await get_tree().create_timer(3).timeout
-		
+		AudioManager.stop_bgm(0)
 		fade_in(endTitle,1)
-		await get_tree().create_timer(1).timeout
-		fade_in(endLabel,0.5)
+		fade_in(endLabel,1)
+		AudioManager.play_bgm("res://music/bgm/hitoribocchi/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 10 Going Home - Monologue (Finale).wav", 0, false, false)
 		
 	if (arg == "post") :
+		await get_tree().create_timer(7).timeout
 		fade_out(endTitle, 1)
 		fade_out(endLabel, 1)
+		await get_tree().create_timer(4).timeout
 		
 	if (arg == "level menu") :
 		if has_node("/root/StoryProgress"):
 			StoryProgress.mark_chapter_completed(5)
-		LoadingManager.set_target_scene("res://scenes/level_menu.tscn")
+		LoadingManager.set_target_scene("res://scenes/story_menu.tscn")
 		await Transition.fade_out()
 		get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 		await Transition.fade_in() # fade out
 
+	if (arg == "kill") :
+		AudioManager.stop_bgm(3)
+		
+	if (arg == "kidding") :
+		await get_tree().create_timer(1).timeout
+		AudioManager.play_bgm_sequence("res://music/bgm/hitoribocchi/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 10 Going Home - Monologue (Finale).wav", "res://music/bgm/level/Cecily Renns - Blast Damage Days Soundtrack - 12 Kill the Band (Clean).ogg", 0)
+		
+		
 var tween: Tween
 func fade_overlay(to: float, duration: float):
 	

@@ -18,6 +18,7 @@ var first_speak
 var base_pos := {}
 
 func _ready():
+	AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 02 Main Menu.ogg", 1, false, false)
 	if has_node("/root/StoryProgress"):
 		StoryProgress.apply_saved_dialogic_variables()
 	Dialogic.signal_event.connect(on_dialogic_signal);
@@ -41,6 +42,8 @@ func on_dialogic_signal(arg: String):
 		fade_overlay(1.0, 1.0) # fade in
 		await get_tree().create_timer(1).timeout
 		
+		AudioManager.stop_bgm(3)
+		
 		fade_in(bg,2)
 		fade_out(chapter2background, 2)
 		if (grass.visible == true) :
@@ -55,6 +58,9 @@ func on_dialogic_signal(arg: String):
 		chapter2background.visible = true
 		bakuTalking.play("default")
 		yunaTalking.play("default")
+	
+	if (arg == "start pause") :
+		AudioManager.stop_bgm(3)
 		
 	if (arg == "start convo"):
 		
@@ -65,6 +71,7 @@ func on_dialogic_signal(arg: String):
 		await get_tree().create_timer(1).timeout
 		
 		fade_in(chapter2background,2)
+		
 	
 		fade_out(bg, 2)
 		if (grass.visible == true) :
@@ -79,9 +86,11 @@ func on_dialogic_signal(arg: String):
 		flyingtogether.visible = true
 		flyingtogether.modulate.a = 0
 		fade_in(flyingtogether,2)
+		
 		move_to(Vector2(843, 403), flyingtogether, 2)
 	
-		
+	if (arg == "sky music"):
+		AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 04 Kristine's Theme ~ -Mornings of Nausea-.ogg", 1, false, false)
 	if (arg == "bt"):
 		
 		bakuTalking.visible = true
@@ -107,6 +116,12 @@ func on_dialogic_signal(arg: String):
 		move_to(Vector2(843, 523),flyingtogether, 0)
 		move_to(Vector2(843, 403), flyingtogether, 1)
 		fade_in(flyingtogether, 1)
+	
+	if (arg == "stop sky") :
+		AudioManager.stop_bgm(5)
+		
+	if (arg == "start grass") :
+		AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 02 Main Menu.ogg", 1, false, false)
 		
 	if (arg == "start grass field") :
 		
@@ -134,11 +149,20 @@ func on_dialogic_signal(arg: String):
 	if (arg == "level menu") :
 		if has_node("/root/StoryProgress"):
 			StoryProgress.mark_chapter_completed(2)
-		LoadingManager.set_target_scene("res://scenes/level_menu.tscn")
+		LoadingManager.set_target_scene("res://scenes/story_menu.tscn")
 		await Transition.fade_out()
+		AudioManager.stop_bgm(4)
 		get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 		await Transition.fade_in() # fade out
+	
+	if (arg == "pause"):
+		AudioManager.stop_bgm(1)
 		
+	if (arg == "city"):
+		AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 02 Main Menu.ogg")
+	if (arg == "resume"):
+		AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 05 New Ark City.ogg", 5, false, false)
+	
 var tween: Tween
 
 func fade_overlay(to: float, duration: float):

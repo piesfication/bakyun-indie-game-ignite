@@ -72,8 +72,7 @@ yuna: (looks at her)\
 We have time.
 update baku (Outlined)
 update yuna (DarkenedOutlined)
-baku: (pause)\
-Maybe later.
+baku: Maybe later.
 leave --All-- [animation="Fade Out Down" wait="true"]
 [wait time="2.0"]
 narrator: Yuna looks at her for a moment longer.
@@ -131,7 +130,9 @@ yuna: (glances at baku)
 yuna: What did they call you?
 [wait time="1.0"]
 leave --All-- [animation="Fade Out Down" wait="true"]
-[wait time="2.5"]
+[wait time="1.5"]
+[signal arg="pause"]
+[wait time="1.0"]
 baku: "The Red Witch"
 baku: The ultimate weapon.
 [wait time="2.0"]
@@ -140,6 +141,7 @@ narrator: Something is clicking. Quietly, in the back of her mind.
 narrator: The Red Witch.
 narrator: Eight years old.
 narrator: She doesn't say it yet.
+[signal arg="resume"]
 [wait time="2.0"]
 join yuna (Outlined) left
 yuna: (carefully)\

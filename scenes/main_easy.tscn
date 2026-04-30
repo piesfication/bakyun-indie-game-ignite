@@ -1026,8 +1026,9 @@ radius = 32.0
 [node name="Main2" type="Node2D"]
 script = ExtResource("1_o5qli")
 enemy_scene = ExtResource("2_ya4ey")
-bird_strike_chance = 0.2
-bird_strike_shoot_lock_duration = 2.0
+bird_strike_check_interval = 12.0
+bird_strike_chance = 0.15
+bird_strike_shoot_lock_duration = 1.5
 level_duration_seconds = 210.0
 
 [node name="BirdStrike" type="AnimatedSprite2D" parent="."]

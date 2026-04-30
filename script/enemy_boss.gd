@@ -379,7 +379,9 @@ func _run_weakness_phase(duration_override: float = -1.0, allow_early_clear: boo
 		return false
 	var timeout_timer := tree.create_timer(maxf(weakness_duration, 0.1))
 	if health_anim != null and health_anim.sprite_frames != null and health_anim.sprite_frames.has_animation("weakened"):
+		health_anim.visible = true
 		health_anim.play("weakened")
+		await get_tree().process_frame
 	_sync_weakness_bar_visibility()
 	_start_weakness_bar(weakness_duration)
 	_start_weakness_bar_pulse()
@@ -570,7 +572,7 @@ func _spawn_single_orb(container: Node2D, follow_leader: Variant = null) -> Node
 		return null
 
 	var follow_leader_node: Node2D = null
-	if follow_leader is Node2D and is_instance_valid(follow_leader):
+	if follow_leader != null and is_instance_valid(follow_leader) and follow_leader is Node2D:
 		follow_leader_node = follow_leader as Node2D
 
 	var orb := homing_orb_scene.instantiate()
@@ -722,7 +724,7 @@ func _collect_weakness_templates() -> void:
 	if weakness_set == null:
 		return
 
-	weakness_set.monitoring = false
+
 	weakness_set.monitorable = false
 	weakness_set.collision_layer = 0
 	weakness_set.collision_mask = 0
@@ -910,10 +912,21 @@ func _apply_boss_damage(amount: int) -> void:
 	
 	_play_action_animation("damaged")
 	AudioManager.play_ui_sfx_with_pitch("res://music/sfx/glitch/virtual_vibes-digital-glitch-noise-hd-379465.wav")
-	if hp <= hp_per_layer and current_layer == 2:
+	
+	var crossing_layer := hp <= hp_per_layer and current_layer == 2
+	
+	if crossing_layer:
 		current_layer = 1
+		# Emit SETELAH current_layer diupdate agar _update_health_visual hitung HP layer baru
+		emit_signal("boss_hp_changed", old_hp, hp)
 		await _play_second_phase_transition()
-	emit_signal("boss_hp_changed", old_hp, hp)
+	else:
+		emit_signal("boss_hp_changed", old_hp, hp)
+
+	
+	#if hp <= hp_per_layer and current_layer == 2:
+		#current_layer = 1
+		#await _play_second_phase_transition()
 
 	if hp <= 0:
 		_die()
@@ -1113,14 +1126,19 @@ func _play_second_phase_transition() -> void:
 	tween.tween_property(health_anim, "scale", original_scale * Vector2(1.4, 0.6), 0.12)
 	tween.tween_property(health_anim, "scale", original_scale * Vector2(0.7, 1.3), 0.12)
 	tween.tween_property(health_anim, "scale", original_scale, 0.15)
-
+	await tween.finished
+	
 	if health_anim.sprite_frames != null and health_anim.sprite_frames.has_animation("second_phase"):
+		
+		health_bar.visible = false
 		health_anim.play("second_phase")
+		
 		await health_anim.animation_finished
-
-	var reset_anim := "hp_%d" % hp_per_layer
-	if health_anim.sprite_frames != null and health_anim.sprite_frames.has_animation(reset_anim):
-		health_anim.play(reset_anim)
+		
+	if not weakness_active:
+		var reset_anim := "hp_%d" % hp_per_layer
+		if health_anim.sprite_frames != null and health_anim.sprite_frames.has_animation(reset_anim):
+			health_anim.play(reset_anim)
 
 func _start_weakness_bar(duration: float) -> void:
 	if health_bar == null:
@@ -1158,7 +1176,7 @@ func _should_show_weakness_bar() -> bool:
 		return false
 	if not weakness_active:
 		return false
-	return String(health_anim.animation) == "weakened"
+	return true
 
 func _sync_weakness_bar_visibility() -> void:
 	if health_bar == null:

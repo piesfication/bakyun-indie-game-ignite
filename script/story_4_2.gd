@@ -45,15 +45,17 @@ func _process(delta: float) -> void:
 	allChar.position.y = all_pos.y + sin(_time_accum * 4 + phase_offset ) * -12
 
 
-
 func on_dialogic_signal(arg: String):
+	
+	if (arg == "water"):
+		AudioManager.start_ui_sfx("res://music/sfx/etc/universfield-water-splash-199583.mp3", [0.8,1.2], 15)
 
 	if (arg == "level menu") :
 		if has_node("/root/StoryProgress"):
 			StoryProgress.mark_chapter_completed(4)
-		LoadingManager.set_target_scene("res://scenes/level_menu.tscn")
+		LoadingManager.set_target_scene("res://scenes/story_menu.tscn")
 		await Transition.fade_out()
-		AudioManager.stop_bgm(8)
+		AudioManager.stop_bgm(5)
 		get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 		await Transition.fade_in() # fade out
 		

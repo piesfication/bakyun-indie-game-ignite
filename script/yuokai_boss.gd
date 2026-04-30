@@ -289,17 +289,19 @@ func _play_hp_squash_stretch() -> void:
 	
 
 func _physics_process(delta: float) -> void:
+	
+	_flap_time += delta
+	var flap_y := sin(_flap_time * _flap_frequency_runtime * TAU) * _flap_amplitude_runtime
+	global_position.y += flap_y - _prev_flap_y
+	_prev_flap_y = flap_y
+	
 	if state == BossState.DEAD:
 		return
 	if player_node == null or not is_instance_valid(player_node):
 		player_node = _find_player_node()
 
 	# Flapping biasa (sinusoidal), tanpa baca frame animasi.
-	_flap_time += delta
-	var flap_y := sin(_flap_time * _flap_frequency_runtime * TAU) * _flap_amplitude_runtime
-	global_position.y += flap_y - _prev_flap_y
-	_prev_flap_y = flap_y
-
+	
 	match state:
 		BossState.INTRO:
 			_update_intro_movement(delta)
@@ -1548,7 +1550,7 @@ func _die() -> void:
 	if body_anim != null and is_instance_valid(body_anim):
 		if body_anim.sprite_frames != null and body_anim.sprite_frames.has_animation("dead"):
 			body_anim.play("dead")
-			AudioManager.play_ui_sfx_with_pitch("res://music/sfx/glitch/delon_boomkin-glitch-explosion-422490.wav")
+			AudioManager.start_ui_sfx("res://music/sfx/glitch/delon_boomkin-glitch-explosion-422490.wav", [1,1], 15)
 		else:
 			_play_body_default_animation()
 
@@ -1774,6 +1776,7 @@ func _on_body_anim_animation_finished() -> void:
 			body_anim.play("deadloop")
 
 func _on_body_anim_frame_changed() -> void:
+	
 	if state == BossState.DEAD:
 		if not _health_dead_sequence_started and body_anim != null and is_instance_valid(body_anim):
 			if body_anim.animation == "dead" and body_anim.frame >= 1:
@@ -1786,7 +1789,12 @@ func _on_body_anim_frame_changed() -> void:
 				_health_dead_sequence_started = true
 				_play_health_dead_then_hide()
 		return
-
+	
+	if body_anim != null and is_instance_valid(body_anim):
+		if body_anim.animation == "summon":
+			if body_anim.frame == 5:
+				AudioManager.start_ui_sfx("res://music/sfx/glitch/delon_boomkin-glitch-explosion-422490.wav", [1,1], 10)
+			
 	if not _attack_damage_armed or _attack_damage_done:
 		return
 	if body_anim == null or not is_instance_valid(body_anim):
@@ -1809,3 +1817,4 @@ func _on_hand_anim_animation_finished() -> void:
 		return
 	hand_anim.play("default")
 	pass # Replace with function body.
+	

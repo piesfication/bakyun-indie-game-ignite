@@ -16,6 +16,7 @@ var rooftopBackground_pos
 var char_pos
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 02 Main Menu.ogg", 1, false, false)
 	charNode.modulate.a = 0
 	darkBackground.modulate.a = 0
 	roofTopBackground.modulate.a = 0
@@ -42,12 +43,19 @@ func _process(delta: float) -> void:
 	pass
 
 func on_dialogic_signal(arg: String):
+	
+	if (arg == "pause"):
+		AudioManager.pause_bgm(1)
+		
+	if (arg == "resume"):
+		AudioManager.resume_bgm(5)
 
 	if (arg == "level menu") :
 		if has_node("/root/StoryProgress"):
 			StoryProgress.mark_chapter_completed(3)
-		LoadingManager.set_target_scene("res://scenes/level_menu.tscn")
+		LoadingManager.set_target_scene("res://scenes/story_menu.tscn")
 		await Transition.fade_out()
+		AudioManager.stop_bgm(6)
 		get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 		await Transition.fade_in() # fade out
 		

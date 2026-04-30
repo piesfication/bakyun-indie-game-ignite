@@ -252,11 +252,12 @@ baku: Above the ground, above everything.
 [signal arg="together"]
 [wait time="3.0"]
 baku: Together.
-[wait time="5.0"]
+[wait time="3.0"]
+[signal arg="endbgm"]
 [signal arg="end"]
-[wait time="8.0"]
+[wait time="7.0"]
 [signal arg="post"]
-[wait time="4.0"]
+[wait time="11.0"]
 baku: Yuna.
 yuna: Hm?
 baku: What did you even do to get banished out here?

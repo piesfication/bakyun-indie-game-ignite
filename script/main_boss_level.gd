@@ -39,7 +39,8 @@ func _ready() -> void:
 		_spawn_boss_once()
 		
 func _play_stage_bgm() -> void:
-	AudioManager.play_bgm("res://music/bgm/level/Cecily Renns - Blast Damage Days Soundtrack - 08 Date Out!.ogg", 1,false, false)
+	pass
+	#passAudioManager.play_bgm("res://music/bgm/level/Cecily Renns - Blast Damage Days Soundtrack - 08 Date Out!.ogg", 1,false, false)
 
 func _begin_level_end_sequence(is_loss: bool) -> void:
 	if not is_loss and has_node("/root/StoryProgress"):
@@ -112,6 +113,7 @@ func on_dialogic_signal(arg: String):
 		pass
 		
 	if (arg == "devour baku") :
+		AudioManager.stop_bgm(2)
 		alphabody.visible = true
 		alphadevour.visible = false
 		animate_node(alpha, 0.5, AnimMode.MOVE_AND_FADE, Vector2(594, 346))
@@ -124,6 +126,7 @@ func on_dialogic_signal(arg: String):
 		alphadevour.play("devour")
 		
 	if (arg == "devour yuna") :
+		AudioManager.stop_bgm(2)
 		alphabody.visible = true
 		alphadevour.visible = false
 		animate_node(alpha, 0.5, AnimMode.MOVE_AND_FADE, Vector2(594, 346))
@@ -147,6 +150,12 @@ func on_dialogic_signal(arg: String):
 		await Transition.fade_out()
 		get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
 		await Transition.fade_in() # fade out
+		
+	if (arg == "just that good"):
+		AudioManager.stop_bgm(3)
+	
+	if (arg == "glad"):
+		AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 11 Ending.wav", 1, false, false)
 
 func _start_intro_timeline_or_spawn_fallback() -> void:
 	var intro := intro_timeline.strip_edges()

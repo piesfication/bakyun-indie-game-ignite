@@ -20,6 +20,9 @@ var _map_manager_base_position: Vector2
 var _background_base_scale: Vector2
 
 func _ready():
+	
+	if (AudioManager.is_bgm_playing() == false or (AudioManager.get_current_bgm_path() != "res://music/bgm/menu/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 03 Kind Girl, Honest Girl.mp3" and AudioManager.get_current_bgm_path() != "res://assets/music/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 03 Kind Girl, Honest Girl.mp3" and AudioManager.get_current_bgm_path() != "res://music/bgm/hitoribocchi/JohnJRenns - Hitoribocchi- A Musical (Vocaloid Cast Recording) - 10 Going Home - Monologue (Finale).wav")) :
+		AudioManager.play_bgm("res://music/bgm/level/Cecily Renns - Blast Damage Days Soundtrack - 12 Kill the Band (Clean).ogg", 1, false, false)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_phone_node = get_node_or_null(phone_node_path) as Control
 	_background_node = get_node_or_null(background_node_path) as Node2D

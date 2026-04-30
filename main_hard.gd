@@ -3,7 +3,7 @@ extends "res://main_easy.gd"
 @export var boss_scene: PackedScene = preload("res://scenes/enemy_boss.tscn")
 @export var boss_spawn_position: Vector2 = Vector2(800, 512)
 @export_range(0.1, 20.0, 0.1, "suffix:s") var hard_batch_spawn_cooldown: float = 3.2
-@export_range(0.0, 1.0, 0.01) var hard_bird_strike_chance: float = 0.3
+@export_range(0.0, 1.0, 0.01) var hard_bird_strike_chance: float = 0.15
 
 const HARD_BATCH_WEIGHT_ENEMY3_X5 := 1
 const HARD_BATCH_WEIGHT_ENEMY3_THEN_ENEMY2_X5 := 1
@@ -141,7 +141,14 @@ func _spawn_hard_boss_once() -> void:
 	if "enable_intro_ui_pull" in boss:
 		boss.enable_intro_ui_pull = false
 	
+	_hard_boss_spawned = true
+	current_enemy_count += 1
+	
+	boss.visible = false
 	enemy_container.add_child(boss)
+	await get_tree().process_frame
+	boss.visible = true
+	
 	current_enemy_count += 1
 	boss.tree_exited.connect(Callable(self, "_on_enemy_removed"))
 

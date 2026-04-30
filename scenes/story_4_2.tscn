@@ -25,7 +25,6 @@
 [node name="story_4" type="Node2D"]
 position = Vector2(0, -43)
 script = ExtResource("1_qu6ap")
-phase_offset = null
 
 [node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
 layer = 0

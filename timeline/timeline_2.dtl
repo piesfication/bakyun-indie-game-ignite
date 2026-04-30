@@ -20,10 +20,12 @@ yuna: I used to think about that a lot.
 yuna: I've been thinking about it again lately.
 [wait time="2.0"]
 [signal arg="start convo"]
+[signal arg="start pause"]
 [wait time="5.0"]
 [signal arg="move"]
 [signal arg="yt"]
 [signal arg="flying together enter"]
+[signal arg="sky music"]
 yuna: Zone C was clear today. But there was activity there yesterday.
 [signal arg="bt"]
 baku: They moved to B.
@@ -76,9 +78,11 @@ yuna: That's all you have to say?
 [signal arg="bt"]
 baku: Eh?-
 baku: What do you want me to say?
+[signal arg="stop sky"]
 [wait time="3.0"]
 [signal arg="start grass field"]
 [wait time="4.0"]
+[signal arg="start grass"]
 narrator: They land.
 narrator: Sit in the overgrown field at the city's western edge. Overcast but calm.
 narrator: In the distance, the city's silhouette — buildings still standing among the ones that have already fallen.
@@ -156,12 +160,14 @@ yuna: Something the association can't dismiss.
 yuna: We'd need to plan the approach carefully. Study the pattern first, then —
 [wait time="1.0"]
 [signal arg="out"]
+[signal arg="pause"]
 [wait time="1.0"]
 narrator: She stops.
 narrator: Baku is looking at her.
 [wait time="2.0"]
 yuna: ...what?
 [signal arg="bt"]
+[signal arg="resume"]
 baku: (small smile)
 baku: You said "we."
 [signal arg="yt"]
@@ -245,7 +251,9 @@ elif {ChapterRead.ReadChap2} == true:
 [wait time="1.0"]
 [signal arg="center"]
 [signal arg="back to city"]
-[wait time="5.0"]
+[wait time="4.0"]
+[signal arg="city"]
+[wait time="2.0"]
 yuna: That night I sat with my notebook open for a long time without writing anything.
 yuna: I kept thinking about what Baku said.
 yuna: "You'll tell me eventually.".

@@ -451,7 +451,7 @@ func _pick_confirmation_text(difficulty: String) -> String:
 	return pool[randi() % pool.size()]
 
 func _setup_difficulty_icons(difficulty: String) -> void:
-	var difficulty_node = level_confirmation.get_node("Sprite2D/Difficulty")
+	var difficulty_node = level_confirmation.get_node_or_null("Sprite2D/Difficulty")
 	if difficulty_node == null:
 		return
 	
@@ -470,7 +470,7 @@ func _setup_difficulty_icons(difficulty: String) -> void:
 			easy_icon.visible = true
 
 func _setup_enemy_list(difficulty: String) -> void:
-	var enemy_list = level_confirmation.get_node("Sprite2D/EnemyList")
+	var enemy_list = level_confirmation.get_node_or_null("Sprite2D/EnemyList")
 	if enemy_list == null:
 		return
 	

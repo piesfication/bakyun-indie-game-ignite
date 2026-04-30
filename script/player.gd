@@ -4,7 +4,7 @@ signal hp_changed(old_hp: int, new_hp: int)
 signal character_switched(character_name: String)
 signal died
 
-@export var max_hp := 3000000000
+@export var max_hp := 3
 var current_hp := max_hp
 var invulnerable: bool = false
 
