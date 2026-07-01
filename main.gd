@@ -68,6 +68,7 @@ var _debug_force_win_button: Button = null
 var _shot_hit_pitch_scale: float = 1.0
 
 func _ready():
+	Current.setcurrentmode("Level")
 	_shot_hit_pitch_scale = maxf(shot_hit_pitch_start, 0.01)
 	AudioManager.play_bgm("res://music/bgm/level/Cecily Renns - Blast Damage Days Soundtrack - 08 Date Out!.ogg", 1, false, false)
 	next_z_index = base_z_index
@@ -326,10 +327,12 @@ func _begin_level_end_sequence(is_loss: bool) -> void:
 	if not is_inside_tree():
 		return
 	
-	LoadingManager.set_target_scene("res://scenes/level_menu.tscn")
+	if (Current.getcurrentmode() == "Story"):
+		LoadingManager.set_target_scene("res://scenes/story_menu.tscn")
+	elif (Current.getcurrentmode() == "Level"):
+		LoadingManager.set_target_scene("res://scenes/level_menu.tscn")
 	await AudioManager.stop_bgm(5)
 	get_tree().change_scene_to_file("res://scenes/loading_screen.tscn")
-
 
 func _play_level_end_screen_fade(target_color: Color) -> void:
 	if level_end_overlay == null or not is_instance_valid(level_end_overlay):

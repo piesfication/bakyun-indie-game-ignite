@@ -4,6 +4,7 @@ func _ready() -> void:
 	super._ready()
 	AudioManager.play_bgm("res://music/sfx/etc/freesound_community-underwater-6236.mp3", 0, false, false)
 	_configure_baku_only_mode()
+	Current.setcurrentmode("Story")
 
 func _configure_baku_only_mode() -> void:
 	if player_node != null and is_instance_valid(player_node):

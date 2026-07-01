@@ -14,6 +14,8 @@ extends "res://scenes/level_menu_float.gd"
 
 @export var note_float_amplitude: float = 6.0
 @export var note_float_speed: float = 2.0
+@export_range(0.0, 1.0, 0.01, "suffix:s") var story_icon_intro_start_delay: float = 0.15
+@export_range(0.0, 1.0, 0.01, "suffix:s") var story_icon_intro_stagger_delay: float = 0.08
 
 var note_position: Vector2
 var _selected_icon: Node = null
@@ -64,10 +66,11 @@ func _process(_delta: float) -> void:
 		_note.position = note_position + Vector2(0.0, sin(t * note_float_speed) * note_float_amplitude)
 
 func _ready() -> void:
-	
+
 	super()
 	if _note != null:
 		note_position = _note.position
+		
 	_setup_debug_reset_button()
 	_connect_story_icons()
 	if _chapter_detail.has_signal("start_pressed") and not _chapter_detail.start_pressed.is_connected(_on_start_pressed):
@@ -79,10 +82,16 @@ func _ready() -> void:
 	if has_node("/root/StoryProgress") and not StoryProgress.progress_changed.is_connected(_refresh_chapter_visibility):
 		StoryProgress.progress_changed.connect(_refresh_chapter_visibility)
 	_refresh_chapter_visibility()
+	
+	var initial_chapter_name := _get_last_unlocked_chapter_name()
+	if not initial_chapter_name.is_empty():
+		_apply_chapter(initial_chapter_name)
+		
+	await _play_story_icon_intro_sequence()
 	_close_chapter_confirmation()
-	if _chapter_config.has("Chapter1"):
-		_apply_chapter("Chapter1")
-
+	
+	_apply_chapter(initial_chapter_name)
+	
 func _setup_debug_reset_button() -> void:
 	# Editor-only helper for playtest; excluded from exported builds.
 	if not OS.has_feature("editor"):
@@ -129,10 +138,48 @@ func _refresh_chapter_visibility() -> void:
 		var chapter_number := _get_chapter_number(icon.name)
 		if chapter_number <= 0:
 			continue
-		icon.visible = chapter_number <= visible_limit
+		if chapter_number <= visible_limit:
+			if icon.has_method("activate"):
+				icon.visible = false
+			else:
+				icon.visible = true
+		else:
+			if icon.has_method("deactivate"):
+				icon.deactivate()
+			else:
+				icon.visible = false
 
 	if _selected_icon != null and not _selected_icon.visible:
 		_selected_icon = null
+
+func _play_story_icon_intro_sequence() -> void:
+	var visible_limit := 1
+	if has_node("/root/StoryProgress"):
+		visible_limit = max(1, StoryProgress.get_visible_chapter_limit())
+
+	if story_icon_intro_start_delay > 0.0:
+		await get_tree().create_timer(story_icon_intro_start_delay).timeout
+
+	for chapter_number in range(1, visible_limit + 1):
+		var icon := get_node_or_null("StorySelectionIcon/Chapter%d" % chapter_number)
+		if icon == null or not icon.has_method("activate"):
+			continue
+		icon.visible = false
+		await icon.activate()
+		if chapter_number < visible_limit and story_icon_intro_stagger_delay > 0.0:
+			await get_tree().create_timer(story_icon_intro_stagger_delay).timeout
+
+func _get_last_unlocked_chapter_name() -> String:
+	var visible_limit := 1
+	if has_node("/root/StoryProgress"):
+		visible_limit = max(1, StoryProgress.get_visible_chapter_limit())
+
+	for chapter_number in range(visible_limit, 0, -1):
+		var chapter_name := "Chapter%d" % chapter_number
+		if _chapter_config.has(chapter_name):
+			return chapter_name
+
+	return ""
 
 func _get_chapter_number(icon_name: String) -> int:
 	if not icon_name.begins_with("Chapter"):
@@ -147,16 +194,14 @@ func _apply_chapter(chapter_name: String) -> void:
 		return
 
 	var icon := get_node_or_null("StorySelectionIcon/%s" % chapter_name)
-	if icon != null and not icon.visible:
-		return
 
-	if _selected_icon != null and _selected_icon != icon:
-		if _selected_icon.has_method("on_deselected"):
-			_selected_icon.on_deselected()
-
-	if icon != null and icon.has_method("on_selected"):
-		icon.on_selected()
-	_selected_icon = icon
+	if icon != null and icon.visible:
+		if _selected_icon != null and _selected_icon != icon:
+			if _selected_icon.has_method("on_deselected"):
+				_selected_icon.on_deselected()
+		if icon.has_method("on_selected"):
+			icon.on_selected()
+		_selected_icon = icon
 
 	var data: Dictionary = _chapter_config[chapter_name]
 	if _chapter_detail.has_method("set_chapter_data"):

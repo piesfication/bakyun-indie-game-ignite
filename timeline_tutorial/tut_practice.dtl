@@ -1,0 +1,22 @@
+[wait time="1.5"]
+join baku (Outlined) right [animation="Fade In Up"]
+baku: You did it! Every move, no more hand-holding needed!
+join yuna (Outlined) left [animation="Fade In Up"]
+update baku (DarkenedOutlined)
+yuna: There was extensive hand-holding. Verbally, repeatedly, at length.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Details! Point is, you've got it all now — combos, the big one, switching, everything.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: This wave has no instructions attached, I find that mildly concerning.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: It means go wild!
+baku: Use whatever you want, however you want!
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: I would have preferred a phrase with a defined scope, but understood.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Let's go!

@@ -5,6 +5,7 @@ func _ready() -> void:
 	super._ready()
 	AudioManager.play_bgm("res://music/sfx/etc/freesound_community-underwater-6236.mp3", 0, false, false)
 	_configure_yuna_only_mode()
+	Current.setcurrentmode("Story")
 	
 func _play_stage_bgm() -> void:
 	pass

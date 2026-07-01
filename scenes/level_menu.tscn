@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://ctue4xy3337pk"]
+[gd_scene format=3 uid="uid://ctue4xy3337pk"]
 
 [ext_resource type="Script" uid="uid://byncm8d1drwvw" path="res://scenes/map_manager.gd" id="2_2go0k"]
 [ext_resource type="Texture2D" uid="uid://rxjxv5rh1cct" path="res://assets/menu/Island/Untitled868_20260403132417.png" id="2_cabf2"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://71fsdc8fl4jf" path="res://assets/title/Untitled977_20260324075141.png" id="14_qc6d6"]
 [ext_resource type="Script" uid="uid://b57hbvyj18rxn" path="res://script/parallax_background_2.gd" id="15_ojubo"]
 [ext_resource type="Script" uid="uid://b4usntkl3nx1l" path="res://script/story_click.gd" id="16_qgpns"]
+[ext_resource type="Script" uid="uid://bcusm1g8yw0rb" path="res://scenes/tutorial_click.gd" id="17_78vb6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6flmm"]
 shader = ExtResource("8_q0t2x")
@@ -64,6 +65,9 @@ font_color = Color(0.5803922, 0.75686276, 0.64705884, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cabf2"]
 size = Vector2(85.00001, 56.000004)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qgpns"]
+size = Vector2(107, 56.000004)
+
 [sub_resource type="LabelSettings" id="LabelSettings_cabf2"]
 font = ExtResource("11_qc6d6")
 font_size = 30
@@ -72,7 +76,7 @@ font_color = Color(1, 0.56078434, 0.5568628, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2jpff"]
 size = Vector2(88, 56)
 
-[node name="Menu" type="Control"]
+[node name="Menu" type="Control" unique_id=1585951233]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1280.0
@@ -86,14 +90,14 @@ background_float_speed = 1.0
 background_phase_offset = 0.3
 background_scale_padding = 0.0
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="." unique_id=573508185]
 position = Vector2(638.4, 401.6)
 scale = Vector2(0.69, 0.69)
 texture = ExtResource("2_cabf2")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1155190879]
 
-[node name="Phone" type="Control" parent="CanvasLayer"]
+[node name="Phone" type="Control" parent="CanvasLayer" unique_id=809316902]
 layout_mode = 3
 anchor_right = 0.994
 anchor_bottom = 0.989
@@ -105,20 +109,20 @@ rotation = 0.08136914
 scale = Vector2(0.8, 0.8)
 mouse_filter = 1
 
-[node name="PhoneSprite" type="Node2D" parent="CanvasLayer/Phone"]
+[node name="PhoneSprite" type="Node2D" parent="CanvasLayer/Phone" unique_id=1832869589]
 position = Vector2(352.00003, 352)
 scale = Vector2(0.667, 0.667)
 
-[node name="Base" type="Sprite2D" parent="CanvasLayer/Phone/PhoneSprite"]
+[node name="Base" type="Sprite2D" parent="CanvasLayer/Phone/PhoneSprite" unique_id=1500129319]
 texture = ExtResource("2_teein")
 
-[node name="Screen" type="Sprite2D" parent="CanvasLayer/Phone/PhoneSprite"]
+[node name="Screen" type="Sprite2D" parent="CanvasLayer/Phone/PhoneSprite" unique_id=1571134060]
 material = SubResource("ShaderMaterial_6flmm")
 texture = ExtResource("3_k08aj")
 region_enabled = true
 region_rect = Rect2(0, 0, 1536, 2048)
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Phone/PhoneSprite/Screen"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Phone/PhoneSprite/Screen" unique_id=821245334]
 clip_children = 1
 clip_contents = true
 offset_left = -767.6163
@@ -128,7 +132,7 @@ offset_bottom = 1028.5098
 texture = ExtResource("3_k08aj")
 expand_mode = 1
 
-[node name="ChatArea" type="Control" parent="CanvasLayer/Phone/PhoneSprite/Screen/TextureRect"]
+[node name="ChatArea" type="Control" parent="CanvasLayer/Phone/PhoneSprite/Screen/TextureRect" unique_id=1280280587]
 clip_children = 1
 clip_contents = true
 anchors_preset = 0
@@ -141,83 +145,114 @@ script = ExtResource("5_teein")
 icon_baku_path = NodePath("../../../../IconBaku")
 icon_yuna_path = NodePath("../../../../IconYuna")
 
-[node name="NoMsg" type="AnimatedSprite2D" parent="CanvasLayer/Phone/PhoneSprite/Screen/TextureRect/ChatArea"]
+[node name="NoMsg" type="AnimatedSprite2D" parent="CanvasLayer/Phone/PhoneSprite/Screen/TextureRect/ChatArea" unique_id=1811089899]
 position = Vector2(644.3616, 498.4849)
 rotation = 0.23562813
 sprite_frames = SubResource("SpriteFrames_hmv2f")
 autoplay = "default"
 frame_progress = 0.9606217
 
-[node name="MessageList" type="VBoxContainer" parent="CanvasLayer/Phone/PhoneSprite/Screen/TextureRect/ChatArea"]
+[node name="MessageList" type="VBoxContainer" parent="CanvasLayer/Phone/PhoneSprite/Screen/TextureRect/ChatArea" unique_id=2063662106]
 layout_mode = 0
 offset_left = 323.83813
 offset_top = 1115.4424
 offset_right = 323.83813
 offset_bottom = 1115.4424
 
-[node name="Header" type="Sprite2D" parent="CanvasLayer/Phone/PhoneSprite/Screen"]
+[node name="Header" type="Sprite2D" parent="CanvasLayer/Phone/PhoneSprite/Screen" unique_id=1106776972]
 position = Vector2(-0.00012207031, 0)
 rotation = -0.0021052652
 texture = ExtResource("4_2go0k")
 
-[node name="IconBaku" parent="CanvasLayer/Phone" instance=ExtResource("6_qr4ff")]
+[node name="IconBaku" parent="CanvasLayer/Phone" unique_id=530109375 instance=ExtResource("6_qr4ff")]
 position = Vector2(430, 498)
 scale = Vector2(0.5, 0.5)
 
-[node name="IconYuna" parent="CanvasLayer/Phone" instance=ExtResource("7_t7gr0")]
+[node name="IconYuna" parent="CanvasLayer/Phone" unique_id=1063712587 instance=ExtResource("7_t7gr0")]
 position = Vector2(360, 480)
 rotation = 0.2443461
 scale = Vector2(0.5, 0.5)
 
-[node name="Story" type="Label" parent="CanvasLayer"]
+[node name="Story" type="Node2D" parent="CanvasLayer" unique_id=1369356507]
+position = Vector2(1002, 40.999992)
+
+[node name="Story" type="Label" parent="CanvasLayer/Story" unique_id=2017714116]
 anchors_preset = -1
 anchor_left = -0.26065162
 anchor_top = 0.1521739
 anchor_right = -0.26065162
 anchor_bottom = 0.1521739
-offset_left = 1363.634
-offset_top = -65.565216
-offset_right = 1430.634
-offset_bottom = -19.565216
+offset_left = -86.99994
+offset_top = 6.0000076
+offset_right = -19.999939
+offset_bottom = 52.000008
 text = "Story"
 label_settings = SubResource("LabelSettings_ojubo")
 
-[node name="StoryClick" type="Area2D" parent="CanvasLayer/Story"]
-position = Vector2(-23, 0)
+[node name="StoryClick" type="Area2D" parent="CanvasLayer/Story" unique_id=1586479902]
+position = Vector2(-112.99994, 7.6293945e-06)
 script = ExtResource("16_qgpns")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Story/StoryClick"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Story/StoryClick" unique_id=2090479058]
 position = Vector2(59.5, 24)
 shape = SubResource("RectangleShape2D_cabf2")
 
-[node name="Back" type="Label" parent="CanvasLayer"]
+[node name="Tutorial" type="Node2D" parent="CanvasLayer" unique_id=1340248497]
+position = Vector2(1015, 40.999992)
+
+[node name="Tutorial" type="Label" parent="CanvasLayer/Tutorial" unique_id=1942248230]
+anchors_preset = -1
+anchor_left = -0.26065162
+anchor_top = 0.1521739
+anchor_right = -0.26065162
+anchor_bottom = 0.1521739
+offset_left = 1.000061
+offset_top = 6.0000076
+offset_right = 93.00006
+offset_bottom = 52.000008
+text = "Tutorial"
+label_settings = SubResource("LabelSettings_ojubo")
+
+[node name="StoryClick" type="Area2D" parent="CanvasLayer/Tutorial" unique_id=1435139694]
+position = Vector2(-22.999939, 7.6293945e-06)
+script = ExtResource("17_78vb6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Tutorial/StoryClick" unique_id=1605570528]
+position = Vector2(70.5, 24)
+shape = SubResource("RectangleShape2D_qgpns")
+
+[node name="Back" type="Node2D" parent="CanvasLayer" unique_id=2097886787]
+position = Vector2(1015, 40.999992)
+
+[node name="Back" type="Label" parent="CanvasLayer/Back" unique_id=417619319]
 anchors_preset = -1
 anchor_left = 0.81875
 anchor_top = 0.055555556
 anchor_right = 0.81875
 anchor_bottom = 0.055555556
-offset_left = 88.0
-offset_top = 7.0
-offset_right = 151.0
-offset_bottom = 53.0
+offset_left = 132.00006
+offset_top = 6.0000076
+offset_right = 195.00006
+offset_bottom = 52.000008
 text = "Back "
 label_settings = SubResource("LabelSettings_cabf2")
 
-[node name="BackClick" type="Area2D" parent="CanvasLayer/Back"]
+[node name="BackClick" type="Area2D" parent="CanvasLayer/Back" unique_id=1814281100]
+position = Vector2(132.00006, 3.0000076)
 script = ExtResource("11_ojubo")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Back/BackClick"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Back/BackClick" unique_id=1345201154]
 position = Vector2(28, 21)
 shape = SubResource("RectangleShape2D_2jpff")
 
-[node name="Overlay" type="ColorRect" parent="CanvasLayer"]
+[node name="Overlay" type="ColorRect" parent="CanvasLayer" unique_id=1184622653]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color(0, 0, 0, 0.70000005)
 
-[node name="LevelConfirmationContainer" type="Control" parent="CanvasLayer"]
+[node name="LevelConfirmationContainer" type="Control" parent="CanvasLayer" unique_id=1708909206]
 visible = false
 layout_mode = 3
 anchors_preset = 8
@@ -233,12 +268,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="LevelConfirmation" parent="CanvasLayer/LevelConfirmationContainer" instance=ExtResource("10_xk4l2")]
+[node name="LevelConfirmation" parent="CanvasLayer/LevelConfirmationContainer" unique_id=1301659965 instance=ExtResource("10_xk4l2")]
 visible = false
 position = Vector2(640, 384.00003)
 scale = Vector2(0.65, 0.65)
 
-[node name="MapManager" type="Control" parent="."]
+[node name="MapManager" type="Control" parent="." unique_id=1609453460]
 layout_mode = 1
 anchor_right = 0.994
 anchor_bottom = 0.989
@@ -249,55 +284,55 @@ offset_bottom = 49.52008
 mouse_filter = 2
 script = ExtResource("2_2go0k")
 
-[node name="LevelIcon6" parent="MapManager" instance=ExtResource("3_qdp46")]
+[node name="LevelIcon6" parent="MapManager" unique_id=1726741000 instance=ExtResource("3_qdp46")]
 position = Vector2(528, 290.39993)
 scale = Vector2(0.4, 0.4)
 
-[node name="LevelIcon" parent="MapManager" instance=ExtResource("3_qdp46")]
+[node name="LevelIcon" parent="MapManager" unique_id=651469006 instance=ExtResource("3_qdp46")]
 position = Vector2(424, 386.3999)
 scale = Vector2(0.43, 0.43)
 
-[node name="LevelIcon2" parent="MapManager" instance=ExtResource("3_qdp46")]
+[node name="LevelIcon2" parent="MapManager" unique_id=632692915 instance=ExtResource("3_qdp46")]
 position = Vector2(192, 154.39993)
 scale = Vector2(0.35, 0.35)
 
-[node name="LevelIcon3" parent="MapManager" instance=ExtResource("3_qdp46")]
+[node name="LevelIcon3" parent="MapManager" unique_id=1548262958 instance=ExtResource("3_qdp46")]
 position = Vector2(104, 250.39992)
 scale = Vector2(0.43, 0.43)
 
-[node name="LevelIcon5" parent="MapManager" instance=ExtResource("3_qdp46")]
+[node name="LevelIcon5" parent="MapManager" unique_id=5036648 instance=ExtResource("3_qdp46")]
 position = Vector2(448, 202.39992)
 scale = Vector2(0.35, 0.35)
 
-[node name="LevelIcon4" parent="MapManager" instance=ExtResource("3_qdp46")]
+[node name="LevelIcon4" parent="MapManager" unique_id=1888440929 instance=ExtResource("3_qdp46")]
 position = Vector2(112, 442.3999)
 scale = Vector2(0.43, 0.43)
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1645921214]
 layer = 0
 script = ExtResource("13_tkofx")
 scroll_speed = 40
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1113743473]
 z_index = 50
 position = Vector2(0, 52)
 motion_mirroring = Vector2(1286.4, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=807635914]
 position = Vector2(640, 369)
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("14_qc6d6")
 
-[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="." unique_id=59984192]
 layer = 0
 script = ExtResource("15_ojubo")
 scroll_speed = 40
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2" unique_id=751928325]
 position = Vector2(-16, -56)
 motion_mirroring = Vector2(1286.4, 0)
 
-[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer" unique_id=63856301]
 position = Vector2(640, 416.00003)
 rotation = -3.1415925
 scale = Vector2(0.67, 0.67)

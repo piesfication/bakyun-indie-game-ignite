@@ -7,7 +7,7 @@ extends "res://main.gd"
 # Weighted batches for easy mode.
 # Higher weight = chosen more often.
 const BATCH_WEIGHT_ENEMY3_X5 := 1
-const BATCH_WEIGHT_ENEMY3_THEN_ENEMY2_X5 := 1
+const BATCH_WEIGHT_ENEMY3_THEN_ENEMY2_X5 := 2
 const BATCH_WEIGHT_NORMAL_X6 := 1
 const BATCH_WEIGHT_NORMAL2_ENEMY3_2 := 1
 const BATCH_WEIGHT_ENEMY2_3_NORMAL3 := 1
@@ -18,6 +18,10 @@ const BATCH_WEIGHT_123_X3 := 1
 
 var _batch_spawning: bool = false
 var _batch_cooldown_timer: float = 0.0
+
+func _ready():
+	super._ready()
+	Current.setcurrentmode("Level")
 
 func spawn_enemy():
 	# Keep compatibility if another flow still calls spawn_enemy directly.
@@ -46,7 +50,7 @@ func _run_random_weighted_batch() -> void:
 
 	match _pick_weighted_batch_id():
 		0:
-			await _spawn_repeated(enemy_3_scene, 5)
+			await _spawn_repeated(enemy_3_scene, 6)
 		1:
 			await _spawn_repeated(enemy_3_scene, 1)
 			await _wait_phase_gap()
@@ -60,13 +64,13 @@ func _run_random_weighted_batch() -> void:
 			await _spawn_repeated(enemy_2_scene, 3)
 			await _spawn_repeated(enemy_scene, 3)
 		5:
-			await _spawn_random_repeated(1)
+			await _spawn_random_repeated(3)
 		6:
 			await _spawn_repeated(enemy_3_scene, 3)
 			await _wait_phase_gap()
 			await _spawn_repeated(enemy_2_scene, 5)
 		7:
-			await _spawn_random_repeated(3)
+			await _spawn_random_repeated(5)
 		8:
 			await _spawn_pattern_123_x3()
 

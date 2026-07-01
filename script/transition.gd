@@ -79,14 +79,15 @@ func fade_in():
 	await tween2.finished
 
 func set_crt_discolor(enabled: bool) -> void:
-	if crt_rect == null or not is_instance_valid(crt_rect):
-		return
-
-	var shader_material := crt_rect.material as ShaderMaterial
-	if shader_material == null:
-		return
-
-	shader_material.set_shader_parameter("discolor", enabled)
+	pass
+	#if crt_rect == null or not is_instance_valid(crt_rect):
+		#return
+#
+	#var shader_material := crt_rect.material as ShaderMaterial
+	#if shader_material == null:
+		#return
+#
+	#shader_material.set_shader_parameter("discolor", enabled)
 
 func play_crt_glitch_burst() -> void:
 	if _crt_burst_active:

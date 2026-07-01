@@ -1,0 +1,57 @@
+[wait time="1.5"]
+join baku (Outlined) right [animation="Fade In Up"]
+baku: Aaaand that's a wrap! You're basically one of us now.
+join yuna (Outlined) left [animation="Fade In Up"]
+update baku (DarkenedOutlined) right
+yuna: That statement lacks a verifiable metric, but performance was within acceptable range.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: She means you did great.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: I said what I said.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: (to camera) See? Told you I had this handled.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: You're still doing that. The talking-to-the-watcher thing.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Because they're still there!
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: Everything we just did is explainable through normal cause and effect. None of it requires an audience.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Or maybe the audience is why it worked so well.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: That is correlation, not causation. I will not dignify it further.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: You're smiling though.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: I am not.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Anyway — welcome aboard! There's a lot more out there waiting for the three of us.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: Define "a lot."
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: ...actually, don't. I'd rather find out as it happens.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+yuna: Look at you, embracing the unknown!
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: I am tolerating it. There is a difference.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Same thing!
+baku: See you out there!
+[wait time="2.0"]
+[signal arg="end_tutorial"]

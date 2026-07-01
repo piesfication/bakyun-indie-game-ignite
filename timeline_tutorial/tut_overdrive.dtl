@@ -1,0 +1,45 @@
+[wait time="1.5"]
+join baku (Outlined) right [animation="Fade In Up"]
+baku: Okay, see that meter filling up every time we land a hit?
+baku: Time to actually use it.
+join yuna (Outlined) left [animation="Fade In Up"]
+update baku (DarkenedOutlined)
+yuna: Define "meter."
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: The bar! Up top!
+[wait time="1.0"]
+leave --All--
+[signal arg="highlight_mahou"]
+[wait time="3.0"]
+[signal arg="highlight_mahou_false"]
+[wait time="1.0"]
+join baku (Outlined) right
+baku: Every hit fills a slot — red for me, blue for you.
+join yuna (Outlined) left
+update baku (DarkenedOutlined)
+yuna: I noticed colored markers appearing. I did not realize they had a purpose.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Well, now you know.
+baku: Depending on how you mix the colors, you unlock a different combo once it's full.
+baku: Like — three reds in a row, or two red one blue, whatever. Right-click triggers whichever combo's filled.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: That is a great deal of mechanical detail delivered verbally and at speed.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: First one, land three hits in a row as me — Baku, Baku, Baku — all three slots red.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: And then?
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Right-click! That's OVERDRIVE. My whole personality, compressed into one attack.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: That explanation raised more questions than it answered.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Three Baku hits, then right-click.
+baku: Don't switch to her in between, or the combo resets!

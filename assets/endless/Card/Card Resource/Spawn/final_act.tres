@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://jxbwb15rdcvt"]
+
+[ext_resource type="Script" uid="uid://bolgbl1crff4s" path="res://script/CardData.gd" id="1_awwsf"]
+[ext_resource type="Texture2D" uid="uid://dpdp2lf707lp5" path="res://assets/endless/Card/Test/spawn card.png" id="1_rhxtr"]
+[ext_resource type="Texture2D" uid="uid://bsd2kv0kfgvo6" path="res://assets/ui/Card/Baku/Idle/3/Untitled741_20260125142045.png" id="2_a4ri2"]
+
+[resource]
+script = ExtResource("1_awwsf")
+card_name = "Final Act"
+front_texture = ExtResource("2_a4ri2")
+back_texture = ExtResource("1_rhxtr")
+metadata/_custom_type_script = "uid://bolgbl1crff4s"

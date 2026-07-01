@@ -1,0 +1,30 @@
+[wait time="1.5"]
+join baku (Outlined) right [animation="Fade In Up"]
+baku: That bounced like five times, did you see?
+join yuna (Outlined) left [animation="Fade In Up"]
+update baku (DarkenedOutlined)
+yuna: I saw four. Close enough, apparently.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Last one — all you this time.
+baku: Three hits, all blue, none from me.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: Restate that. Clearly, this time.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Three Yuna hits in a row! No red at all!
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: That should have been the original phrasing.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Right-click after, and it's NOVA — pulls enemies in close and slows them down.
+baku: Crowd control, basically.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: An accurate, if belated, description.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Three Yuna hits, then right-click.
+baku: Show 'em what you've got!

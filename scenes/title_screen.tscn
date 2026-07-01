@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://unffs1vlk3ih"]
+[gd_scene format=3 uid="uid://unffs1vlk3ih"]
 
 [ext_resource type="Texture2D" uid="uid://i5asanwmdtcp" path="res://assets/level/sea/Untitled694_20260115180850.png" id="1_4qe4i"]
 [ext_resource type="Texture2D" uid="uid://4wksodnvgnvv" path="res://assets/level/sea/Untitled694_20260115181335.png" id="2_p07av"]
@@ -118,83 +118,83 @@ radius = 224.0
 radius = 64.0
 height = 144.0
 
-[node name="TitleScreen" type="Node2D"]
+[node name="TitleScreen" type="Node2D" unique_id=1270127627]
 script = ExtResource("17_a3sfq")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1490696069]
 layer = -1
 
-[node name="Background" type="Node2D" parent="CanvasLayer"]
+[node name="Background" type="Node2D" parent="CanvasLayer" unique_id=2425225]
 position = Vector2(-1.0000019, -39.999996)
 rotation = 0.025745109
 scale = Vector2(1.03, 1.03)
 script = ExtResource("18_bgfloat")
 
-[node name="Sky" type="Sprite2D" parent="CanvasLayer/Background"]
+[node name="Sky" type="Sprite2D" parent="CanvasLayer/Background" unique_id=1979468426]
 scale = Vector2(0.667, 0.667)
 texture = ExtResource("1_4qe4i")
 centered = false
 
-[node name="Back" type="Sprite2D" parent="CanvasLayer/Background"]
+[node name="Back" type="Sprite2D" parent="CanvasLayer/Background" unique_id=514535281]
 z_index = 10
 position = Vector2(0, 16)
 scale = Vector2(0.65, 0.65)
 texture = ExtResource("2_p07av")
 centered = false
 
-[node name="Back2" type="Sprite2D" parent="CanvasLayer/Background"]
+[node name="Back2" type="Sprite2D" parent="CanvasLayer/Background" unique_id=491053284]
 z_index = 10
 position = Vector2(0, 16)
 scale = Vector2(0.65, 0.65)
 texture = ExtResource("2_p07av")
 centered = false
 
-[node name="Front" type="Sprite2D" parent="CanvasLayer/Background"]
+[node name="Front" type="Sprite2D" parent="CanvasLayer/Background" unique_id=1763938322]
 z_index = 20
 position = Vector2(0, 16)
 scale = Vector2(0.65, 0.65)
 texture = ExtResource("3_khjys")
 centered = false
 
-[node name="Sea" type="Sprite2D" parent="CanvasLayer/Background"]
+[node name="Sea" type="Sprite2D" parent="CanvasLayer/Background" unique_id=351423081]
 z_index = 30
 position = Vector2(0, -10.999998)
 scale = Vector2(0.683, 0.683)
 texture = ExtResource("4_174rq")
 centered = false
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1157370452]
 layer = 0
 script = ExtResource("19_174rq")
 scroll_speed = 60
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1816531376]
 z_index = 50
 motion_mirroring = Vector2(1286.4, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=1678578611]
 position = Vector2(640, 368)
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("5_lrxh4")
 
-[node name="ParallaxBackground2" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="." unique_id=1427241903]
 layer = 0
 script = ExtResource("20_lrxh4")
 scroll_speed = 60
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2"]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2" unique_id=1568937658]
 motion_mirroring = Vector2(1286.4, 0)
 
-[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer"]
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer" unique_id=970850867]
 position = Vector2(640, 360)
 rotation = -3.1415925
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("5_lrxh4")
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=943051649]
 layer = 2
 
-[node name="CharAnim" type="AnimatedSprite2D" parent="CanvasLayer2"]
+[node name="CharAnim" type="AnimatedSprite2D" parent="CanvasLayer2" unique_id=1224542258]
 z_index = 50
 position = Vector2(640, 376)
 scale = Vector2(0.67, 0.67)
@@ -202,39 +202,39 @@ sprite_frames = SubResource("SpriteFrames_y8m2v")
 autoplay = "default"
 frame_progress = 0.06540324
 
-[node name="BakuClick" type="Area2D" parent="CanvasLayer2/CharAnim"]
+[node name="BakuClick" type="Area2D" parent="CanvasLayer2/CharAnim" unique_id=2065101194]
 script = ExtResource("13_jr68i")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CanvasLayer2/CharAnim/BakuClick"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CanvasLayer2/CharAnim/BakuClick" unique_id=926540526]
 position = Vector2(5.970093, -170.14923)
 polygon = PackedVector2Array(-4.477478, -46.268646, -29.850647, -68.65671, -88.05957, -70.14923, -113.43274, -152.2388, -125.37305, -176.1194, -159.07178, -185.99356, -256.7163, -176.1194, -314.92523, -225.37312, -328.3581, -223.8806, -340.2984, -223.8806, -350.74615, -201.49252, -459.7014, -247.7612, -483.58197, -235.82089, -483.58197, -200, -471.6417, -176.1194, -423.8805, -140.29851, -435.8208, -128.35822, -423.8805, -80.597015, -423.8805, -32.835815, -352.2387, 26.865662, -316.4178, 26.865662, -304.47754, 74.62686, -271.96075, 107.14365, -232.83575, 146.26865, -208.95514, 146.26865, -77.61188, 337.3134, -101.49243, 373.1343, -89.552124, 420.89548, -101.49243, 432.8358, -197.01483, 432.8358, -280.59692, 397.01492, -316.4178, 408.95523, -352.2387, 444.7761, -399.99988, 432.8358, -483.58197, 504.47757, -579.1044, 600, -605.3948, 657.83887, -638.80585, 731.34326, 185.07465, 731.34326, 173.13446, 683.58203, 185.07465, 635.8208, 197.01495, 576.1194, 220.89557, 456.7164, 197.01495, 468.6567, 137.31354, 444.7761, 101.492615, 444.7761, 77.612, 432.8358, 77.612, 397.01492, 89.55231, 361.194, 197.01495, 194.02982, 304.47772, 26.865662, 400.00006, -104.47763, 507.4627, -223.8806, 435.82098, -283.5821, 328.35834, -331.34326, 244.77618, -331.34326, 149.25385, -295.5224, 53.731445, -235.82089, 17.910522, -188.05971, 17.910522, -164.17911, -5.9700317, -128.35822, -17.91034, -92.53732)
 
-[node name="YunaClick" type="Area2D" parent="CanvasLayer2/CharAnim"]
+[node name="YunaClick" type="Area2D" parent="CanvasLayer2/CharAnim" unique_id=1882420623]
 script = ExtResource("14_b344i")
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="CanvasLayer2/CharAnim/YunaClick"]
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="CanvasLayer2/CharAnim/YunaClick" unique_id=1230829544]
 position = Vector2(191.04477, 0)
 polygon = PackedVector2Array(-107.46265, 262.68652, -95.52234, 274.62683, -47.76111, 274.62683, -23.880493, 286.56714, 11.940308, 298.50745, -47.76111, 429.8507, -71.64172, 489.5522, -83.58203, 537.3134, -71.64172, 561.19403, 608.9553, 561.19403, 585.0747, 525.3731, 585.0747, 489.5522, 632.8358, 429.8507, 680.59705, 405.9701, 680.59705, 358.20892, 704.47766, 298.50745, 716.41797, 250.74622, 620.8955, 155.22388, 632.8358, 83.58209, 620.8955, 47.76117, 620.8955, 23.880554, 704.47766, 23.880554, 776.1194, 47.76117, 788.0597, -35.820923, 776.1194, -214.92538, 704.47766, -262.68658, 644.7761, -286.56717, 656.71643, -370.14926, 620.8955, -405.97015, 537.3135, -453.73135, 477.61194, -513.43286, 429.85083, -513.43286, 370.1493, -453.73135, 286.56726, -358.20898, 179.10449, -238.80597, 95.52246, -107.46271, 0, 23.880554, -71.64172, 143.28357, -95.52234, 191.04474, -107.46265, 226.86566, -107.46265, 250.74622)
 
-[node name="Title" type="Node2D" parent="CanvasLayer2"]
+[node name="Title" type="Node2D" parent="CanvasLayer2" unique_id=982361604]
 z_index = 50
 position = Vector2(320, 496.00003)
 scale = Vector2(0.9, 0.9)
 
-[node name="Ba" type="AnimatedSprite2D" parent="CanvasLayer2/Title"]
+[node name="Ba" type="AnimatedSprite2D" parent="CanvasLayer2/Title" unique_id=688342232]
 sprite_frames = SubResource("SpriteFrames_r0uj2")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.86164784
 
-[node name="Kyun" type="AnimatedSprite2D" parent="CanvasLayer2/Title"]
+[node name="Kyun" type="AnimatedSprite2D" parent="CanvasLayer2/Title" unique_id=1079085901]
 position = Vector2(0, -35.555557)
 sprite_frames = SubResource("SpriteFrames_16pxe")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.39930788
 
-[node name="Label2" type="Label" parent="CanvasLayer2"]
+[node name="Label2" type="Label" parent="CanvasLayer2" unique_id=1921432839]
 z_index = 50
 offset_left = 88.0
 offset_top = 632.0
@@ -244,7 +244,7 @@ text = "Exit"
 label_settings = SubResource("LabelSettings_htdhw")
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="CanvasLayer2"]
+[node name="Label" type="Label" parent="CanvasLayer2" unique_id=1049908099]
 z_index = 50
 offset_left = 88.0
 offset_top = 55.0
@@ -254,7 +254,7 @@ text = "Press to start! >_<"
 label_settings = SubResource("LabelSettings_dujhn")
 metadata/_edit_use_anchors_ = true
 
-[node name="Story" type="Label" parent="CanvasLayer2"]
+[node name="Story" type="Label" parent="CanvasLayer2" unique_id=452332223]
 visible = false
 anchors_preset = -1
 anchor_left = -0.26065162
@@ -268,18 +268,18 @@ offset_bottom = -19.565216
 text = "Story"
 label_settings = SubResource("LabelSettings_6uh13")
 
-[node name="Story" type="Area2D" parent="CanvasLayer2/Story"]
+[node name="Story" type="Area2D" parent="CanvasLayer2/Story" unique_id=1450920982]
 position = Vector2(-23, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer2/Story/Story"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer2/Story/Story" unique_id=1218890865]
 position = Vector2(65, 24)
 shape = SubResource("RectangleShape2D_y8m2v")
 
-[node name="CanvasLayer3" type="CanvasLayer" parent="."]
+[node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=745925578]
 layer = 3
 script = ExtResource("23_mce2t")
 
-[node name="Overlay" type="ColorRect" parent="CanvasLayer3"]
+[node name="Overlay" type="ColorRect" parent="CanvasLayer3" unique_id=1037299961]
 visible = false
 offset_left = -8.0
 offset_top = -16.0
@@ -288,42 +288,42 @@ offset_bottom = 752.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0.70000005)
 
-[node name="BakuProfile" type="Sprite2D" parent="CanvasLayer3"]
+[node name="BakuProfile" type="Sprite2D" parent="CanvasLayer3" unique_id=536272716]
 visible = false
 position = Vector2(699.2, 359.99997)
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("21_w03br")
 
-[node name="YunaProfile" type="Sprite2D" parent="CanvasLayer3"]
+[node name="YunaProfile" type="Sprite2D" parent="CanvasLayer3" unique_id=776245178]
 visible = false
 position = Vector2(699.2, 360)
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("22_jr68i")
 
-[node name="PlayClick" type="Area2D" parent="CanvasLayer3"]
+[node name="PlayClick" type="Area2D" parent="CanvasLayer3" unique_id=630962673]
 script = ExtResource("25_gm4k0")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer3/PlayClick"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer3/PlayClick" unique_id=687383619]
 position = Vector2(176, 64)
 shape = SubResource("CapsuleShape2D_mce2t")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="CanvasLayer3/PlayClick"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="CanvasLayer3/PlayClick" unique_id=760992556]
 position = Vector2(-112, 208)
 shape = SubResource("CircleShape2D_gm4k0")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="CanvasLayer3/PlayClick"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CanvasLayer3/PlayClick" unique_id=1385543069]
 position = Vector2(144, 312)
 shape = SubResource("CircleShape2D_gm4k0")
 
-[node name="ExitClick" type="Area2D" parent="CanvasLayer3"]
+[node name="ExitClick" type="Area2D" parent="CanvasLayer3" unique_id=698152224]
 script = ExtResource("27_12ga3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer3/ExitClick"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer3/ExitClick" unique_id=234608867]
 position = Vector2(112, 648)
 rotation = -1.5607986
 shape = SubResource("CapsuleShape2D_yrrko")
 
-[node name="ConfrimBox" parent="CanvasLayer3" instance=ExtResource("26_12ga3")]
+[node name="ConfrimBox" parent="CanvasLayer3" unique_id=1195196644 instance=ExtResource("26_12ga3")]
 visible = false
 z_index = 100
 offset_left = 632.0
@@ -332,7 +332,7 @@ offset_right = 632.0
 offset_bottom = 352.0
 scale = Vector2(0.67, 0.67)
 
-[node name="IntroOverlay" type="ColorRect" parent="CanvasLayer3"]
+[node name="IntroOverlay" type="ColorRect" parent="CanvasLayer3" unique_id=2049360403]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -340,17 +340,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="titlecard" type="Node2D" parent="CanvasLayer3"]
+[node name="titlecard" type="Node2D" parent="CanvasLayer3" unique_id=912473954]
 visible = false
 position = Vector2(624, 360)
 
-[node name="white" type="Sprite2D" parent="CanvasLayer3/titlecard"]
+[node name="white" type="Sprite2D" parent="CanvasLayer3/titlecard" unique_id=1498458259]
 texture = ExtResource("29_6uh13")
 
-[node name="dark" type="Sprite2D" parent="CanvasLayer3/titlecard"]
+[node name="dark" type="Sprite2D" parent="CanvasLayer3/titlecard" unique_id=1407329357]
 visible = false
 texture = ExtResource("30_y8m2v")
 
-[node name="bakyun" type="Sprite2D" parent="CanvasLayer3/titlecard"]
+[node name="bakyun" type="Sprite2D" parent="CanvasLayer3/titlecard" unique_id=1366341030]
 visible = false
 texture = ExtResource("31_r0uj2")

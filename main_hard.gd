@@ -8,12 +8,12 @@ extends "res://main_easy.gd"
 const HARD_BATCH_WEIGHT_ENEMY3_X5 := 1
 const HARD_BATCH_WEIGHT_ENEMY3_THEN_ENEMY2_X5 := 1
 const HARD_BATCH_WEIGHT_NORMAL_X6 := 1
-const HARD_BATCH_WEIGHT_NORMAL2_ENEMY3_2 := 1
+const HARD_BATCH_WEIGHT_NORMAL2_ENEMY3_2 := 2
 const HARD_BATCH_WEIGHT_ENEMY2_3_NORMAL3 := 1
 const HARD_BATCH_WEIGHT_RANDOM_X1 := 3
 const HARD_BATCH_WEIGHT_ENEMY3_3_THEN_ENEMY2_X5 := 1
 const HARD_BATCH_WEIGHT_RANDOM_X3 := 3
-const HARD_BATCH_WEIGHT_123_X3 := 1
+const HARD_BATCH_WEIGHT_123_X3 := 2
 const HARD_BATCH_WEIGHT_SPIKE_MIX := 2
 
 var _hard_boss_spawned: bool = false
@@ -24,6 +24,7 @@ func _ready() -> void:
 	batch_spawn_cooldown = maxf(hard_batch_spawn_cooldown, 0.1)
 	bird_strike_chance = clampf(hard_bird_strike_chance, 0.0, 1.0)
 	super._ready()
+	Current.setcurrentmode("Level")
 
 func _finish_spawn() -> void:
 	if _hard_boss_phase_active:
@@ -60,17 +61,18 @@ func _run_random_weighted_batch() -> void:
 		0:
 			await _spawn_repeated(enemy_3_scene, 5)
 		1:
-			await _spawn_repeated(enemy_3_scene, 1)
+			await _spawn_repeated(enemy_3_scene, 5)
 			await _wait_phase_gap()
 			await _spawn_repeated(enemy_2_scene, 5)
 		2:
 			await _spawn_repeated(enemy_scene, 6)
 		3:
-			await _spawn_repeated(enemy_scene, 2)
-			await _spawn_repeated(enemy_3_scene, 2)
+			await _spawn_repeated(enemy_scene, 5)
+			await _wait_phase_gap()
+			await _spawn_repeated(enemy_3_scene, 5)
 		4:
-			await _spawn_repeated(enemy_2_scene, 3)
 			await _spawn_repeated(enemy_scene, 3)
+			await _spawn_repeated(enemy_2_scene, 5)
 		5:
 			await _spawn_random_repeated(1)
 		6:
@@ -78,7 +80,7 @@ func _run_random_weighted_batch() -> void:
 			await _wait_phase_gap()
 			await _spawn_repeated(enemy_2_scene, 5)
 		7:
-			await _spawn_random_repeated(3)
+			await _spawn_random_repeated(4)
 		8:
 			await _spawn_pattern_123_x3()
 		9:

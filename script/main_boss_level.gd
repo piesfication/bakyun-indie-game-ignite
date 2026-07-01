@@ -29,10 +29,12 @@ var _timeline_mode_active: bool = false
 var _damage_hud_was_visible_before_timeline: bool = false
 
 func _ready() -> void:
+	Current.setcurrentmode("Story")
 	_play_stage_bgm()
 	Dialogic.signal_event.connect(on_dialogic_signal);
 	next_z_index = base_z_index
 	_setup_main_runtime_systems()
+	level_running = true
 	if play_intro_timeline_before_boss:
 		await _start_intro_timeline_or_spawn_fallback()
 	else:

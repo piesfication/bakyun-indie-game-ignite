@@ -7,7 +7,19 @@ signal chapter_selected(chapter_name: String)
 var _is_selected: bool = false
 
 func _ready() -> void:
+	visible = false
 	_anim.play("idle")
+
+func activate() -> void:
+	visible = true
+	_anim.play("popup")
+	await _anim.animation_finished
+	_anim.play("idle")
+
+func deactivate() -> void:
+	_is_selected = false
+	_anim.stop()
+	visible = false
 
 func on_selected() -> void:
 	_is_selected = true

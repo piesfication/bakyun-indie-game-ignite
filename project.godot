@@ -8,11 +8,16 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Bakyun"
 run/main_scene="uid://unffs1vlk3ih"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/image="res://assets/rstk/Ristek_Gamedev (2).png"
 config/icon="res://icon.svg"
 
 [audio]
@@ -26,9 +31,11 @@ LoadingDialogue="*res://script/loading_dialogue.gd"
 LoadingManager="*res://script/loading_manager.gd"
 Transition="*res://scenes/transition.tscn"
 MusicManager="res://scenes/music_manager.tscn"
-Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+Dialogic="*uid://ds2q0uclmolvu"
 StoryProgress="*res://script/story_progress.gd"
 AudioManager="*res://audio/world_audio_manager.tscn"
+Current="*uid://dospdvoh7w2xl"
+CardDatabase="*uid://7seytnrea6sn"
 
 [dialogic]
 
@@ -39,6 +46,8 @@ directories/dch_directory={
 "yuna": "res://char/yuna.dch"
 }
 directories/dtl_directory={
+"introduction": "res://timeline_tutorial/introduction.dtl",
+"outro": "res://timeline_tutorial/outro.dtl",
 "timeline": "res://timeline/timeline.dtl",
 "timeline_2": "res://timeline/timeline_2.dtl",
 "timeline_3": "res://timeline/timeline_3.dtl",
@@ -52,7 +61,13 @@ directories/dtl_directory={
 "timeline_412_bakumono_confession": "res://timeline/timeline_412_bakumono_confession.dtl",
 "timeline_412_bakumono_phase2": "res://timeline/timeline_412_bakumono_phase2.dtl",
 "timeline_412_bakumono_post": "res://timeline/timeline_412_bakumono_post.dtl",
-"timeline_5": "res://timeline/timeline_5.dtl"
+"timeline_5": "res://timeline/timeline_5.dtl",
+"tut_chain": "res://timeline_tutorial/tut_chain.dtl",
+"tut_nova": "res://timeline_tutorial/tut_nova.dtl",
+"tut_overdrive": "res://timeline_tutorial/tut_overdrive.dtl",
+"tut_pierce": "res://timeline_tutorial/tut_pierce.dtl",
+"tut_practice": "res://timeline_tutorial/tut_practice.dtl",
+"tut_ultimate": "res://timeline_tutorial/tut_ultimate.dtl"
 }
 layout/style_directory={
 "": "res://style/style_1.tres",
@@ -121,6 +136,7 @@ text/absolute_autopauses=true
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/mode=4
 window/stretch/mode="canvas_items"
 window/stretch/aspect="ignore"
 

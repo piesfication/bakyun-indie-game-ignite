@@ -14,6 +14,8 @@ var _health_base_scale: Vector2 = Vector2.ONE
 var _health_squash_tween: Tween
 
 var _pending_nova_pull = null
+
+const NOVA_MODULATE := Color(0.622, 0.644, 1.0, 1.0)
 # State
 
 enum State {
@@ -32,19 +34,16 @@ func set_state(new_state: State):
 
 	match state:
 		State.MOVING:
-			if nova_pull_time_left <= 0.0:
-				visual.modulate = original_modulate
+			_apply_visual_modulate()
 			visual.play("moving")
 		State.DAMAGED:
-			if nova_pull_time_left <= 0.0:
-				visual.modulate = Color(1.0, 0.804, 0.815, 1.0)
+			_apply_visual_modulate()
 			visual.play("damaged")
 		State.ATTACK:
 			print("attack!")
 			pass
 		State.DEATH:
-			if nova_pull_time_left <= 0.0:
-				visual.modulate = Color(1.0, 0.804, 0.815, 1.0)
+			_apply_visual_modulate()
 			visual.play("death")
 
 @export var max_hp := 3
@@ -55,6 +54,15 @@ var marked := false
 var mark_time_left: float = 0.0
 var slow_timer := 0.0
 var slow_factor := 1.0
+var nova_knockback_time_left := 0.0
+var nova_knockback_target_depth := 1.0
+var nova_knockback_speed := 0.0
+var nova_pending_pull_target_pos: Vector2 = Vector2.ZERO
+var nova_pending_pull_target_depth := 0.5
+var nova_pending_pull_speed := 0.0
+var nova_pending_pull_time_left := 0.0
+var nova_pending_slow_duration := 0.0
+var nova_pending_slow_factor := 1.0
 var nova_pull_time_left := 0.0
 var nova_pull_target_pos: Vector2 = Vector2.ZERO
 var nova_pull_target_depth := 0.5
@@ -292,15 +300,25 @@ func _process(delta: float):
 		if slow_timer <= 0.0:
 			slow_factor = 1.0
 
+	if nova_knockback_time_left > 0.0:
+		nova_knockback_time_left -= delta
+		depth = move_toward(depth, nova_knockback_target_depth, nova_knockback_speed * delta)
+		depth = clampf(depth, 0.0, 1.0)
+		_update_z_from_depth()
+		if nova_knockback_time_left <= 0.0:
+			_start_nova_pull_from_pending()
+
 	var sim_delta: float = delta * slow_factor
 
 	idle_move(sim_delta)
-	update_depth(sim_delta)
+	if nova_knockback_time_left <= 0.0:
+		update_depth(sim_delta)
 	update_scale()
 
 	update_drift_blend(sim_delta)
 	update_movement(sim_delta)
 	_apply_nova_pull(sim_delta)
+	_apply_visual_modulate()
 	update_scale()
 	
 	# Apply bird flapping animation AFTER movement
@@ -978,6 +996,7 @@ func explode_mark(radius: float, damage: int, visited: Array[Node] = []) -> void
 func apply_slow(duration: float, factor: float) -> void:
 	slow_timer = max(slow_timer, duration)
 	slow_factor = clampf(min(slow_factor, factor), 0.15, 1.0)
+	_apply_visual_modulate()
 
 
 func pull_towards(target_pos: Vector2, strength: float = 0.55) -> void:
@@ -993,14 +1012,45 @@ func apply_nova_pull_effect(target_pos: Vector2, target_depth: float, pull_speed
 	nova_pull_speed = maxf(pull_speed, 0.0)
 	nova_pull_time_left = maxf(duration, 0.0)
 	flap_enabled = true
+	_apply_visual_modulate()
 
+
+func apply_nova_center_knockback_then_pull_effect(target_pos: Vector2, target_depth: float, knockback_distance: float, knockback_speed: float, knockback_duration: float, pull_speed: float, pull_duration: float, slow_duration: float, slow_value: float) -> void:
+	if is_dead:
+		return
+
+	nova_knockback_target_depth = clampf(depth + maxf(knockback_distance, 0.0), 0.0, 1.0)
+	nova_knockback_speed = maxf(knockback_speed, 0.0)
+	nova_knockback_time_left = maxf(knockback_duration, 0.0)
+	nova_pending_pull_target_pos = target_pos
+	nova_pending_pull_target_depth = clampf(nova_knockback_target_depth, 0.0, 1.0)
+	nova_pending_pull_speed = maxf(pull_speed, 0.0)
+	nova_pending_pull_time_left = maxf(pull_duration, 0.0)
+	nova_pending_slow_duration = maxf(slow_duration, 0.0)
+	nova_pending_slow_factor = clampf(slow_value, 0.15, 1.0)
+	flap_enabled = true
+	_apply_visual_modulate()
+
+
+func _start_nova_pull_from_pending() -> void:
+	if nova_pending_pull_time_left <= 0.0 and nova_pending_slow_duration <= 0.0:
+		return
+		
+	nova_pull_target_pos = global_position
+	nova_pull_target_depth = nova_knockback_target_depth
+	nova_pull_speed = nova_pending_pull_speed
+	nova_pull_time_left = nova_pending_pull_time_left
+	if nova_pending_slow_duration > 0.0:
+		slow_timer = max(slow_timer, nova_pending_slow_duration)
+		slow_factor = clampf(min(slow_factor, nova_pending_slow_factor), 0.15, 1.0)
+
+	nova_pending_pull_time_left = 0.0
+	nova_pending_slow_duration = 0.0
+	_apply_visual_modulate()
 
 func _apply_nova_pull(delta: float) -> void:
 	
-	if nova_pull_time_left > 0.0:
-		visual.modulate = Color(0.622, 0.644, 1.0, 1.0) 
-	else:
-		visual.modulate = original_modulate
+	_apply_visual_modulate()
 		
 	if nova_pull_time_left <= 0.0:
 		return
@@ -1015,6 +1065,17 @@ func _apply_nova_pull(delta: float) -> void:
 	depth = clampf(depth, 0.0, 1.0)
 	# Update z-order immediately as depth changes during pull
 	_update_z_from_depth()
+
+func _apply_visual_modulate() -> void:
+	if nova_knockback_time_left > 0.0 or nova_pull_time_left > 0.0 or slow_timer > 0.0:
+		visual.modulate = NOVA_MODULATE
+		return
+
+	match state:
+		State.DAMAGED, State.DEATH:
+			visual.modulate = Color(1.0, 0.804, 0.815, 1.0)
+		_:
+			visual.modulate = original_modulate
 
 func play_bluehit_effect() -> float:
 	

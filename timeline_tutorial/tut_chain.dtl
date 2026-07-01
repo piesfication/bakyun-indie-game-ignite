@@ -1,0 +1,26 @@
+[wait time="1.5"]
+join baku (Outlined) right [animation="Fade In Up"]
+baku: See that? Five directions, fully dramatic.
+join yuna (Outlined) left [animation="Fade In Up"]
+update baku (DarkenedOutlined)
+yuna: It was adequate.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Flip the ratio this time — one hit from me, two from you.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: One red, two blue. Understood. Then?
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Right-click! This one's CHAIN — it bounces between enemies and gets stronger every jump.
+baku: Like gossip, but useful.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: I'm not going to engage with that comparison.
+update baku (Outlined)
+update yuna (DarkenedOutlined)
+baku: Fair, bad analogy.
+baku:  Point is, it chains. One Baku hit, two from you, then right-click.
+update yuna (Outlined)
+update baku (DarkenedOutlined)
+yuna: Acknowledged. Proceeding.
