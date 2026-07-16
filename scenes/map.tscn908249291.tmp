@@ -1,0 +1,340 @@
+[gd_scene format=3 uid="uid://dq2wipwmwdt4h"]
+
+[ext_resource type="Script" uid="uid://crde36v3nllod" path="res://script/map.gd" id="1_c70he"]
+[ext_resource type="Texture2D" uid="uid://bnt6fjcl2i5h6" path="res://assets/map/Sky/Untitled1173_20260712204125.png" id="1_p7tei"]
+[ext_resource type="Texture2D" uid="uid://boo6qcyscmepy" path="res://assets/map/Confirmation/tutorial.png" id="2_4b7dj"]
+[ext_resource type="Texture2D" uid="uid://dwuulbqk34vst" path="res://assets/map/Sky/Untitled1173_20260712204250.png" id="2_c70he"]
+[ext_resource type="Texture2D" uid="uid://7fun7ja1uupn" path="res://assets/map/Confirmation/journey.png" id="3_2cfcp"]
+[ext_resource type="Texture2D" uid="uid://cdidd6scngv2j" path="res://assets/map/Earth/Untitled1173_20260712204301.png" id="3_mo32q"]
+[ext_resource type="Script" uid="uid://dgxvxmitrd13o" path="res://script/parallax_background.gd" id="4_6k6j1"]
+[ext_resource type="Texture2D" uid="uid://71fsdc8fl4jf" path="res://assets/title/Untitled977_20260324075141.png" id="5_m335s"]
+[ext_resource type="Texture2D" uid="uid://yfnik18ebled" path="res://assets/map/Confirmation/basecamp.png" id="5_y2ir2"]
+[ext_resource type="Texture2D" uid="uid://cuysamc0t6uyn" path="res://assets/map/New Shadow/Endless.png" id="7_p7tei"]
+[ext_resource type="Texture2D" uid="uid://x11rpypj8g7l" path="res://assets/map/New Shadow/Tutorial.png" id="8_c70he"]
+[ext_resource type="Texture2D" uid="uid://dph7bfi3jocuj" path="res://assets/map/New Shadow/Journey.png" id="9_mo32q"]
+[ext_resource type="Texture2D" uid="uid://dhed1d6eu03hx" path="res://assets/map/Path/Untitled1173_20260712204335.png" id="10_5u2yt"]
+[ext_resource type="Texture2D" uid="uid://c7okee47jwe78" path="res://assets/map/New Shadow/Basecamp.png" id="10_6k6j1"]
+[ext_resource type="PackedScene" uid="uid://blughlotcafg6" path="res://scenes/map_icon.tscn" id="12_gw3fx"]
+[ext_resource type="Texture2D" uid="uid://bn0xuspyq0gtv" path="res://assets/map/Path/Mask group (4).png" id="13_c70he"]
+[ext_resource type="Texture2D" uid="uid://bmo0vrrppa577" path="res://assets/map/New Icon/Basecamp.png" id="13_p7tei"]
+[ext_resource type="Texture2D" uid="uid://bmpotjqwbk6wb" path="res://assets/map/New Icon/Journey.png" id="14_c70he"]
+[ext_resource type="Texture2D" uid="uid://c5qbtu8qoy5c1" path="res://assets/map/New Icon/Tutorial.png" id="15_mo32q"]
+[ext_resource type="Script" uid="uid://b57hbvyj18rxn" path="res://script/parallax_background_2.gd" id="16_fq663"]
+[ext_resource type="Texture2D" uid="uid://cpfo3uu63jkfi" path="res://assets/map/Confirmation/endless.png" id="17_mo32q"]
+[ext_resource type="FontFile" uid="uid://bjisq025387gx" path="res://assets/font/zrtw-hackynote-personal-use/ZRTW-HackynotePersonalUse.ttf" id="18_6k6j1"]
+[ext_resource type="Texture2D" uid="uid://d3lp7713sopuw" path="res://assets/ui/Koisuru-meter (icon)/Yuna/Untitled733_20260122204932.png" id="22_30iet"]
+[ext_resource type="Texture2D" uid="uid://sx4ujy5h7ynm" path="res://assets/ui/Koisuru-meter (icon)/Baku/Untitled733_20260122204456.png" id="22_y2ir2"]
+[ext_resource type="Texture2D" uid="uid://w8qn0f6p77w5" path="res://assets/ui/Koisuru-meter (icon)/Baku/Untitled733_20260122204533.png" id="23_5u2yt"]
+[ext_resource type="Texture2D" uid="uid://dljdouri7m6ab" path="res://assets/ui/Koisuru-meter (icon)/Yuna/Untitled733_20260122205023.png" id="23_mkblt"]
+[ext_resource type="Texture2D" uid="uid://dyvr4bg3h4jlc" path="res://assets/map/Chat/MapChat.png" id="27_6ek7f"]
+[ext_resource type="Texture2D" uid="uid://lm3ajoehlwpx" path="res://assets/menu/Hp/Icon/Untitled935_20260316142424.png" id="28_6ek7f"]
+[ext_resource type="Texture2D" uid="uid://yrap8brlvm5q" path="res://assets/menu/Hp/Icon/Untitled935_20260316142431.png" id="29_4qxv8"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6k6j1"]
+load_path = "res://.godot/imported/Endless.png-95005f1de9cb44a7597e6ed971f8b73f.ctex"
+
+[sub_resource type="LabelSettings" id="LabelSettings_m335s"]
+line_spacing = -3.0
+font = ExtResource("18_6k6j1")
+font_size = 20
+font_color = Color(0.5529412, 0.6745098, 0.58431375, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4o3w1"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": ExtResource("23_mkblt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_30iet")
+}],
+"loop": true,
+"name": &"yuna",
+"speed": 4.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_30iet"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_y2ir2")
+}, {
+"duration": 2.0,
+"texture": ExtResource("23_5u2yt")
+}],
+"loop": true,
+"name": &"yuna",
+"speed": 4.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4qxv8"]
+font = ExtResource("18_6k6j1")
+font_size = 34
+font_color = Color(0.32156864, 0.64705884, 0.63529414, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fq663"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": ExtResource("29_4qxv8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_6ek7f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="Map" type="Node2D" unique_id=1514107743]
+script = ExtResource("1_c70he")
+tutorial_panel = ExtResource("2_4b7dj")
+journey_panel = ExtResource("3_2cfcp")
+endless_panel = ExtResource("17_mo32q")
+basecamp_panel = ExtResource("5_y2ir2")
+
+[node name="SkyBackground" type="Sprite2D" parent="." unique_id=1337970190]
+position = Vector2(640.2, 387.80002)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("1_p7tei")
+
+[node name="CloudBackground" type="Sprite2D" parent="." unique_id=1484096097]
+position = Vector2(640.2, 387.80002)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("2_c70he")
+
+[node name="SeaBackground" type="Sprite2D" parent="." unique_id=1375816356]
+position = Vector2(640.2, 387.80002)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("3_mo32q")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1041030095]
+layer = 0
+script = ExtResource("4_6k6j1")
+scroll_speed = 40
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=306196079]
+z_index = 50
+position = Vector2(0, 52)
+motion_mirroring = Vector2(1286.4, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=737791051]
+position = Vector2(640, 369)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("5_m335s")
+
+[node name="Map" type="CanvasLayer" parent="." unique_id=269528132]
+
+[node name="IconShadow" type="Node2D" parent="Map" unique_id=1969917033]
+position = Vector2(640, 393)
+scale = Vector2(0.55, 0.55)
+
+[node name="Endless" parent="Map/IconShadow" unique_id=1017151573 instance=ExtResource("12_gw3fx")]
+position = Vector2(-26.666664, 158.33333)
+
+[node name="Sprite2D" parent="Map/IconShadow/Endless" index="0" unique_id=435413369]
+position = Vector2(-1.666667, 26.666618)
+texture = ExtResource("7_p7tei")
+offset = Vector2(0, -31.666626)
+
+[node name="CollisionShape2D" parent="Map/IconShadow/Endless" index="1" unique_id=1928477864]
+position = Vector2(-1.666667, 16.666695)
+
+[node name="Tutorial" parent="Map/IconShadow" unique_id=702962184 instance=ExtResource("12_gw3fx")]
+position = Vector2(-498.3333, -115)
+
+[node name="Sprite2D" parent="Map/IconShadow/Tutorial" index="0" unique_id=435413369]
+position = Vector2(13.3333435, 63.33331)
+texture = ExtResource("8_c70he")
+offset = Vector2(-20, -63.333313)
+
+[node name="CollisionShape2D" parent="Map/IconShadow/Tutorial" index="1" unique_id=1928477864]
+position = Vector2(0, 20.000017)
+
+[node name="Journey" parent="Map/IconShadow" unique_id=235598885 instance=ExtResource("12_gw3fx")]
+position = Vector2(466.66666, -106.666664)
+
+[node name="Sprite2D" parent="Map/IconShadow/Journey" index="0" unique_id=435413369]
+position = Vector2(18.333252, 53.333263)
+texture = ExtResource("9_mo32q")
+offset = Vector2(-18.333252, -73.33325)
+
+[node name="CollisionShape2D" parent="Map/IconShadow/Journey" index="1" unique_id=1928477864]
+position = Vector2(3.0517578e-05, 1.666636)
+
+[node name="Basecamp" parent="Map/IconShadow" unique_id=189509847 instance=ExtResource("12_gw3fx")]
+position = Vector2(0, -308.3333)
+
+[node name="Sprite2D" parent="Map/IconShadow/Basecamp" index="0" unique_id=435413369]
+texture = ExtResource("10_6k6j1")
+
+[node name="CollisionShape2D" parent="Map/IconShadow/Basecamp" index="1" unique_id=1928477864]
+position = Vector2(0, 21.666662)
+
+[node name="MapPath" type="Node2D" parent="Map" unique_id=1013518521]
+position = Vector2(640, 390)
+scale = Vector2(0.55, 0.55)
+
+[node name="PathShadow" type="Sprite2D" parent="Map/MapPath" unique_id=2030941496]
+texture = ExtResource("10_5u2yt")
+
+[node name="Path" type="Sprite2D" parent="Map/MapPath" unique_id=1330422488]
+texture = ExtResource("13_c70he")
+
+[node name="Icon" type="Node2D" parent="Map" unique_id=1386035848]
+position = Vector2(640, 390)
+scale = Vector2(0.55, 0.55)
+
+[node name="Basecamp" parent="Map/Icon" unique_id=436595921 instance=ExtResource("12_gw3fx")]
+position = Vector2(0, -300)
+location_id = "basecamp"
+
+[node name="Sprite2D" parent="Map/Icon/Basecamp" index="0" unique_id=435413369]
+texture = ExtResource("13_p7tei")
+
+[node name="Journey" parent="Map/Icon" unique_id=1362690505 instance=ExtResource("12_gw3fx")]
+position = Vector2(466.66663, -118.33333)
+location_id = "journey"
+
+[node name="Sprite2D" parent="Map/Icon/Journey" index="0" unique_id=435413369]
+texture = ExtResource("14_c70he")
+
+[node name="Tutorial" parent="Map/Icon" unique_id=1944146819 instance=ExtResource("12_gw3fx")]
+position = Vector2(-498.33328, -111.666664)
+location_id = "tutorial"
+
+[node name="Sprite2D" parent="Map/Icon/Tutorial" index="0" unique_id=435413369]
+texture = ExtResource("15_mo32q")
+
+[node name="Endless" parent="Map/Icon" unique_id=995939181 instance=ExtResource("12_gw3fx")]
+position = Vector2(-26.666666, 163.33333)
+location_id = "endless"
+
+[node name="Sprite2D" parent="Map/Icon/Endless" index="0" unique_id=435413369]
+texture = SubResource("CompressedTexture2D_6k6j1")
+
+[node name="Overlay" type="CanvasLayer" parent="." unique_id=1219770239]
+visible = false
+
+[node name="Overlay" type="ColorRect" parent="Overlay" unique_id=1773446330]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.70000005)
+
+[node name="Panel" type="Control" parent="Overlay" unique_id=738071635]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.1, 1.1)
+pivot_offset = Vector2(650, 364)
+
+[node name="PanelSprite" type="Sprite2D" parent="Overlay/Panel" unique_id=558521360]
+position = Vector2(636.2, 366)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("17_mo32q")
+
+[node name="ActionContainer" type="VBoxContainer" parent="Overlay/Panel" unique_id=1363741775]
+layout_mode = 0
+offset_left = 757.27277
+offset_top = 254.90909
+offset_right = 953.27277
+offset_bottom = 543.90906
+scale = Vector2(0.5, 0.5)
+
+[node name="CloseButton" type="TextureButton" parent="Overlay/Panel" unique_id=2051595382]
+layout_mode = 0
+offset_left = 886.0
+offset_top = 184.0
+offset_right = 1040.0
+offset_bottom = 278.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Title" type="Label" parent="Overlay/Panel" unique_id=1576525175]
+layout_mode = 0
+offset_left = 746.00006
+offset_top = 403.90912
+offset_right = 925.00006
+offset_bottom = 622.90906
+text = "Endless"
+label_settings = SubResource("LabelSettings_m335s")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Overlay/Panel" unique_id=1983500089]
+position = Vector2(691.8181, 502.18185)
+rotation = -0.08008356
+scale = Vector2(0.11, 0.11)
+sprite_frames = SubResource("SpriteFrames_4o3w1")
+animation = &"yuna"
+autoplay = "yuna"
+frame_progress = 0.108286746
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Overlay/Panel" unique_id=1111402377]
+position = Vector2(348.1818, 505.81815)
+rotation = 0.12242571
+scale = Vector2(0.11, 0.11)
+sprite_frames = SubResource("SpriteFrames_30iet")
+animation = &"yuna"
+autoplay = "yuna"
+frame = 1
+frame_progress = 0.27040952
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="." unique_id=1949074129]
+layer = 0
+script = ExtResource("16_fq663")
+scroll_speed = 40
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2" unique_id=659662493]
+position = Vector2(-16, -56)
+motion_mirroring = Vector2(1286.4, 0)
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer" unique_id=91350755]
+position = Vector2(640, 368)
+rotation = -3.1415925
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("5_m335s")
+
+[node name="ChatUI" type="Control" parent="." unique_id=453691593]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Bubble" type="TextureRect" parent="ChatUI" unique_id=1214783130]
+layout_mode = 0
+offset_left = 64.150024
+offset_top = 566.0
+offset_right = 552.15
+offset_bottom = 665.0
+scale = Vector2(0.55, 0.55)
+texture = ExtResource("27_6ek7f")
+
+[node name="Text" type="Label" parent="ChatUI" unique_id=1039886932]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 580.0
+offset_right = 448.0
+offset_bottom = 624.0
+scale = Vector2(0.55, 0.55)
+text = "Lorem Ipsum Dolor Sit Amet"
+label_settings = SubResource("LabelSettings_4qxv8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ChatUI" unique_id=643740793]
+position = Vector2(353, 580)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_fq663")
+frame_progress = 0.45373055
+offset = Vector2(-345, 244)
+
+[editable path="Map/IconShadow/Endless"]
+[editable path="Map/IconShadow/Tutorial"]
+[editable path="Map/IconShadow/Journey"]
+[editable path="Map/IconShadow/Basecamp"]
+[editable path="Map/Icon/Basecamp"]
+[editable path="Map/Icon/Journey"]
+[editable path="Map/Icon/Tutorial"]
+[editable path="Map/Icon/Endless"]

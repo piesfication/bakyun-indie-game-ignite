@@ -1,18 +1,24 @@
 
 extends Area2D
+signal first_hit_enemy_reached(enemy: Node)
 @export var background_top_z: int = 30
 var first_hit_enemy: Node = null
 
 @export var speed: float = 3500.0
+@export var speed_max: float = 3500.0
 @export var max_distance: float = 1200.0
 var max_scale_proyektil := 0.4
 var max_distance_default := 1200.0
 var scale_proyektil := 1.0
 @export var hit_radius: float = 26.0
+@export var hit_radius_max: float = 26.0
 @export var damage: int = 1
 @export var max_depth_difference: float = 0.3
 @export var projectile_scale: Vector2 = Vector2(0.25,0.25)
 @export var projectile_color: Color = Color(1.0, 0.48, 0.55, 0.92)
+
+var locked_z_index: int = 1100
+var locked_scale_value: float = 0.0
 
 @onready var visual: AnimatedSprite2D = $Visual
 
@@ -21,18 +27,20 @@ var traveled_distance: float = 0.0
 var ignored_enemy: Node = null
 var hit_enemies: Array[Node] = []
 var source_depth_plane: float = 0.5
+var _first_hit_signal_emitted: bool = false
 
 
 
 func _ready() -> void:
 	monitoring = false
 	monitorable = false
-	z_index = 1100
+	z_index = locked_z_index
 	setup_visual()
 	if visual != null:
 		visual.animation = "launch"
 		visual.play()
 		visual.connect("animation_finished", Callable(self, "_on_visual_animation_finished"))
+	_sync_motion_with_visual_scale()
 func _on_visual_animation_finished() -> void:
 	if visual.animation == "launch":
 		visual.animation = "travel"
@@ -64,6 +72,9 @@ func setup(start_pos: Vector2, move_direction: Vector2, source_enemy: Node = nul
 	source_depth_plane = source_depth
 	traveled_distance = 0.0
 	hit_enemies.clear()
+	_lock_scale_from_source(source_enemy)
+	_apply_locked_visual_scale()
+	_sync_motion_with_visual_scale()
 
 
 func _extract_enemy_depth(enemy: Node) -> Variant:
@@ -81,9 +92,10 @@ func setup_visual() -> void:
 	if visual == null:
 		return
 
-	visual.scale = projectile_scale
+	_apply_locked_visual_scale()
 	visual.modulate = projectile_color
 	# AnimatedSprite2D tidak punya property 'texture', jadi tidak perlu create_placeholder_texture
+	_sync_motion_with_visual_scale()
 
 
 func create_placeholder_texture() -> ImageTexture:
@@ -93,6 +105,7 @@ func create_placeholder_texture() -> ImageTexture:
 
 
 func deal_damage_on_overlap() -> void:
+	_sync_motion_with_visual_scale()
 	var circle := CircleShape2D.new()
 	circle.radius = hit_radius
 
@@ -130,39 +143,61 @@ func deal_damage_on_overlap() -> void:
 
 	for hit in enemy_hits:
 		var enemy = hit["enemy"]
-		# Samakan z_index projectile dengan z_index musuh yang kena
-		var new_z_index = z_index
-		if "z_index" in enemy:
-			new_z_index = enemy.z_index
 		# Simpan reference ke musuh pertama yang kena
 		if first_hit_enemy == null:
 			first_hit_enemy = enemy
-
-		# Scale proyektil proporsional: scale = scale_lawan * 0.8 (maksimal)
-		var enemy_scale := Vector2.ONE
-		if "scale" in enemy:
-			enemy_scale = enemy.scale
-		elif enemy.has_method("get_scale"):
-			enemy_scale = enemy.get_scale()
-		var scale_val = max_scale_proyektil * (enemy_scale.x / 0.3)
-		scale_val = min(scale_val, max_scale_proyektil)
-		scale_proyektil = scale_val
-		# Update max_distance proporsional terhadap scale
-		max_distance = max_distance_default * (scale_proyektil / max_scale_proyektil)
-
-		# Sinkronkan ke semua proyektil aktif
-		var parent = get_parent()
-		if parent:
-			for child in parent.get_children():
-				if child != self and child.has_method("set_projectile_visual_sync"):
-					child.set_projectile_visual_sync(new_z_index, scale_val)
-		# Set untuk diri sendiri
-		z_index = new_z_index
-		visual.scale = Vector2.ONE * scale_val
+			if not _first_hit_signal_emitted:
+				_first_hit_signal_emitted = true
+				first_hit_enemy_reached.emit(enemy)
 
 		hit_enemies.append(enemy)
-		enemy.apply_damage(damage)
+		var total_damage := damage + EnhancementManager.get_pierce_damage_bonus_for(enemy)
+		if enemy.is_in_group("orb_nodes") and enemy.has_method("apply_damage"):
+			enemy.apply_damage(total_damage, true)
+		else:
+			enemy.apply_damage(total_damage)
 
-func set_projectile_visual_sync(new_z_index: int, scale_val: float) -> void:
-	z_index = new_z_index
-	visual.scale = Vector2.ONE * scale_val
+func set_projectile_visual_sync(_scale_val: float) -> void:
+	pass
+
+func _lock_scale_from_source(source_enemy: Node) -> void:
+	locked_scale_value = _calculate_locked_scale_value(source_enemy)
+	if locked_scale_value > 0.0:
+		scale_proyektil = locked_scale_value
+		max_distance = max_distance_default * (scale_proyektil / max_scale_proyektil)
+
+func _apply_locked_visual_scale() -> void:
+	if visual == null:
+		return
+
+	if locked_scale_value > 0.0:
+		visual.scale = Vector2.ONE * locked_scale_value
+	else:
+		visual.scale = projectile_scale
+
+func _calculate_locked_scale_value(source_enemy: Node) -> float:
+	if source_enemy == null or not is_instance_valid(source_enemy):
+		return 0.0
+
+	var source_scale_x := 0.0
+	if "scale" in source_enemy:
+		source_scale_x = float((source_enemy as Node2D).scale.x)
+	elif source_enemy.has_method("get_scale"):
+		source_scale_x = float((source_enemy.get_scale() as Vector2).x)
+
+	if source_scale_x <= 0.0:
+		return 0.0
+
+	var scale_val := max_scale_proyektil * (source_scale_x / 0.3)
+	return min(scale_val, max_scale_proyektil)
+
+func _sync_motion_with_visual_scale() -> void:
+	if visual == null:
+		return
+
+	var scale_ratio := 0.0
+	if max_scale_proyektil > 0.0:
+		scale_ratio = clampf(visual.scale.x / max_scale_proyektil, 0.0, 1.0)
+
+	speed = speed_max * scale_ratio
+	hit_radius = hit_radius_max * scale_ratio

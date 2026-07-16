@@ -927,7 +927,7 @@ func on_hit(hit_area: Node = null):
 	apply_damage(1)
 		
 
-func apply_damage(amount: int) -> void:
+func apply_damage(amount: int, from_nova_shared_damage: bool = false) -> void:
 	if is_dead or amount <= 0 or hp <= 0:
 		return
 
@@ -938,6 +938,9 @@ func apply_damage(amount: int) -> void:
 	_show_health_exclusive()
 	_play_health_state_animation()
 	_play_health_squeeze_stretch()
+
+	if not from_nova_shared_damage and EnhancementManager.should_nova_shared_damage() and is_slow():
+		_apply_nova_shared_damage_to_other_slow_enemies(amount)
 
 	if hp <= 0:
 		die()
@@ -997,6 +1000,27 @@ func apply_slow(duration: float, factor: float) -> void:
 	slow_timer = max(slow_timer, duration)
 	slow_factor = clampf(min(slow_factor, factor), 0.15, 1.0)
 	_apply_visual_modulate()
+
+
+func is_slow() -> bool:
+	return slow_timer > 0.0
+
+
+func _apply_nova_shared_damage_to_other_slow_enemies(amount: int) -> void:
+	if amount <= 0:
+		return
+
+	var enemies: Array = get_tree().get_nodes_in_group("enemy_nodes")
+	for enemy in enemies:
+		if enemy == null or not is_instance_valid(enemy):
+			continue
+		if enemy == self:
+			continue
+		if not enemy.has_method("is_slow") or not enemy.has_method("apply_damage"):
+			continue
+		if not enemy.is_slow():
+			continue
+		enemy.apply_damage(amount, true)
 
 
 func pull_towards(target_pos: Vector2, strength: float = 0.55) -> void:

@@ -175,8 +175,14 @@ func on_hit(_area: Node = null) -> void:
 	#hp -= amount
 	#if hp <= 0:
 		#_neutralize_anchor()
-func apply_damage(amount: int) -> void:
+func apply_damage(amount: int, ignore_color: bool = false) -> void:
 	if is_dead or neutralized or amount <= 0:
+		return
+
+	if ignore_color:
+		hp -= amount
+		if hp <= 0:
+			_neutralize_anchor()
 		return
 
 	var shooter_char := _get_current_character_name()

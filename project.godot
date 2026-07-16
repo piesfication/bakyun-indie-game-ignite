@@ -36,6 +36,7 @@ StoryProgress="*res://script/story_progress.gd"
 AudioManager="*res://audio/world_audio_manager.tscn"
 Current="*uid://dospdvoh7w2xl"
 CardDatabase="*uid://7seytnrea6sn"
+EnhancementManager="*res://script/enhancement_manager.gd"
 
 [dialogic]
 

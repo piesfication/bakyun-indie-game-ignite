@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://crvf8rs2qdxo8"]
+
+[ext_resource type="Script" uid="uid://fth3n6t5nh18" path="res://script/album_thumbnail.gd" id="1_i73c5"]
+[ext_resource type="Texture2D" uid="uid://csgakp0rw3yfc" path="res://assets/album/selected/1.png" id="2_400nd"]
+
+[node name="AlbumThumbnail" type="Control" unique_id=1663415163]
+custom_minimum_size = Vector2(0, 285)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 280.0
+offset_bottom = 285.0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_i73c5")
+
+[node name="Content" type="Control" parent="." unique_id=1290683455]
+anchors_preset = 0
+offset_right = 280.0
+offset_bottom = 262.0
+
+[node name="Thumbnail" type="TextureRect" parent="Content" unique_id=1338726684]
+layout_mode = 0
+offset_right = 279.0
+offset_bottom = 258.0
+pivot_offset = Vector2(142, 123)
+texture = ExtResource("2_400nd")
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=1866575700]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 284.0
+offset_bottom = 264.0

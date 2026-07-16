@@ -26,9 +26,207 @@
 "scale": 0.98,
 "scene": ""
 },
+"Iwiwiwi/DarkenedIwiwiwi": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Dark/iwiwiwiw.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 0.98,
+"scene": ""
+},
+"Iwiwiwi/iwiwiwi": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Ori/iwiwiwiw.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Kesal/DarkenedKesal": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Dark/kesal.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 0.98,
+"scene": ""
+},
+"Kesal/Kesal": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Ori/kesal.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Kikuk/DarkenedKikuk": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Dark/kikuk.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 0.98,
+"scene": ""
+},
+"Kikuk/Kikuk": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Ori/kikuk.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Kyaaaa/DarkenedKyaaaa": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Dark/kyaaaa.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 0.98,
+"scene": ""
+},
+"Kyaaaa/Kyaaaa": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Ori/kyaaaa.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Mikir/DarkenedMikir": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Dark/mikir(merem).png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 0.98,
+"scene": ""
+},
+"Mikir/Mikir": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Ori/mikir(merem).png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
 "Outlined": {
 "export_overrides": {
 "image": "\"res://assets/story/Dialogue/Potrait/Untitled1013_20260404085334.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Proud/DarkenedProud": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Dark/proud.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 0.98,
+"scene": ""
+},
+"Proud/Proud": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Ori/proud.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Sad/DarkenedSad": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Dark/sadsmile.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 0.98,
+"scene": ""
+},
+"Sad/Sad": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Ori/sadsmile.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Serious/DarkenedSerious": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Dark/serious.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Serious/Serious": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Ori/serious.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Smirk/DarkenedSmirk": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Dark/smirk.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 0.98,
+"scene": ""
+},
+"Smirk/Smirk": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Ori/smirk.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Surprised/DarkenedSurprised": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Dark/surprised.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 0.98,
+"scene": ""
+},
+"Surprised/Surprised": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Ori/surprised.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"Think/DarkenedThink": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Dark/think.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 0.98,
+"scene": ""
+},
+"Think/Think": {
+"export_overrides": {
+"image": "\"res://assets/expression/Baku/Ori/think.png\""
 },
 "mirror": false,
 "offset": Vector2(0, 0),

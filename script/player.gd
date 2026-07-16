@@ -128,6 +128,19 @@ func take_damage(amount: int):
 		die()
 
 
+func heal(amount: int) -> void:
+	if amount <= 0:
+		return
+
+	var old_hp := current_hp
+	current_hp = clamp(current_hp + amount, 0, max_hp)
+
+	if current_hp != old_hp:
+		emit_signal("hp_changed", old_hp, current_hp)
+		if _damage_hud != null and is_instance_valid(_damage_hud) and not _damage_hud_forced and current_hp > 1 and _damage_hud_time_left <= 0.0:
+			_damage_hud.visible = false
+
+
 func die():
 	print("GAME OVER")
 	emit_signal("died")

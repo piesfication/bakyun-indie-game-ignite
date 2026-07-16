@@ -92,7 +92,7 @@ background_scale_padding = 0.0
 
 [node name="Background" type="Sprite2D" parent="." unique_id=573508185]
 position = Vector2(638.4, 401.6)
-scale = Vector2(0.69, 0.69)
+scale = Vector2(0.67, 0.67)
 texture = ExtResource("2_cabf2")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1155190879]
@@ -101,10 +101,10 @@ texture = ExtResource("2_cabf2")
 layout_mode = 3
 anchor_right = 0.994
 anchor_bottom = 0.989
-offset_left = 100.99999
-offset_top = 66.0
-offset_right = -459.32007
-offset_bottom = 73.91998
+offset_left = 116.99999
+offset_top = 68.0
+offset_right = -443.32007
+offset_bottom = 75.91998
 rotation = 0.08136914
 scale = Vector2(0.8, 0.8)
 mouse_filter = 1
@@ -174,7 +174,7 @@ rotation = 0.2443461
 scale = Vector2(0.5, 0.5)
 
 [node name="Story" type="Node2D" parent="CanvasLayer" unique_id=1369356507]
-position = Vector2(1002, 40.999992)
+position = Vector2(985, 40.999992)
 
 [node name="Story" type="Label" parent="CanvasLayer/Story" unique_id=2017714116]
 anchors_preset = -1
@@ -188,6 +188,7 @@ offset_right = -19.999939
 offset_bottom = 52.000008
 text = "Story"
 label_settings = SubResource("LabelSettings_ojubo")
+metadata/_edit_use_anchors_ = true
 
 [node name="StoryClick" type="Area2D" parent="CanvasLayer/Story" unique_id=1586479902]
 position = Vector2(-112.99994, 7.6293945e-06)
@@ -198,7 +199,7 @@ position = Vector2(59.5, 24)
 shape = SubResource("RectangleShape2D_cabf2")
 
 [node name="Tutorial" type="Node2D" parent="CanvasLayer" unique_id=1340248497]
-position = Vector2(1015, 40.999992)
+position = Vector2(998, 40.999992)
 
 [node name="Tutorial" type="Label" parent="CanvasLayer/Tutorial" unique_id=1942248230]
 anchors_preset = -1
@@ -222,7 +223,7 @@ position = Vector2(70.5, 24)
 shape = SubResource("RectangleShape2D_qgpns")
 
 [node name="Back" type="Node2D" parent="CanvasLayer" unique_id=2097886787]
-position = Vector2(1015, 40.999992)
+position = Vector2(998, 40.999992)
 
 [node name="Back" type="Label" parent="CanvasLayer/Back" unique_id=417619319]
 anchors_preset = -1
@@ -271,7 +272,7 @@ mouse_filter = 2
 [node name="LevelConfirmation" parent="CanvasLayer/LevelConfirmationContainer" unique_id=1301659965 instance=ExtResource("10_xk4l2")]
 visible = false
 position = Vector2(640, 384.00003)
-scale = Vector2(0.65, 0.65)
+scale = Vector2(0.55, 0.55)
 
 [node name="MapManager" type="Control" parent="." unique_id=1609453460]
 layout_mode = 1

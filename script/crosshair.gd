@@ -18,7 +18,7 @@ var queued_skill: SkillShot = SkillShot.NONE
 
 const SKILL_DELAY_OVERDRIVE := 0.28
 const SKILL_PIERCE_SPLIT_RANGE := 1500.0
-const SKILL_PIERCE_PROJECTILE_SPEED := 750.0
+const SKILL_PIERCE_PROJECTILE_SPEED := 1500.0
 const SKILL_PIERCE_PROJECTILE_RADIUS := 62.0
 const SKILL_CHAIN_MARK_RADIUS := 240.0
 const SKILL_CHAIN_EXPLOSION_RADIUS := 220.0
@@ -73,6 +73,8 @@ var aim_state := AimState.NONE
 
 var state := State.IDLE
 @onready var sprite: AnimatedSprite2D = $Visual/AnimatedSprite2D
+var _pierce_burst_token_counter: int = 0
+var _pierce_burst_used_tokens: Dictionary = {}
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -597,15 +599,21 @@ func apply_skill_shot(enemy: Node, hitbox: Node, cast_position: Vector2) -> void
 			elif target_enemy != null and target_enemy.has_method("instakill"):
 				# Only instakill non-boss enemies
 				target_enemy.instakill(overdrive_delay)
+				var overdrive_heal := EnhancementManager.get_overdrive_heal_amount()
+				if overdrive_heal > 0:
+					_schedule_player_heal(overdrive_heal, overdrive_delay)
+				if EnhancementManager.should_overdrive_fill_random_combo() and indicator.has_method("queue_random_combo_fill"):
+					indicator.queue_random_combo_fill()
 
 		SkillShot.PIERCE:
 			var projectile_origin := cast_position
 			if target_enemy != null:
 				if target_enemy.has_method("play_redhit_effect"):
 					target_enemy.play_redhit_effect()
-				_apply_skill_hit_or_damage(target_enemy, hitbox, 1)
+				var pierce_damage := 1 + EnhancementManager.get_pierce_damage_bonus_for(target_enemy)
+				_apply_skill_hit_or_damage(target_enemy, hitbox, pierce_damage)
 				projectile_origin = target_enemy.global_position
-			spawn_pierce_projectiles(projectile_origin, target_enemy)
+			spawn_pierce_projectiles(projectile_origin, target_enemy, true)
 
 		SkillShot.CHAIN:
 			if target_enemy != null and target_enemy.has_method("play_bluehit_effect"):
@@ -618,6 +626,7 @@ func apply_skill_shot(enemy: Node, hitbox: Node, cast_position: Vector2) -> void
 		SkillShot.NOVA:
 			var center_pos := cast_position
 			var target_depth := 0.5
+			var nova_slow_duration := EnhancementManager.get_nova_slow_duration(SKILL_NOVA_SLOW_DURATION)
 			
 			if target_enemy != null and not _is_boss_enemy(target_enemy, hitbox):
 				_apply_nova_target_visual_modulate(target_enemy)
@@ -632,7 +641,7 @@ func apply_skill_shot(enemy: Node, hitbox: Node, cast_position: Vector2) -> void
 				target_depth = _extract_enemy_depth_or_default(target_enemy, 0.5)
 				
 			
-			apply_nova_pull(center_pos, target_enemy, target_depth)
+			apply_nova_pull(center_pos, target_enemy, target_depth, nova_slow_duration)
 
 	queued_skill = SkillShot.NONE
 
@@ -643,6 +652,48 @@ func _trigger_recoil_shake() -> void:
 	if player_node.has_method("trigger_recoil_shake"):
 		player_node.trigger_recoil_shake()
 
+
+func _schedule_player_heal(amount: int, delay: float) -> void:
+	if amount <= 0:
+		return
+
+	var player_node := get_node_or_null("../Player")
+	if player_node == null or not is_instance_valid(player_node):
+		return
+	if not player_node.has_method("heal"):
+		return
+
+	var tree := get_tree()
+	if tree == null:
+		return
+
+	var wait_time := maxf(delay, 0.0)
+	if wait_time <= 0.0:
+		player_node.heal(amount)
+		return
+
+	tree.create_timer(wait_time).timeout.connect(func():
+		if is_instance_valid(player_node):
+			player_node.heal(amount)
+	)
+
+func _next_pierce_burst_token() -> int:
+	_pierce_burst_token_counter += 1
+	return _pierce_burst_token_counter
+
+func _on_pierce_projectile_first_hit(enemy: Node, burst_token: int, allow_secondary_burst: bool) -> void:
+	if not allow_secondary_burst:
+		return
+	if enemy == null or not is_instance_valid(enemy):
+		return
+	if not EnhancementManager.should_pierce_spawn_secondary_burst():
+		return
+	if _pierce_burst_used_tokens.get(burst_token, false):
+		return
+
+	_pierce_burst_used_tokens[burst_token] = true
+	spawn_pierce_projectiles((enemy as Node2D).global_position, enemy, false)
+
 func _apply_skill_hit_or_damage(enemy: Node, hitbox: Node, damage: int) -> void:
 	if enemy == null or not is_instance_valid(enemy) or damage <= 0:
 		return
@@ -652,6 +703,11 @@ func _apply_skill_hit_or_damage(enemy: Node, hitbox: Node, damage: int) -> void:
 		if enemy.has_method("on_hit"):
 			enemy.on_hit(hitbox)
 			return
+
+	# Jika target adalah orb, panggil apply_damage dengan flag untuk melewati aturan warna
+	if enemy.is_in_group("orb_nodes") and enemy.has_method("apply_damage"):
+		enemy.apply_damage(damage, true)
+		return
 
 	if enemy.has_method("apply_damage"):
 		enemy.apply_damage(damage)
@@ -675,10 +731,13 @@ func find_nearest_enemy_to_position(
 	radius: float = INF,
 	excluded: Array[Node] = [],
 	reference_depth: Variant = null,
-	max_depth_difference: float = INF
+	max_depth_difference: float = INF,
+	prefer_slow: bool = false
 ) -> Node:
 	var best_enemy: Node = null
 	var best_dist: float = radius
+	var best_slow_enemy: Node = null
+	var best_slow_dist: float = radius
 
 	var enemies: Array = get_tree().get_nodes_in_group("enemy_nodes")
 	for enemy in enemies:
@@ -694,18 +753,27 @@ func find_nearest_enemy_to_position(
 				continue
 
 		var dist: float = enemy.global_position.distance_to(center_pos)
+		if prefer_slow and _is_enemy_slow(enemy):
+			if dist <= best_slow_dist:
+				best_slow_dist = dist
+				best_slow_enemy = enemy
 		if dist <= best_dist:
 			best_dist = dist
 			best_enemy = enemy
 
+	if prefer_slow and best_slow_enemy != null:
+		return best_slow_enemy
+
 	return best_enemy
 
 
-func spawn_pierce_projectiles(origin: Vector2, source_enemy: Node = null) -> void:
+func spawn_pierce_projectiles(origin: Vector2, source_enemy: Node = null, allow_secondary_burst: bool = true) -> void:
 	var split_dirs: Array[Vector2] = []
 	var base_dir := Vector2.UP
 	for i in range(5):
 		split_dirs.append(base_dir.rotated(deg_to_rad(float(i) * 72.0)))
+
+	var burst_token := _next_pierce_burst_token() if allow_secondary_burst else -1
 
 	var source_depth := 0.5
 	if source_enemy != null and is_instance_valid(source_enemy):
@@ -716,11 +784,14 @@ func spawn_pierce_projectiles(origin: Vector2, source_enemy: Node = null) -> voi
 
 	for dir: Vector2 in split_dirs:
 		var projectile := PIERCE_PROJECTILE_SCENE.instantiate()
+		projectile.set("speed_max", SKILL_PIERCE_PROJECTILE_SPEED)
+		projectile.set("hit_radius_max", SKILL_PIERCE_PROJECTILE_RADIUS)
+		projectile.set("locked_z_index", source_enemy.z_index if source_enemy != null and is_instance_valid(source_enemy) and "z_index" in source_enemy else 1100)
+		if allow_secondary_burst and projectile.has_signal("first_hit_enemy_reached"):
+			projectile.first_hit_enemy_reached.connect(Callable(self, "_on_pierce_projectile_first_hit").bind(burst_token, allow_secondary_burst))
 		get_tree().current_scene.add_child(projectile)
 		projectile.setup(origin, dir, source_enemy, source_depth)
-		projectile.speed = SKILL_PIERCE_PROJECTILE_SPEED
 		projectile.max_distance = SKILL_PIERCE_SPLIT_RANGE
-		projectile.hit_radius = SKILL_PIERCE_PROJECTILE_RADIUS
 
 
 func _extract_enemy_depth_or_default(enemy: Node, fallback_depth: float = 0.5) -> float:
@@ -746,10 +817,17 @@ func _run_chain_mark_sequence(start_enemy: Node) -> void:
 	var visited: Array[Node] = []
 	var current: Node = start_enemy
 	var bounce_count: int = 0 
+	var max_bounces := SKILL_CHAIN_MAX_BOUNCES + EnhancementManager.get_chain_extra_bounces()
+	var prefer_slow := EnhancementManager.should_prioritize_slow_for_chain()
 	
-	if start_enemy.has_method("apply_damage"):
-		if start_enemy.has_method("play_bluehit_effect"):
-			start_enemy.play_bluehit_effect()
+	if start_enemy.has_method("play_bluehit_effect"):
+		start_enemy.play_bluehit_effect()
+	if start_enemy.is_in_group("boss") and start_enemy.has_method("on_hit"):
+		start_enemy.on_hit()
+	elif start_enemy.has_method("apply_damage"):
+		if start_enemy.is_in_group("orb_nodes"):
+			start_enemy.apply_damage(1, true)
+		else:
 			start_enemy.apply_damage(1)
 
 	var damage: int = 2
@@ -758,7 +836,7 @@ func _run_chain_mark_sequence(start_enemy: Node) -> void:
 		if visited.has(current):
 			break
 			
-		if bounce_count >= SKILL_CHAIN_MAX_BOUNCES:  # ← cek batas
+		if bounce_count >= max_bounces:
 			break
 
 		visited.append(current)
@@ -769,15 +847,24 @@ func _run_chain_mark_sequence(start_enemy: Node) -> void:
 			SKILL_CHAIN_TARGET_SEARCH_RADIUS,
 			visited,
 			current_depth,
-			SKILL_CHAIN_MAX_DEPTH_DIFFERENCE
+			SKILL_CHAIN_MAX_DEPTH_DIFFERENCE,
+			prefer_slow
 		)
 		if next_enemy == null or not is_instance_valid(next_enemy):
 			break
 
 		await _play_chain_projectile((current as Node2D).global_position, (next_enemy as Node2D).global_position, next_enemy )
 		
-		if next_enemy.has_method("apply_damage"):
-			next_enemy.apply_damage(damage)
+		if next_enemy.is_in_group("boss") and next_enemy.has_method("on_hit"):
+			next_enemy.on_hit()
+		elif next_enemy.has_method("apply_damage"):
+			if next_enemy.is_in_group("orb_nodes"):
+				next_enemy.apply_damage(damage, true)
+			else:
+				next_enemy.apply_damage(damage)
+
+		if EnhancementManager.should_chain_last_hit_insta_kill() and bounce_count + 1 >= max_bounces and next_enemy.has_method("instakill"):
+			next_enemy.instakill(0.0)
 
 		damage += 1
 		
@@ -824,25 +911,25 @@ func _play_chain_projectile(start_pos: Vector2, end_pos: Vector2, target_enemy: 
 		var scale_factor := lerpf(PROJECTILE_MIN_SCALE, PROJECTILE_MAX_SCALE, ratio)
 		var target_proj_scale := SKILL_CHAIN_PROJECTILE_SCALE * (scale_factor / SKILL_CHAIN_PROJECTILE_SCALE.x)
 				
-		var target_z := (target_enemy as Node2D).z_index -1
+		var target_z := (target_enemy as Node2D).z_index + 1
 		projectile.set_interpolation_targets(target_proj_scale, target_z)
 
 	if projectile.has_method("play_between"):
 		await projectile.play_between(start_pos, target_enemy as Node2D)
 
 
-func apply_nova_pull(center_pos: Vector2, center_enemy: Node, target_depth: float) -> void:
+func apply_nova_pull(center_pos: Vector2, center_enemy: Node, target_depth: float, slow_duration: float = SKILL_NOVA_SLOW_DURATION) -> void:
 	
 	# Apply nova pull ke center_enemy juga
 	var target_scale = center_enemy.scale if center_enemy != null and is_instance_valid(center_enemy) else Vector2.ONE
 	var center_entered_trigger := _has_entered_trigger_zorder(center_enemy)
 	if center_enemy != null and is_instance_valid(center_enemy):
 		if center_enemy.has_method("apply_nova_center_knockback_then_pull_effect"):
-			center_enemy.apply_nova_center_knockback_then_pull_effect(center_pos, target_depth, SKILL_NOVA_CENTER_KNOCKBACK_DEPTH, SKILL_NOVA_CENTER_KNOCKBACK_SPEED, SKILL_NOVA_CENTER_KNOCKBACK_DURATION, SKILL_NOVA_PULL_SPEED, SKILL_NOVA_PULL_DURATION, SKILL_NOVA_SLOW_DURATION, SKILL_NOVA_SLOW_FACTOR)
+			center_enemy.apply_nova_center_knockback_then_pull_effect(center_pos, target_depth, SKILL_NOVA_CENTER_KNOCKBACK_DEPTH, SKILL_NOVA_CENTER_KNOCKBACK_SPEED, SKILL_NOVA_CENTER_KNOCKBACK_DURATION, SKILL_NOVA_PULL_SPEED, SKILL_NOVA_PULL_DURATION, slow_duration, SKILL_NOVA_SLOW_FACTOR)
 		elif center_enemy.has_method("apply_nova_pull_effect"):
 			center_enemy.apply_nova_pull_effect(center_pos, target_depth, SKILL_NOVA_PULL_SPEED, SKILL_NOVA_PULL_DURATION)
 			if center_enemy.has_method("apply_slow"):
-				center_enemy.apply_slow(SKILL_NOVA_SLOW_DURATION, SKILL_NOVA_SLOW_FACTOR)
+				center_enemy.apply_slow(slow_duration, SKILL_NOVA_SLOW_FACTOR)
 	var enemies: Array = get_tree().get_nodes_in_group("enemy_nodes")
 	for enemy in enemies:
 		if enemy == null or not is_instance_valid(enemy):
@@ -857,18 +944,35 @@ func apply_nova_pull(center_pos: Vector2, center_enemy: Node, target_depth: floa
 			continue
 		
 		var scale_x_int = float(enemy.scale.x)
-		var nova_knockback_target_depth = clampf(enemy.depth + maxf(SKILL_NOVA_CENTER_KNOCKBACK_DEPTH, 0.0), 0.0, 1.0)
+		var enemy_depth := _extract_enemy_depth_or_default(enemy, 0.5)
+		var enemy_max_scale := 1.0
+		if "max_scale" in enemy:
+			enemy_max_scale = maxf(float(enemy.get("max_scale")), 0.001)
+		var nova_knockback_target_depth = clampf(enemy_depth + maxf(SKILL_NOVA_CENTER_KNOCKBACK_DEPTH, 0.0), 0.0, 1.0)
 		
-		if enemy.global_position.distance_to(center_pos) <= SKILL_NOVA_PULL_RADIUS * (scale_x_int/enemy.max_scale):
+		if enemy.global_position.distance_to(center_pos) <= SKILL_NOVA_PULL_RADIUS * (scale_x_int / enemy_max_scale):
 			if (enemy.scale >= target_scale and enemy.scale <= target_scale + Vector2(0.3, 0.3)) or (enemy.scale <= target_scale and enemy.scale >= target_scale - Vector2(0.1, 0.1)):
 				if enemy.has_method("apply_nova_pull_effect"):
-						enemy.apply_nova_pull_effect(center_pos, nova_knockback_target_depth , SKILL_NOVA_PULL_SPEED, SKILL_NOVA_PULL_DURATION)
+							enemy.apply_nova_pull_effect(center_pos, nova_knockback_target_depth , SKILL_NOVA_PULL_SPEED, SKILL_NOVA_PULL_DURATION)
 				elif enemy.has_method("pull_towards"):
 					if enemy.is_in_group("boss"):
 						continue
 					enemy.pull_towards(center_pos)
 				if enemy.has_method("apply_slow"):
-					enemy.apply_slow(SKILL_NOVA_SLOW_DURATION, SKILL_NOVA_SLOW_FACTOR)
+						enemy.apply_slow(slow_duration, SKILL_NOVA_SLOW_FACTOR)
+
+func _is_enemy_slow(enemy: Node) -> bool:
+	if enemy == null or not is_instance_valid(enemy):
+		return false
+
+	if enemy.has_method("is_slow"):
+		return enemy.call("is_slow") == true
+
+	for prop in enemy.get_property_list():
+		if String(prop.get("name", "")) == "slow_timer":
+			return float(enemy.get("slow_timer")) > 0.0
+
+	return false
 
 
 func _has_entered_trigger_zorder(node: Node) -> bool:

@@ -17,6 +17,7 @@ var current_cast_skill := "NONE"
 var cast_locked: bool = false
 var _mahou_base_position: Vector2 = Vector2.ZERO
 var _mahou_bounce_tween: Tween
+var _pending_random_combo_fill: bool = false
 
 @onready var anim := $CastAnimation
 
@@ -153,9 +154,27 @@ func _on_cast_animation_animation_finished() -> void:
 	$MahouMeter.visible = true
 	current_cast_skill = "NONE"
 	reset_slots()
+	if _pending_random_combo_fill:
+		_pending_random_combo_fill = false
+		fill_random_combo()
 	pass # Replace with function body.
 
 func reset_slots():
 	for i in range(3):
 		slot_states[i] = "empty"
 		update_slot_visual(i)
+
+func fill_random_combo() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+
+	for i in range(3):
+		slot_states[i] = "baku" if rng.randi_range(0, 1) == 0 else "yuna"
+
+	for i in range(3):
+		update_slot_visual(i)
+
+	play_bounce($MahouMeter)
+
+func queue_random_combo_fill() -> void:
+	_pending_random_combo_fill = true

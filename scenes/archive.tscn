@@ -1,0 +1,467 @@
+[gd_scene format=3 uid="uid://bqi0nu3g60sas"]
+
+[ext_resource type="Script" uid="uid://bfity0f402xlj" path="res://script/archive.gd" id="1_4dq6o"]
+[ext_resource type="Texture2D" uid="uid://foxk7dq6i7gx" path="res://assets/archive/Screen/Untitled1178_20260714154220.png" id="2_43qd2"]
+[ext_resource type="Texture2D" uid="uid://bpqk0iy53deak" path="res://assets/archive/Screen/Untitled1178_20260714154242.png" id="3_5mx8p"]
+[ext_resource type="Texture2D" uid="uid://b24dk7yak0a2i" path="res://assets/archive/Screen/Untitled1178_20260714164407.png" id="4_43qd2"]
+[ext_resource type="Texture2D" uid="uid://gvlt7gksqc2w" path="res://assets/archive/Screen/Untitled1178_20260714164412.png" id="5_5mx8p"]
+[ext_resource type="FontFile" uid="uid://dcs4tsec8f7yd" path="res://assets/font/zrtw-hackynote-personal-use/ZRTW-HackynotePersonalUse.otf" id="5_cj230"]
+[ext_resource type="Script" uid="uid://b4usntkl3nx1l" path="res://script/story_click.gd" id="6_1k2kj"]
+[ext_resource type="Script" uid="uid://bcusm1g8yw0rb" path="res://scenes/tutorial_click.gd" id="7_s6brg"]
+[ext_resource type="Script" uid="uid://dtppdsewryec4" path="res://script/back_click.gd" id="8_8h5hx"]
+[ext_resource type="PackedScene" uid="uid://ipsj4qvblc3m" path="res://scenes/level_confirmation.tscn" id="9_ldih6"]
+[ext_resource type="Texture2D" uid="uid://d13pg257l34ji" path="res://assets/archive/Screen/Untitled1178_20260714154301.png" id="10_e1ojs"]
+[ext_resource type="Texture2D" uid="uid://c3ebt413x1l3" path="res://assets/archive/Screen/Untitled1178_20260714154319.png" id="11_4dq6o"]
+[ext_resource type="Script" uid="uid://dgxvxmitrd13o" path="res://script/parallax_background.gd" id="11_o56r2"]
+[ext_resource type="Texture2D" uid="uid://b4v8sopxtx4hd" path="res://assets/archive/Screen/Untitled1178_20260714154317.png" id="12_cj230"]
+[ext_resource type="Texture2D" uid="uid://71fsdc8fl4jf" path="res://assets/title/Untitled977_20260324075141.png" id="12_se8ge"]
+[ext_resource type="Script" uid="uid://b57hbvyj18rxn" path="res://script/parallax_background_2.gd" id="13_rurru"]
+[ext_resource type="Script" uid="uid://ecce2xti5ckh" path="res://script/album_layer.gd" id="17_e1ojs"]
+[ext_resource type="Texture2D" uid="uid://fatim0d7ni4t" path="res://assets/album/Photo/1.png" id="17_ldih6"]
+[ext_resource type="Texture2D" uid="uid://cs3a4a1b66i66" path="res://assets/album/Scroller/Group 1000008713 (1).png" id="18_8h5hx"]
+[ext_resource type="PackedScene" uid="uid://crvf8rs2qdxo8" path="res://scenes/album_thumbnail.tscn" id="19_e1ojs"]
+[ext_resource type="Texture2D" uid="uid://dqp1is1bptfk4" path="res://assets/story/Dialogue/Chatbox/Group 1000008712 (1).png" id="19_ldih6"]
+[ext_resource type="Texture2D" uid="uid://otyv2hbp4mq4" path="res://assets/album/Button/Group 1000008707 (1).png" id="19_s6brg"]
+[ext_resource type="Texture2D" uid="uid://csgakp0rw3yfc" path="res://assets/album/selected/1.png" id="21_yscmx"]
+[ext_resource type="Texture2D" uid="uid://t6xrxixpnqtu" path="res://assets/album/deselected/1.png" id="22_m0p2y"]
+[ext_resource type="Texture2D" uid="uid://bhmig14tieasp" path="res://assets/album/deselected/3.png" id="23_igigw"]
+[ext_resource type="Texture2D" uid="uid://8guodnqgs0kp" path="res://assets/album/deselected/unlocked.png" id="24_igigw"]
+[ext_resource type="Texture2D" uid="uid://bgk8xt0alrdd0" path="res://assets/album/selected/3.png" id="24_nc50w"]
+[ext_resource type="Texture2D" uid="uid://bham7pc37yy34" path="res://assets/album/Photo/2.png" id="25_66xhs"]
+[ext_resource type="Texture2D" uid="uid://bik2bdbgb057u" path="res://assets/album/selected/2.png" id="26_yt72o"]
+[ext_resource type="Texture2D" uid="uid://duewifmd7y5ob" path="res://assets/album/deselected/2.png" id="27_d31po"]
+[ext_resource type="Texture2D" uid="uid://nu1h6tvd7vw7" path="res://assets/album/Photo/3.png" id="28_46rfr"]
+[ext_resource type="Texture2D" uid="uid://ddy6jbxji7y47" path="res://assets/album/selected/4.png" id="29_2mht0"]
+[ext_resource type="Texture2D" uid="uid://c1720h2eluk0c" path="res://assets/album/deselected/4.png" id="30_lolmo"]
+[ext_resource type="Texture2D" uid="uid://edhvak5rqqjx" path="res://assets/album/Photo/4.png" id="31_xbqg6"]
+[ext_resource type="Texture2D" uid="uid://cglomwsv1cdwf" path="res://assets/album/selected/5.png" id="32_8x6i3"]
+[ext_resource type="Texture2D" uid="uid://d304gwo851vfb" path="res://assets/album/deselected/5.png" id="33_v7myn"]
+[ext_resource type="Texture2D" uid="uid://bmbmneuk6rmkn" path="res://assets/album/Photo/5.png" id="34_5v8u6"]
+[ext_resource type="Texture2D" uid="uid://l120xq8csp8l" path="res://assets/album/selected/6.png" id="35_ow1qk"]
+[ext_resource type="Texture2D" uid="uid://byc6iwipwb51s" path="res://assets/album/deselected/6.png" id="36_l24pm"]
+[ext_resource type="Texture2D" uid="uid://c8654jm3gg121" path="res://assets/album/Photo/6.png" id="37_8tpp2"]
+[ext_resource type="FontFile" uid="uid://bjisq025387gx" path="res://assets/font/zrtw-hackynote-personal-use/ZRTW-HackynotePersonalUse.ttf" id="39_m0p2y"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ojubo"]
+font = ExtResource("5_cj230")
+font_size = 30
+font_color = Color(0.5803922, 0.75686276, 0.64705884, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cabf2"]
+size = Vector2(85.00001, 56.000004)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qgpns"]
+size = Vector2(107, 56.000004)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cabf2"]
+font = ExtResource("5_cj230")
+font_size = 30
+font_color = Color(1, 0.56078434, 0.5568628, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2jpff"]
+size = Vector2(88, 56)
+
+[sub_resource type="LabelSettings" id="LabelSettings_m0p2y"]
+font = ExtResource("39_m0p2y")
+font_size = 50
+font_color = Color(0.46666667, 0.49803922, 0.3372549, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_igigw"]
+line_spacing = 2.8
+font = ExtResource("39_m0p2y")
+font_size = 42
+font_color = Color(0.46666667, 0.49803922, 0.3372549, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_nc50w"]
+line_spacing = 2.8
+font = ExtResource("39_m0p2y")
+font_size = 20
+font_color = Color(0.5803922, 0.75686276, 0.64705884, 1)
+
+[node name="Archive" type="Control" unique_id=1585951233]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+script = ExtResource("1_4dq6o")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1094875768]
+
+[node name="Background" type="Sprite2D" parent="Node2D" unique_id=573508185]
+position = Vector2(638, 401.99997)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("2_43qd2")
+
+[node name="Sea" type="Sprite2D" parent="Node2D" unique_id=1314725672]
+position = Vector2(639.2, 358.80002)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("3_5mx8p")
+
+[node name="Base" type="Sprite2D" parent="Node2D" unique_id=86432894]
+position = Vector2(639.2, 358.80002)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("4_43qd2")
+
+[node name="Char" type="Sprite2D" parent="Node2D" unique_id=1476319311]
+position = Vector2(618.00006, 407)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("5_5mx8p")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1155190879]
+
+[node name="Story" type="Node2D" parent="CanvasLayer" unique_id=1369356507]
+position = Vector2(985, 40.999992)
+
+[node name="Story" type="Label" parent="CanvasLayer/Story" unique_id=2017714116]
+anchors_preset = -1
+anchor_left = -0.26065162
+anchor_top = 0.1521739
+anchor_right = -0.26065162
+anchor_bottom = 0.1521739
+offset_left = -86.99994
+offset_top = 6.0000076
+offset_right = -19.999939
+offset_bottom = 52.000008
+text = "Story"
+label_settings = SubResource("LabelSettings_ojubo")
+metadata/_edit_use_anchors_ = true
+
+[node name="StoryClick" type="Area2D" parent="CanvasLayer/Story" unique_id=1586479902]
+position = Vector2(-112.99994, 7.6293945e-06)
+script = ExtResource("6_1k2kj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Story/StoryClick" unique_id=2090479058]
+position = Vector2(59.5, 24)
+shape = SubResource("RectangleShape2D_cabf2")
+
+[node name="Tutorial" type="Node2D" parent="CanvasLayer" unique_id=1340248497]
+position = Vector2(998, 40.999992)
+
+[node name="Tutorial" type="Label" parent="CanvasLayer/Tutorial" unique_id=1942248230]
+anchors_preset = -1
+anchor_left = -0.26065162
+anchor_top = 0.1521739
+anchor_right = -0.26065162
+anchor_bottom = 0.1521739
+offset_left = 1.000061
+offset_top = 6.0000076
+offset_right = 93.00006
+offset_bottom = 52.000008
+text = "Tutorial"
+label_settings = SubResource("LabelSettings_ojubo")
+
+[node name="StoryClick" type="Area2D" parent="CanvasLayer/Tutorial" unique_id=1435139694]
+position = Vector2(-22.999939, 7.6293945e-06)
+script = ExtResource("7_s6brg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Tutorial/StoryClick" unique_id=1605570528]
+position = Vector2(70.5, 24)
+shape = SubResource("RectangleShape2D_qgpns")
+
+[node name="Back" type="Node2D" parent="CanvasLayer" unique_id=2097886787]
+position = Vector2(998, 40.999992)
+
+[node name="Back" type="Label" parent="CanvasLayer/Back" unique_id=417619319]
+anchors_preset = -1
+anchor_left = 0.81875
+anchor_top = 0.055555556
+anchor_right = 0.81875
+anchor_bottom = 0.055555556
+offset_left = 132.00006
+offset_top = 6.0000076
+offset_right = 195.00006
+offset_bottom = 52.000008
+text = "Back "
+label_settings = SubResource("LabelSettings_cabf2")
+
+[node name="BackClick" type="Area2D" parent="CanvasLayer/Back" unique_id=1814281100]
+position = Vector2(132.00006, 3.0000076)
+script = ExtResource("8_8h5hx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Back/BackClick" unique_id=1345201154]
+position = Vector2(28, 21)
+shape = SubResource("RectangleShape2D_2jpff")
+
+[node name="TV" type="Node2D" parent="CanvasLayer" unique_id=15218324]
+position = Vector2(550.00006, 419.00003)
+rotation = -0.046461564
+scale = Vector2(0.58, 0.58)
+
+[node name="Visual" type="Sprite2D" parent="CanvasLayer/TV" unique_id=1234532763]
+texture = ExtResource("10_e1ojs")
+
+[node name="Codex" type="Sprite2D" parent="CanvasLayer/TV/Visual" unique_id=202743026]
+texture = ExtResource("11_4dq6o")
+
+[node name="AlbumButton" type="TextureButton" parent="CanvasLayer/TV/Visual" unique_id=1139561018]
+offset_left = -356.392
+offset_top = -56.26853
+offset_right = 168.59067
+offset_bottom = 109.76003
+rotation = 0.0029489405
+
+[node name="Album" type="Sprite2D" parent="CanvasLayer/TV/Visual/AlbumButton" unique_id=1783535790]
+position = Vector2(356.55634, 55.217285)
+rotation = -0.0029489403
+texture = ExtResource("12_cj230")
+
+[node name="Overlay" type="ColorRect" parent="CanvasLayer" unique_id=1184622653]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.70000005)
+
+[node name="LevelConfirmationContainer" type="Control" parent="CanvasLayer" unique_id=1708909206]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LevelConfirmation" parent="CanvasLayer/LevelConfirmationContainer" unique_id=1301659965 instance=ExtResource("9_ldih6")]
+visible = false
+position = Vector2(640, 384.00003)
+scale = Vector2(0.55, 0.55)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1645921214]
+layer = 0
+script = ExtResource("11_o56r2")
+scroll_speed = 40
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1113743473]
+z_index = 50
+position = Vector2(0, 52)
+motion_mirroring = Vector2(1286.4, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=807635914]
+position = Vector2(640, 369)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("12_se8ge")
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="." unique_id=59984192]
+layer = 0
+script = ExtResource("13_rurru")
+scroll_speed = 40
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2" unique_id=751928325]
+position = Vector2(-16, -56)
+motion_mirroring = Vector2(1286.4, 0)
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer" unique_id=63856301]
+position = Vector2(640, 416.00003)
+rotation = -3.1415925
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("12_se8ge")
+
+[node name="AlbumLayer" type="CanvasLayer" parent="." unique_id=197326990]
+script = ExtResource("17_e1ojs")
+
+[node name="Overlay" type="ColorRect" parent="AlbumLayer" unique_id=1473082485]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.70000005)
+
+[node name="AlbumMenu" type="Control" parent="AlbumLayer" unique_id=1767720030]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Image" type="TextureRect" parent="AlbumLayer/AlbumMenu" unique_id=1600471267]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 121.261086
+offset_right = 1275.0
+offset_bottom = 931.2611
+rotation = -0.038397245
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("17_ldih6")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="AlbumLayer/AlbumMenu" unique_id=429597239]
+layout_mode = 0
+offset_left = 901.0
+offset_top = -24.0
+offset_right = 1334.0
+offset_bottom = 1462.0
+rotation = 0.09773844
+scale = Vector2(0.5, 0.5)
+
+[node name="Content" type="Control" parent="AlbumLayer/AlbumMenu/ScrollContainer" unique_id=608923396]
+custom_minimum_size = Vector2(0, 2642)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="AlbumLayer/AlbumMenu/ScrollContainer/Content" unique_id=1718924395]
+layout_mode = 0
+offset_right = 422.0
+offset_bottom = 3683.0
+texture = ExtResource("18_8h5hx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AlbumLayer/AlbumMenu/ScrollContainer/Content" unique_id=363553878]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 330.0
+offset_right = 498.0
+offset_bottom = 4013.0
+
+[node name="AlbumThumbnail7" parent="AlbumLayer/AlbumMenu/ScrollContainer/Content/VBoxContainer" unique_id=1479164067 instance=ExtResource("19_e1ojs")]
+layout_mode = 2
+selected_texture = ExtResource("35_ow1qk")
+deselected_texture = ExtResource("36_l24pm")
+preview_texture = ExtResource("37_8tpp2")
+timeline = "res://scenes/story.tscn"
+unlocked = true
+locked_texture = ExtResource("24_igigw")
+description = "First impressions can be tricky. I think I'll trust my instincts this time."
+char = "Baku"
+
+[node name="AlbumThumbnail" parent="AlbumLayer/AlbumMenu/ScrollContainer/Content/VBoxContainer" unique_id=41199011 instance=ExtResource("19_e1ojs")]
+layout_mode = 2
+selected_texture = ExtResource("21_yscmx")
+deselected_texture = ExtResource("22_m0p2y")
+preview_texture = ExtResource("17_ldih6")
+locked_texture = ExtResource("24_igigw")
+description = "S— stop looking at me like that!!"
+char = "Yuna"
+
+[node name="AlbumThumbnail2" parent="AlbumLayer/AlbumMenu/ScrollContainer/Content/VBoxContainer" unique_id=1106766891 instance=ExtResource("19_e1ojs")]
+layout_mode = 2
+selected_texture = ExtResource("24_nc50w")
+deselected_texture = ExtResource("23_igigw")
+preview_texture = ExtResource("25_66xhs")
+unlocked = true
+locked_texture = ExtResource("24_igigw")
+description = "Neither of us said much. Somehow, the silence never felt uncomfortable."
+char = "Baku"
+
+[node name="AlbumThumbnail3" parent="AlbumLayer/AlbumMenu/ScrollContainer/Content/VBoxContainer" unique_id=198832834 instance=ExtResource("19_e1ojs")]
+layout_mode = 2
+selected_texture = ExtResource("26_yt72o")
+deselected_texture = ExtResource("27_d31po")
+preview_texture = ExtResource("28_46rfr")
+locked_texture = ExtResource("24_igigw")
+description = "The view was beautiful, but I think what I remember most was who I shared it with."
+char = "Yuna"
+
+[node name="AlbumThumbnail4" parent="AlbumLayer/AlbumMenu/ScrollContainer/Content/VBoxContainer" unique_id=2031612004 instance=ExtResource("19_e1ojs")]
+layout_mode = 2
+selected_texture = ExtResource("29_2mht0")
+deselected_texture = ExtResource("30_lolmo")
+preview_texture = ExtResource("31_xbqg6")
+locked_texture = ExtResource("24_igigw")
+description = "The waves were finally calm. So was my heart"
+char = "Baku"
+
+[node name="AlbumThumbnail5" parent="AlbumLayer/AlbumMenu/ScrollContainer/Content/VBoxContainer" unique_id=605097989 instance=ExtResource("19_e1ojs")]
+layout_mode = 2
+selected_texture = ExtResource("32_8x6i3")
+deselected_texture = ExtResource("33_v7myn")
+preview_texture = ExtResource("34_5v8u6")
+locked_texture = ExtResource("24_igigw")
+description = "Let's go home. Together."
+char = "Yuna"
+
+[node name="AlbumThumbnail6" parent="AlbumLayer/AlbumMenu/ScrollContainer/Content/VBoxContainer" unique_id=531490748 instance=ExtResource("19_e1ojs")]
+layout_mode = 2
+selected_texture = ExtResource("35_ow1qk")
+deselected_texture = ExtResource("36_l24pm")
+preview_texture = ExtResource("37_8tpp2")
+locked_texture = ExtResource("24_igigw")
+
+[node name="ColorRect" type="ColorRect" parent="AlbumLayer/AlbumMenu" unique_id=1695214805]
+layout_mode = 0
+offset_left = 869.72955
+offset_top = 566.8139
+offset_right = 1025.7295
+offset_bottom = 768.2721
+rotation = 0.09491127
+
+[node name="ColorRect2" type="ColorRect" parent="AlbumLayer/AlbumMenu" unique_id=15602583]
+layout_mode = 0
+offset_left = 936.0
+offset_top = -124.999985
+offset_right = 1092.0
+offset_bottom = 138.0161
+rotation = 0.0963101
+
+[node name="DescriptionBox" type="TextureRect" parent="AlbumLayer/AlbumMenu" unique_id=32923827]
+layout_mode = 0
+offset_left = 36.00003
+offset_top = 292.00003
+offset_right = 1022.0
+offset_bottom = 706.0
+rotation = -0.04048778
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(485.3443, 234.745)
+texture = ExtResource("19_ldih6")
+
+[node name="Description2" type="Label" parent="AlbumLayer/AlbumMenu/DescriptionBox" unique_id=607395253]
+layout_mode = 0
+offset_left = 629.079
+offset_top = 35.492054
+offset_right = 866.079
+offset_bottom = 101.49205
+rotation = 0.13435154
+text = "Lorem Ipsum"
+label_settings = SubResource("LabelSettings_m0p2y")
+
+[node name="Description" type="Label" parent="AlbumLayer/AlbumMenu/DescriptionBox" unique_id=139905985]
+layout_mode = 0
+offset_left = 103.59546
+offset_top = 160.32437
+offset_right = 859.6371
+offset_bottom = 336.3232
+rotation = -0.0053008446
+text = "Lorem Ipsum"
+label_settings = SubResource("LabelSettings_igigw")
+autowrap_mode = 3
+
+[node name="CloseButton" type="TextureButton" parent="AlbumLayer/AlbumMenu/DescriptionBox" unique_id=214895886]
+layout_mode = 0
+offset_left = 869.1249
+offset_top = 39.21141
+offset_right = 962.7495
+offset_bottom = 123.62474
+rotation = 0.10073775
+
+[node name="StartButton" type="TextureButton" parent="AlbumLayer" unique_id=1661625992]
+offset_left = 141.95178
+offset_top = 432.27386
+offset_right = 265.66083
+offset_bottom = 606.10706
+rotation = -0.07203075
+pivot_offset = Vector2(62.608307, 84.95569)
+
+[node name="StartButton" type="TextureRect" parent="AlbumLayer/StartButton" unique_id=139519493]
+layout_mode = 0
+offset_left = -3.364441
+offset_top = -11.210693
+offset_right = 306.63556
+offset_bottom = 393.7893
+rotation = 0.061688513
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("19_s6brg")
+
+[node name="Description" type="Label" parent="AlbumLayer/StartButton" unique_id=489028200]
+layout_mode = 0
+offset_left = 21.203867
+offset_top = 136.88097
+offset_right = 103.214966
+offset_bottom = 190.88097
+rotation = -0.0053008446
+text = "Side Story"
+label_settings = SubResource("LabelSettings_nc50w")
+autowrap_mode = 3

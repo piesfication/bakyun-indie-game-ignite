@@ -188,7 +188,7 @@ layer = 2
 
 [node name="ChapterDetail" parent="CanvasLayer2" unique_id=80594609 instance=ExtResource("10_46nyp")]
 position = Vector2(900, 371.99994)
-scale = Vector2(0.55, 0.55)
+scale = Vector2(0.54, 0.54)
 
 [node name="Overlay" type="ColorRect" parent="CanvasLayer2" unique_id=672217718]
 visible = false

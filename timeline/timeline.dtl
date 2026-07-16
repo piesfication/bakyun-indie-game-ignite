@@ -9,35 +9,46 @@ unknown: I was surprised enough to stand up from my bed. That's already an achie
 [signal arg="baku appears"]
 [wait time="2.0"]
 join baku (Outlined) right [animation="Fade In Up" wait="true"]
+update baku (Surprised/Surprised) [animation="Bounce" length="0.4"]
 unknown: New witch?!
+update baku (Kyaaaa/Kyaaaa) [animation="Bounce"]
 unknown: From the association?!
 join yuna (Outlined) left [animation="Fade In Up" wait="true"]
-update baku (DarkenedOutlined) right [fade="Fade Cross"]
+update baku (Kyaaaa/DarkenedKyaaaa) right [fade="Fade Cross"]
 yuna: I'm Yuna. Transferred to this city, effective today.
 yuna: Is there anyone I should report to —
 update yuna (DarkenedOutlined) left [fade="Fade Cross"]
-update baku (Outlined) right [fade="Fade Cross"]
+update baku (Kyaaaa/Kyaaaa) right [animation="Bounce"]
 unknown: Welcome!
+update baku (Outlined) [animation="Bounce"]
 unknown: Welcome to this city  — monster capital of the known world!
+update baku (Proud/Proud) [animation="Bounce"]
 unknown: No neighbors, no noise complaints. Just ruins, things that want to eat you...
+update baku (Kyaaaa/Kyaaaa)
 unknown: ...and the best view you'll ever see from a rooftop!
 update yuna (Outlined)
-update baku (DarkenedOutlined)
+update baku (Kyaaaa/DarkenedKyaaaa)
 yuna (Outlined): ...is there a commanding officer I should —
 update yuna (DarkenedOutlined)
-update baku (Outlined)
+update baku (Kyaaaa/Kyaaaa) [animation="Bounce"]
 unknown: Oh, and me! There's me.
+update baku (Mikir/Mikir) [animation="Bounce"]
 unknown: Ah, right —
+update baku (Think/Think) [animation="Bounce"]
 unknown: (laughs a little)\
 Been a while since I've had to introduce myself.
+update baku (Outlined) [animation="Bounce"]
 baku: I'm Baku. I run things around here. Loosely, very loosely.
+update baku (Smirk/Smirk) [animation="Bounce"]
 baku: Monsters show up, I deal with them!  that's pretty much the whole job description.
+update baku (Proud/Proud) [animation="Bounce"]
 baku: Come on, I made too much food anyway...
+update baku (Smirk/Smirk) [animation="Bounce"]
 baku: Oh right — watch out for the bird attacks around here.
 update yuna (Outlined)
-update baku (DarkenedOutlined)
+update baku (Smirk/DarkenedSmirk)
 yuna: ...what do you mean by —
-update baku (Outlined)
+update baku (Surprised/Surprised) [animation="Bounce"]
 update yuna (DarkenedOutlined)
 baku: Ah! There's one now.
 leave --All-- [animation="Instant Out" length="0.2" wait="true"]
@@ -55,15 +66,16 @@ yuna: Where am I...
 join baku (Outlined) right
 [signal arg="my place"]
 baku: My place. You were out for about ten minutes.
+update baku (Think/Think) [animation="Bounce"]
 baku: Bird got you pretty good.
 join yuna (Outlined) left
-update baku (DarkenedOutlined)
+update baku (Think/DarkenedThink)
 yuna: (touches the side of her head)\
 ...a bird did this?
 update yuna (DarkenedOutlined)
-update baku (Outlined)
+update baku (Iwiwiwi/iwiwiwi) [animation="Bounce"]
 baku: I did warn you.
-update baku (DarkenedOutlined)
+update baku (Iwiwiwi/DarkenedIwiwiwi)
 update yuna (Outlined)
 yuna: ......
 yuna: That was a countdown. Not a warning.
@@ -80,31 +92,33 @@ baku (Outlined): A while.
 update baku (DarkenedOutlined) right
 update yuna (Outlined) left
 yuna (Outlined): How long is a while?
-update baku (Outlined) right
+update baku (Kikuk/Kikuk) right [animation="Bounce"]
 update yuna (DarkenedOutlined) left
-baku (Outlined): (genuinely thinking about it)
-baku (Outlined): It's a loooooongg story...
-update baku (DarkenedOutlined) right
+baku (Kikuk/Kikuk): (genuinely thinking about it)
+update baku (Think/Think) [animation="Bounce"]
+baku (Think/Think): It's a loooooongg story...
+update baku (Think/DarkenedThink) right
 update yuna (Outlined) left
 yuna: (small exhale)
 yuna: Alone?
-update baku (Outlined) right
+update baku (Sad/Sad) right
 update yuna (DarkenedOutlined) left
 baku: Before you, yeah.
-update baku (DarkenedOutlined) right
+update baku (Sad/DarkenedSad) right
 update yuna (Outlined) left
 yuna: The assignment letter didn't mention anyone living here.
-update baku (Outlined) right
+update baku (Kesal/Kesal) right [animation="Bounce"]
 update yuna (DarkenedOutlined) left
 baku: (shrugs)
+update baku (Think/Think) [animation="Bounce"]
 baku: I'm not really on the official roster anymore.
-update baku (DarkenedOutlined) right
+update baku (Think/DarkenedThink) right
 update yuna (Outlined) left
 yuna: You're not associated with the association?
-update baku (Outlined) right
+update baku (Think/Think) right
 update yuna (DarkenedOutlined) left
 baku: Not for a long time.
-update baku (DarkenedOutlined) right
+update baku (Think/DarkenedThink) right
 update yuna (Outlined) left
 yuna: Then what are you doing here?
 update baku (Outlined) right
@@ -134,19 +148,22 @@ if {ChapterRead.ReadChap1} == false:
 		join yuna (Outlined) left
 		yuna: (stops eating)
 		yuna: Had to.
-		update baku (Outlined)
+		update baku (Smirk/Smirk)
 		update yuna (DarkenedOutlined)
 		baku: Mmhm.
 		[wait time="1.0"]
 		leave --All-- [animation="Fade Out Down" wait="true"]
 		[wait time="2.0"]
+		update baku (Sad/Sad)
 		baku: I didn't push further.
 		baku: One word, fast — like she'd been rehearsing it the whole trip here.
 		baku: People who answer like that usually have a story they're not ready to tell yet.
+		update baku (Outlined)
 		baku: That's fine. This city has a way of bringing things out eventually.
 		baku: That felt like enough for now.
 		[wait time="2.0"]
 		join baku (Outlined) right
+		update baku (Proud/Proud) [animation="Bounce"]
 		[wait time="1.0"]
 		baku: You'll tell me eventually.
 		[wait time="2.0"]
@@ -164,7 +181,9 @@ if {ChapterRead.ReadChap1} == false:
 		yuna (Outlined): You're not going to ask why I'm here?
 		[wait time="2.0"]
 		update yuna (DarkenedOutlined)
-		update baku (Outlined)
+		update baku (Mikir/Mikir)
+		[wait time="1.0"]
+		update baku (Proud/Proud) [animation="Bounce"]
 		baku: You'll tell me eventually.
 		[wait time="2.0"]
 		leave --All-- [animation="Fade Out Down" wait="true"]

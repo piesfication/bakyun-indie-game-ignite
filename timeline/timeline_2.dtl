@@ -93,50 +93,53 @@ yuna: Baku.
 yuna: I need to get back to the association.
 [wait time="1.0"]
 join baku (DarkenedOutlined) right
-update baku (Outlined)
+update baku (Proud/Proud) [animation="Bounce"]
 update yuna (DarkenedOutlined)
 baku: (not surprised)\
 I figured.
-update baku (DarkenedOutlined)
+update baku (Proud/DarkenedProud)
 update yuna (Outlined)
 yuna: My banishment — it wasn't permanent.
 yuna: But I need to prove I'm still competent. That the last mission was a one-time failure, not a pattern.
-update baku (Outlined)
+update baku (Think/Think) [animation="Shake Y"]
 update yuna (DarkenedOutlined)
 baku: How do you plan to do that from here?
 update yuna (Outlined)
-update baku (DarkenedOutlined)
+update baku (Think/DarkenedThink)
 yuna: That's what I've been trying to figure out.
 yuna: Is there anything in this city significant enough that the association would take notice?
-update baku (Outlined)
+update baku (Think/Think)
 update yuna (DarkenedOutlined)
 baku: (looks at the sky)
 baku: There's an alpha.
 update yuna (Outlined)
 update baku (DarkenedOutlined)
 yuna: ...a what?
-update baku (Outlined)
+update baku (Serious/Serious)
 update yuna (DarkenedOutlined)
 baku: A monster. Deep in the city center.
 baku: I’ve only seen it once — long time ago.
 baku: It's not like the regular spawns. It's the source, their leader.
+update baku (Smirk/Smirk) [animation="Shake Y"]
 baku: (looks at Yuna)\
 If you could bring proof that you took it down — that's not just competence.
+update baku (Proud/Proud) [animation="Shake Y"]
 baku: That's something no witch in the association has ever done.
 update yuna (Outlined)
 update baku (DarkenedOutlined)
 yuna: You've known about this and never reported it?
-update baku (Outlined)
+update baku (Think/Think)
 update yuna (DarkenedOutlined)
 baku: (shrugs)\
 Who would I report it to?
-update baku (DarkenedOutlined)
+update baku (Think/DarkenedThink)
 update yuna (Outlined)
 yuna: ..fair point.
 yuna: Can we find it?
-update baku (Outlined)
+update baku (Think/Think)
 update yuna (DarkenedOutlined)
 baku: Eventually. It's been moving.
+update baku (Think/Think) [animation="Shake Y"]
 baku: I’ve felt it for years. Getting closer to the surface.
 [wait time="2.0"]
 leave --All-- [animation="Fade Out Down" wait="true"]
