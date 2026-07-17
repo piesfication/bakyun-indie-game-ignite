@@ -2,12 +2,18 @@
 
 [ext_resource type="Script" uid="uid://dlkrgvy2wf1xa" path="res://script/story_menu.gd" id="1_46nyp"]
 [ext_resource type="Texture2D" uid="uid://bj8vc2m62afna" path="res://assets/story/Menu/Untitled869_20260423183111.png" id="2_0e5xh"]
+[ext_resource type="Texture2D" uid="uid://c3xj42gr6v2x8" path="res://assets/story menu/Untitled875_20260716113703.png" id="2_xjv6n"]
+[ext_resource type="Texture2D" uid="uid://ddguhhugvcssp" path="res://assets/story menu/Untitled875_20260716113706.png" id="3_q7mqg"]
 [ext_resource type="FontFile" uid="uid://dcs4tsec8f7yd" path="res://assets/font/zrtw-hackynote-personal-use/ZRTW-HackynotePersonalUse.otf" id="3_vjbdf"]
 [ext_resource type="Script" uid="uid://dtppdsewryec4" path="res://script/back_click.gd" id="4_myusa"]
 [ext_resource type="Script" uid="uid://btft4ts27bbua" path="res://scenes/mission_click.gd" id="4_vjbdf"]
+[ext_resource type="Texture2D" uid="uid://b26lw17phcg6u" path="res://assets/story menu/Untitled875_20260716113709.png" id="4_whn35"]
+[ext_resource type="Texture2D" uid="uid://dose7463n7xg" path="res://assets/story menu/Untitled875_20260716113620.png" id="5_0krf4"]
 [ext_resource type="PackedScene" uid="uid://ipsj4qvblc3m" path="res://scenes/level_confirmation.tscn" id="5_f2glh"]
 [ext_resource type="Script" uid="uid://bcusm1g8yw0rb" path="res://scenes/tutorial_click.gd" id="5_myusa"]
 [ext_resource type="Script" uid="uid://dgxvxmitrd13o" path="res://script/parallax_background.gd" id="6_3vk0y"]
+[ext_resource type="Texture2D" uid="uid://d3je0p0r5q8qm" path="res://assets/story menu/Untitled875_20260716114751.png" id="6_ckq7b"]
+[ext_resource type="Texture2D" uid="uid://cxbiwbbkxft70" path="res://assets/story menu/Untitled875_20260716113626.png" id="7_ex3fg"]
 [ext_resource type="Texture2D" uid="uid://71fsdc8fl4jf" path="res://assets/title/Untitled977_20260324075141.png" id="7_qdmnm"]
 [ext_resource type="Script" uid="uid://b57hbvyj18rxn" path="res://script/parallax_background_2.gd" id="8_pbitw"]
 [ext_resource type="PackedScene" uid="uid://br4cpi30marww" path="res://scenes/story_icon.tscn" id="9_xjv6n"]
@@ -47,7 +53,38 @@ background_float_speed = 1.0
 background_phase_offset = 0.3
 background_scale_padding = 0.0
 
+[node name="Sky" type="Sprite2D" parent="." unique_id=884443656]
+position = Vector2(642.2, 422.80002)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("2_xjv6n")
+
+[node name="Cloud" type="Sprite2D" parent="." unique_id=1049738815]
+position = Vector2(642.2, 423.80002)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("3_q7mqg")
+
+[node name="Sea" type="Sprite2D" parent="." unique_id=296792773]
+position = Vector2(642.2, 447)
+scale = Vector2(0.678, 0.678)
+texture = ExtResource("4_whn35")
+
+[node name="CityShadow" type="Sprite2D" parent="." unique_id=265803803]
+position = Vector2(548.2, 408.8)
+scale = Vector2(0.62, 0.62)
+texture = ExtResource("5_0krf4")
+
+[node name="Path" type="Sprite2D" parent="." unique_id=676449564]
+position = Vector2(548.2, 408.8)
+scale = Vector2(0.62, 0.62)
+texture = ExtResource("6_ckq7b")
+
+[node name="City" type="Sprite2D" parent="." unique_id=11128441]
+position = Vector2(548.2, 408.8)
+scale = Vector2(0.62, 0.62)
+texture = ExtResource("7_ex3fg")
+
 [node name="Background" type="Sprite2D" parent="." unique_id=198021662]
+visible = false
 position = Vector2(656, 379)
 scale = Vector2(0.69, 0.69)
 texture = ExtResource("2_0e5xh")
@@ -158,37 +195,38 @@ texture = ExtResource("7_qdmnm")
 
 [node name="StorySelectionIcon" type="Control" parent="." unique_id=70988529]
 anchors_preset = 0
-offset_left = -7.0
+offset_left = 3.0
 offset_top = -63.0
-offset_right = 33.0
+offset_right = 43.0
 offset_bottom = -23.0
 
 [node name="Chapter1" parent="StorySelectionIcon" unique_id=1975163431 instance=ExtResource("9_xjv6n")]
-position = Vector2(526.99994, 578.99994)
-scale = Vector2(0.4, 0.4)
+position = Vector2(560, 597)
+scale = Vector2(0.3, 0.3)
 
 [node name="Chapter2" parent="StorySelectionIcon" unique_id=1000230346 instance=ExtResource("9_xjv6n")]
-position = Vector2(290, 604)
-scale = Vector2(0.4, 0.4)
-
-[node name="Chapter3" parent="StorySelectionIcon" unique_id=1793291843 instance=ExtResource("9_xjv6n")]
-position = Vector2(327, 411.99997)
-scale = Vector2(0.4, 0.4)
+position = Vector2(351, 614)
+scale = Vector2(0.3, 0.3)
 
 [node name="Chapter4" parent="StorySelectionIcon" unique_id=1574479137 instance=ExtResource("9_xjv6n")]
-position = Vector2(434.99997, 357)
-scale = Vector2(0.4, 0.4)
+position = Vector2(474, 392)
+scale = Vector2(0.3, 0.3)
+
+[node name="Chapter3" parent="StorySelectionIcon" unique_id=1793291843 instance=ExtResource("9_xjv6n")]
+position = Vector2(380, 448.00003)
+scale = Vector2(0.3, 0.3)
 
 [node name="Chapter5" parent="StorySelectionIcon" unique_id=2000663749 instance=ExtResource("9_xjv6n")]
-position = Vector2(270, 274)
-scale = Vector2(0.4, 0.4)
+position = Vector2(247, 350)
+scale = Vector2(0.3, 0.3)
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1561634300]
 layer = 2
 
 [node name="ChapterDetail" parent="CanvasLayer2" unique_id=80594609 instance=ExtResource("10_46nyp")]
-position = Vector2(900, 371.99994)
-scale = Vector2(0.54, 0.54)
+position = Vector2(899.99994, 341)
+rotation = -0.19545418
+scale = Vector2(0.48, 0.48)
 
 [node name="Overlay" type="ColorRect" parent="CanvasLayer2" unique_id=672217718]
 visible = false

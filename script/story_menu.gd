@@ -12,8 +12,28 @@ extends "res://scenes/level_menu_float.gd"
 @onready var _note: Node2D = $CanvasLayer2/ChapterDetail
 @onready var _ui_layer: CanvasLayer = $CanvasLayer2
 
-@export var note_float_amplitude: float = 6.0
-@export var note_float_speed: float = 2.0
+@onready var sky_story = $Sky
+@onready var cloud_story = $Cloud
+@onready var sea_story = $Sea
+@onready var city_story = $City
+@onready var city_shadow = $CityShadow
+@onready var path = $Path
+@onready var map_story = $StorySelectionIcon
+@onready var chap_detail = $CanvasLayer2/ChapterDetail
+
+@export var path_parallax := 16.0
+@export var note_parallax := 20.0
+
+@export var path_float_amplitude := 4.0
+
+@export var path_float_speed := 2.0
+
+var city_shadow_base_position: Vector2
+var path_base_position: Vector2
+var map_base_position: Vector2
+
+@export var note_float_amplitude: float = 10.0
+@export var note_float_speed: float = 4.0
 @export_range(0.0, 1.0, 0.01, "suffix:s") var story_icon_intro_start_delay: float = 0.15
 @export_range(0.0, 1.0, 0.01, "suffix:s") var story_icon_intro_stagger_delay: float = 0.08
 
@@ -61,13 +81,84 @@ var _chapter_config: Dictionary = {
 }
 
 func _process(_delta: float) -> void:
-	if _note != null:
-		var t := Time.get_ticks_msec() * 0.001
-		_note.position = note_position + Vector2(0.0, sin(t * note_float_speed) * note_float_amplitude)
+	var viewport_size = get_viewport_rect().size
+	var mouse = get_viewport().get_mouse_position()
+	var mouse_offset = (mouse - viewport_size * 0.5) / (viewport_size * 0.5)
+
+	var t := Time.get_ticks_msec() * 0.001
+	
+	#if _note != null:
+		#_note.position = note_position + Vector2(0.0, sin(t * note_float_speed) * note_float_amplitude)
+		
+	var target = sky_base_position
+	target += mouse_offset * sky_parallax
+	target.y += sin(t * sky_float_speed) * sky_float_amplitude
+
+	sky_story.position = sky_story.position.lerp(target, _delta * parallax_smoothing)
+	
+	target = cloud_base_position
+	target += -mouse_offset * cloud_parallax
+	target.y += sin(t * cloud_float_speed + 0.5) * cloud_float_amplitude
+
+	cloud_story.position = cloud_story.position.lerp(target, _delta * parallax_smoothing)
+	
+	target = sea_base_position
+	target += mouse_offset * sea_parallax
+	target.y += sin(t * sea_float_speed + 1.0) * sea_float_amplitude
+
+	sea_story.position = sea_story.position.lerp(target, _delta * parallax_smoothing)
+	
+	target = city_base_position
+	target += +mouse_offset * city_parallax
+	target.y += sin(t * city_float_speed + 1.5) * city_float_amplitude
+
+	city_story.position = city_story.position.lerp(
+		target,
+		_delta * parallax_smoothing
+	)
+
+	city_shadow.position = city_shadow.position.lerp(
+		city_shadow_base_position + (target - city_base_position),
+		_delta * parallax_smoothing
+	)
+	
+	target = path_base_position
+	target += +mouse_offset * path_parallax
+	target.y += sin(t * path_float_speed + 2.0) * path_float_amplitude
+
+	path.position = path.position.lerp(
+		target,
+		_delta * parallax_smoothing
+	)
+
+	map_story.position = map_story.position.lerp(
+		map_base_position + (target - path_base_position),
+		_delta * parallax_smoothing
+	)
+	
+	var note_target = note_position
+	note_target += -mouse_offset * note_parallax
+	note_target.y += sin(t * note_float_speed) * note_float_amplitude
+
+	_note.position = _note.position.lerp(
+		note_target,
+		_delta * parallax_smoothing
+	)
 
 func _ready() -> void:
 
 	super()
+	
+	sky_base_position = sky_story.position
+	cloud_base_position = cloud_story.position
+	sea_base_position = sea_story.position
+
+	city_base_position = city_story.position
+	city_shadow_base_position = city_shadow.position
+
+	path_base_position = path.position
+	map_base_position = map_story.position
+	
 	if _note != null:
 		note_position = _note.position
 		

@@ -23,7 +23,10 @@
 [ext_resource type="Texture2D" uid="uid://dqp1is1bptfk4" path="res://assets/story/Dialogue/Chatbox/Group 1000008712 (1).png" id="19_ldih6"]
 [ext_resource type="Texture2D" uid="uid://otyv2hbp4mq4" path="res://assets/album/Button/Group 1000008707 (1).png" id="19_s6brg"]
 [ext_resource type="Texture2D" uid="uid://csgakp0rw3yfc" path="res://assets/album/selected/1.png" id="21_yscmx"]
+[ext_resource type="Texture2D" uid="uid://dyodxq2wvgpma" path="res://assets/album/selected/0.png" id="21_yt72o"]
+[ext_resource type="Texture2D" uid="uid://baoj8tswsbs2i" path="res://assets/album/deselected/0.png" id="22_d31po"]
 [ext_resource type="Texture2D" uid="uid://t6xrxixpnqtu" path="res://assets/album/deselected/1.png" id="22_m0p2y"]
+[ext_resource type="Texture2D" uid="uid://c8mjrfek20x05" path="res://assets/album/Photo/0.png" id="23_46rfr"]
 [ext_resource type="Texture2D" uid="uid://bhmig14tieasp" path="res://assets/album/deselected/3.png" id="23_igigw"]
 [ext_resource type="Texture2D" uid="uid://8guodnqgs0kp" path="res://assets/album/deselected/unlocked.png" id="24_igigw"]
 [ext_resource type="Texture2D" uid="uid://bgk8xt0alrdd0" path="res://assets/album/selected/3.png" id="24_nc50w"]
@@ -319,9 +322,9 @@ offset_bottom = 4013.0
 
 [node name="AlbumThumbnail7" parent="AlbumLayer/AlbumMenu/ScrollContainer/Content/VBoxContainer" unique_id=1479164067 instance=ExtResource("19_e1ojs")]
 layout_mode = 2
-selected_texture = ExtResource("35_ow1qk")
-deselected_texture = ExtResource("36_l24pm")
-preview_texture = ExtResource("37_8tpp2")
+selected_texture = ExtResource("21_yt72o")
+deselected_texture = ExtResource("22_d31po")
+preview_texture = ExtResource("23_46rfr")
 timeline = "res://scenes/story.tscn"
 unlocked = true
 locked_texture = ExtResource("24_igigw")

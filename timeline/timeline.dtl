@@ -6,6 +6,12 @@ unknown: — monsters, ruins, phenomena nobody can explain. Enough to make anyon
 unknown: So when someone actually showed up at the city entrance this morning —
 unknown: — backpack on, assignment letter in hand, expression working very hard to not look completely terrified —
 unknown: I was surprised enough to stand up from my bed. That's already an achievement.
+[wait time="2.0"]
+[signal arg="first encounter"]
+[wait time="6.0"]
+[wait_input]
+[signal arg="new witch"]
+[wait time="0.5"]
 [signal arg="baku appears"]
 [wait time="2.0"]
 join baku (Outlined) right [animation="Fade In Up" wait="true"]

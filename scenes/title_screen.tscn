@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://unffs1vlk3ih"]
 
 [ext_resource type="Texture2D" uid="uid://i5asanwmdtcp" path="res://assets/level/sea/Untitled694_20260115180850.png" id="1_4qe4i"]
+[ext_resource type="Script" uid="uid://b1amxai23gvpu" path="res://script/background_parallax.gd" id="2_6uh13"]
 [ext_resource type="Texture2D" uid="uid://4wksodnvgnvv" path="res://assets/level/sea/Untitled694_20260115181335.png" id="2_p07av"]
 [ext_resource type="Texture2D" uid="uid://dssooydqpu272" path="res://assets/level/sea/Untitled694_20260115182142.png" id="3_khjys"]
 [ext_resource type="Texture2D" uid="uid://dhx2rv2ssyyuj" path="res://assets/level/sea/Untitled694_20260115180839.png" id="4_174rq"]
@@ -17,7 +18,6 @@
 [ext_resource type="Texture2D" uid="uid://bvlpk8h4kwe5k" path="res://assets/title/Title/Untitled992_20260324125512.png" id="16_lrxh4"]
 [ext_resource type="Script" uid="uid://crnsuayqmcaw0" path="res://scenes/title_screen.gd" id="17_a3sfq"]
 [ext_resource type="Texture2D" uid="uid://dnj075wikrxae" path="res://assets/title/Title/Untitled992_20260324125515.png" id="17_neciy"]
-[ext_resource type="Script" uid="uid://csf0dehln2qhw" path="res://scenes/title_background_float.gd" id="18_bgfloat"]
 [ext_resource type="Texture2D" uid="uid://cf4lhjo123g60" path="res://assets/title/Title/Untitled992_20260324125517.png" id="18_w03br"]
 [ext_resource type="Script" uid="uid://dgxvxmitrd13o" path="res://script/parallax_background.gd" id="19_174rq"]
 [ext_resource type="Texture2D" uid="uid://1horrj0gr2ff" path="res://assets/title/Title/Untitled992_20260324125519.png" id="19_jr68i"]
@@ -128,7 +128,7 @@ layer = -1
 position = Vector2(-1.0000019, -39.999996)
 rotation = 0.025745109
 scale = Vector2(1.03, 1.03)
-script = ExtResource("18_bgfloat")
+script = ExtResource("2_6uh13")
 
 [node name="Sky" type="Sprite2D" parent="CanvasLayer/Background" unique_id=1979468426]
 scale = Vector2(0.667, 0.667)
@@ -136,6 +136,7 @@ texture = ExtResource("1_4qe4i")
 centered = false
 
 [node name="Back" type="Sprite2D" parent="CanvasLayer/Background" unique_id=514535281]
+visible = false
 z_index = 10
 position = Vector2(0, 16)
 scale = Vector2(0.65, 0.65)
@@ -196,7 +197,7 @@ layer = 2
 
 [node name="CharAnim" type="AnimatedSprite2D" parent="CanvasLayer2" unique_id=1224542258]
 z_index = 50
-position = Vector2(640, 376)
+position = Vector2(661, 376)
 scale = Vector2(0.67, 0.67)
 sprite_frames = SubResource("SpriteFrames_y8m2v")
 autoplay = "default"
@@ -218,7 +219,7 @@ polygon = PackedVector2Array(-107.46265, 262.68652, -95.52234, 274.62683, -47.76
 
 [node name="Title" type="Node2D" parent="CanvasLayer2" unique_id=982361604]
 z_index = 50
-position = Vector2(320, 496.00003)
+position = Vector2(327, 496.00003)
 scale = Vector2(0.9, 0.9)
 
 [node name="Ba" type="AnimatedSprite2D" parent="CanvasLayer2/Title" unique_id=688342232]

@@ -1,11 +1,15 @@
 [gd_scene format=3 uid="uid://ctue4xy3337pk"]
 
 [ext_resource type="Script" uid="uid://byncm8d1drwvw" path="res://scenes/map_manager.gd" id="2_2go0k"]
+[ext_resource type="Texture2D" uid="uid://dpy4o0hqewdsf" path="res://assets/level menu/Untitled868_20260716112555.png" id="2_bypmx"]
 [ext_resource type="Texture2D" uid="uid://rxjxv5rh1cct" path="res://assets/menu/Island/Untitled868_20260403132417.png" id="2_cabf2"]
 [ext_resource type="Texture2D" uid="uid://q4ssdfg33q7m" path="res://assets/menu/Hp/Base.png" id="2_teein"]
 [ext_resource type="Texture2D" uid="uid://dm0owvx0rv5xc" path="res://assets/menu/Hp/Screen/Untitled935_20260315110302.png" id="3_k08aj"]
 [ext_resource type="PackedScene" uid="uid://bcop4wcc8fbat" path="res://scenes/level_icon.tscn" id="3_qdp46"]
+[ext_resource type="Texture2D" uid="uid://xn3etynwedjl" path="res://assets/level menu/Untitled868_20260716112558.png" id="3_ru8ln"]
 [ext_resource type="Texture2D" uid="uid://cqqobe7wdmwqe" path="res://assets/menu/Hp/Screen/Untitled935_20260315110531.png" id="4_2go0k"]
+[ext_resource type="Texture2D" uid="uid://dvpkkc0hcufvt" path="res://assets/level menu/Untitled868_20260716112604.png" id="4_rxmmb"]
+[ext_resource type="Texture2D" uid="uid://cvamp6vc7wekn" path="res://assets/level menu/Untitled868_20260716111935.png" id="5_4m716"]
 [ext_resource type="Script" uid="uid://dsbnw4qd4j1qe" path="res://scenes/chat_area.gd" id="5_teein"]
 [ext_resource type="PackedScene" uid="uid://du6hxlyu0k3oj" path="res://scenes/icon_baku.tscn" id="6_qr4ff"]
 [ext_resource type="Texture2D" uid="uid://bequl5io04tio" path="res://assets/menu/Hp/NoMessages/Untitled1012_20260403131246.png" id="7_kh2of"]
@@ -90,7 +94,28 @@ background_float_speed = 1.0
 background_phase_offset = 0.3
 background_scale_padding = 0.0
 
+[node name="Sky" type="Sprite2D" parent="." unique_id=624028360]
+position = Vector2(642.2, 422.80002)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("2_bypmx")
+
+[node name="Cloud" type="Sprite2D" parent="." unique_id=2075561314]
+position = Vector2(642.2, 423.80002)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("3_ru8ln")
+
+[node name="Sea" type="Sprite2D" parent="." unique_id=1601720827]
+position = Vector2(642.2, 442)
+scale = Vector2(0.678, 0.678)
+texture = ExtResource("4_rxmmb")
+
+[node name="City" type="Sprite2D" parent="." unique_id=703885416]
+position = Vector2(791, 367)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_4m716")
+
 [node name="Background" type="Sprite2D" parent="." unique_id=573508185]
+visible = false
 position = Vector2(638.4, 401.6)
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("2_cabf2")
@@ -101,12 +126,12 @@ texture = ExtResource("2_cabf2")
 layout_mode = 3
 anchor_right = 0.994
 anchor_bottom = 0.989
-offset_left = 116.99999
-offset_top = 68.0
-offset_right = -443.32007
-offset_bottom = 75.91998
-rotation = 0.08136914
-scale = Vector2(0.8, 0.8)
+offset_left = 173.00003
+offset_top = 73.00001
+offset_right = -387.32007
+offset_bottom = 80.91998
+rotation = 0.12873332
+scale = Vector2(0.7, 0.7)
 mouse_filter = 1
 
 [node name="PhoneSprite" type="Node2D" parent="CanvasLayer/Phone" unique_id=1832869589]
@@ -278,36 +303,36 @@ scale = Vector2(0.55, 0.55)
 layout_mode = 1
 anchor_right = 0.994
 anchor_bottom = 0.989
-offset_left = 638.4
+offset_left = 591.4
 offset_top = 41.600067
-offset_right = 6.079956
+offset_right = -40.920044
 offset_bottom = 49.52008
 mouse_filter = 2
 script = ExtResource("2_2go0k")
 
 [node name="LevelIcon6" parent="MapManager" unique_id=1726741000 instance=ExtResource("3_qdp46")]
-position = Vector2(528, 290.39993)
-scale = Vector2(0.4, 0.4)
+position = Vector2(463.59998, 309.39993)
+scale = Vector2(0.3, 0.3)
 
 [node name="LevelIcon" parent="MapManager" unique_id=651469006 instance=ExtResource("3_qdp46")]
-position = Vector2(424, 386.3999)
-scale = Vector2(0.43, 0.43)
+position = Vector2(365.59998, 360.39993)
+scale = Vector2(0.3, 0.3)
 
 [node name="LevelIcon2" parent="MapManager" unique_id=632692915 instance=ExtResource("3_qdp46")]
-position = Vector2(192, 154.39993)
-scale = Vector2(0.35, 0.35)
+position = Vector2(204.59998, 178.39993)
+scale = Vector2(0.3, 0.3)
 
 [node name="LevelIcon3" parent="MapManager" unique_id=1548262958 instance=ExtResource("3_qdp46")]
-position = Vector2(104, 250.39992)
-scale = Vector2(0.43, 0.43)
+position = Vector2(103.599976, 279.3999)
+scale = Vector2(0.3, 0.3)
 
 [node name="LevelIcon5" parent="MapManager" unique_id=5036648 instance=ExtResource("3_qdp46")]
-position = Vector2(448, 202.39992)
-scale = Vector2(0.35, 0.35)
+position = Vector2(417.59998, 234.39993)
+scale = Vector2(0.3, 0.3)
 
 [node name="LevelIcon4" parent="MapManager" unique_id=1888440929 instance=ExtResource("3_qdp46")]
-position = Vector2(112, 442.3999)
-scale = Vector2(0.43, 0.43)
+position = Vector2(113.599976, 416.39993)
+scale = Vector2(0.3, 0.3)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1645921214]
 layer = 0

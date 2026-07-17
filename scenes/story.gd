@@ -21,16 +21,45 @@ var _shake_target: Node2D
 @export var bird_strike_shake_frequency: float = 155.0
 @export var bird_strike_shake_falloff_power: float = 0.55
 
+@onready var sky = $FirstEncounter/Sky
+@onready var building = $FirstEncounter/Building
+@onready var land = $FirstEncounter/Land
+@onready var charfirstenc = $FirstEncounter/Char
+@onready var grass = $FirstEncounter/Grass
+
 @onready var overlay = $CanvasLayer3/Overlay
 
 @onready var bakusroom = $BakusRoom
 
+@export var sky_float_amplitude := 12.0
+@export var building_float_amplitude := 6.0
+@export var land_float_amplitude := 7
+@export var char_float_amplitude := 8
+@export var grass_float_amplitude := 12.0
+
+@export var sky_float_speed := 2
+@export var building_float_speed := 2
+@export var land_float_speed := 2
+@export var char_float_speed := 2
+@export var grass_float_speed := 4
 
 var base_pos := {}
+
+var sky_base_pos: Vector2
+var building_base_pos: Vector2
+var land_base_pos: Vector2
+var char_base_pos: Vector2
+var grass_base_pos: Vector2
 
 var bakusroom_pos 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	sky_base_pos = sky.position
+	building_base_pos = building.position
+	land_base_pos = land.position
+	char_base_pos = charfirstenc.position
+	grass_base_pos = grass.position
+	
 	bakusroom_pos = bakusroom.position
 	if has_node("/root/StoryProgress"):
 		StoryProgress.apply_saved_dialogic_variables()
@@ -41,6 +70,45 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
+	var tt := Time.get_ticks_msec() * 0.001
+
+	sky.position = sky_base_pos + Vector2(
+		0,
+		sin(tt * sky_float_speed) * sky_float_amplitude
+	)
+
+	building.position = building_base_pos + Vector2(
+		0,
+		sin(tt * building_float_speed + 0.4) * building_float_amplitude
+	)
+	
+	building.position = building_base_pos + Vector2(
+		sin(tt * building_float_speed + 0.4) * building_float_amplitude, 0
+	)
+
+	land.position = land_base_pos + Vector2(
+		0,
+		sin(tt * land_float_speed + 0.8) * land_float_amplitude
+	)
+	
+	land.position = land_base_pos + Vector2(
+		sin(tt * land_float_speed + 0.8) * land_float_amplitude, 0
+	)
+
+	charfirstenc.position = char_base_pos + Vector2(
+		0,
+		sin(tt * char_float_speed + 1.2) * char_float_amplitude
+	)
+
+	grass.position = grass_base_pos + Vector2(
+		0,
+		sin(tt * grass_float_speed + 1.6) * grass_float_amplitude
+	)
+	
+	grass.position = grass_base_pos - Vector2(
+		sin(tt * grass_float_speed + 1.6) * grass_float_amplitude, 0
+	)
 	
 	time += delta * speed
 	bakusroom.position.y = bakusroom_pos.y + sin(time * 1) * 5
@@ -78,12 +146,30 @@ func _process(delta: float) -> void:
 		_shake_target.position += offset
 		_shake_prev_offset = offset
 
-
+@onready var first = $FirstEncounter
+@onready var charfirst = $FirstEncounter/Char
 func on_dialogic_signal(arg: String):
 	if (arg == "bird strike") :
 		birdstrike.visible = true
 		birdstrike.play("strike")
+	
+	if (arg == "first encounter"):
+		overlay2.modulate.a = 0
+		overlay2.visible = true
 		
+		await fade_overlay_white(1.0, 1)
+		
+		await get_tree().create_timer(1).timeout
+		
+		first.modulate.a = 0
+		first.visible = true
+		
+		fade_in(first, 0)
+		await get_tree().create_timer(1.5).timeout
+		await fade_overlay_white(0.0, 1.0)
+		
+	if (arg == "new witch"):
+		fade_out(charfirst, 1)
 		
 	if (arg == "yuna wake up") :
 		print("wake")
@@ -113,6 +199,10 @@ func on_dialogic_signal(arg: String):
 func fade_in(arg, dur):
 	var tween = create_tween()
 	tween.tween_property(arg, "modulate:a", 1.0, dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+func fade_out(arg, dur):
+	var tween = create_tween()
+	tween.tween_property(arg, "modulate:a", 0.0, dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		
 
 
@@ -154,6 +244,15 @@ func _on_bird_strike_frame_changed() -> void:
 		#await Transition.fade_in()
 		
 var tween: Tween
+
+@onready var overlay2 = $CanvasLayer3/Overlay2
+
+func fade_overlay_white(to: float, duration: float):
+	if tween:
+		tween.kill()
+	
+	tween = create_tween()
+	tween.tween_property(overlay2, "modulate:a", to, duration)
 
 func fade_overlay(to: float, duration: float):
 	if tween:

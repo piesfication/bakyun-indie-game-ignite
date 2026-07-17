@@ -32,11 +32,11 @@ func set_chapter_data(chapter_number: int, chapter_title: String, synopsis: Stri
 	
 	var tween = create_tween()
 
-	tween.tween_property(self, "scale", Vector2(0.6, 0.6), 0.1)\
+	tween.tween_property(self, "scale", Vector2(0.52, 0.52), 0.1)\
 	 .set_trans(Tween.TRANS_SINE)\
 	 .set_ease(Tween.EASE_OUT)
 
-	tween.tween_property(self, "scale", Vector2(0.55, 0.55), 0.1)\
+	tween.tween_property(self, "scale", Vector2(0.48, 0.48), 0.1)\
 		 .set_trans(Tween.TRANS_SINE)\
 		 .set_ease(Tween.EASE_IN)
 		

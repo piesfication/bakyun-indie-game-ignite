@@ -49,6 +49,7 @@ directories/dch_directory={
 directories/dtl_directory={
 "introduction": "res://timeline_tutorial/introduction.dtl",
 "outro": "res://timeline_tutorial/outro.dtl",
+"prologue": "res://additional story/prologue.dtl",
 "timeline": "res://timeline/timeline.dtl",
 "timeline_2": "res://timeline/timeline_2.dtl",
 "timeline_3": "res://timeline/timeline_3.dtl",

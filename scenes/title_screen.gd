@@ -14,6 +14,12 @@ var char_float_amplitude: float = 6
 @onready var yuna_click_area: Area2D = $CanvasLayer2/CharAnim/YunaClick
 @onready var exit_click_area: Area2D = $CanvasLayer3/ExitClick
 
+@export var ba_parallax_strength := 8.0
+@export var kyun_parallax_strength := 10.0
+@export var char_parallax_strength := 16.0
+
+@export var parallax_smoothing := 6.0
+
 var _time_accum: float = 0.0
 var _ba_base_position: Vector2
 var _kyun_base_position: Vector2
@@ -143,6 +149,53 @@ func _shape_contains_point(shape: Shape2D, local_point: Vector2) -> bool:
 
 func _process(delta: float) -> void:
 	_time_accum += delta
-	ba.position.y = _ba_base_position.y + sin(_time_accum * float_speed) * ba_float_amplitude
-	kyun.position.y = _kyun_base_position.y + sin(_time_accum * float_speed + phase_offset) * kyun_float_amplitude
-	charAnim.position.y = _char_base_position.y + sin(_time_accum * float_speed + phase_offset) * char_float_amplitude
+
+	var viewport_size = get_viewport_rect().size
+	var mouse = get_viewport().get_mouse_position()
+	var mouse_offset = (mouse - viewport_size * 0.5) / (viewport_size * 0.5)
+
+	# =========================
+	# BA
+	# =========================
+	var ba_target = _ba_base_position
+	ba_target += -mouse_offset * ba_parallax_strength
+	ba_target.y += sin(_time_accum * float_speed) * ba_float_amplitude
+
+	ba.position = ba.position.lerp(
+		ba_target,
+		delta * parallax_smoothing
+	)
+
+	# =========================
+	# KYUN
+	# =========================
+	var kyun_target = _kyun_base_position
+	kyun_target += -mouse_offset * kyun_parallax_strength
+	kyun_target.y += sin(
+		_time_accum * float_speed + phase_offset
+	) * kyun_float_amplitude
+
+	kyun.position = kyun.position.lerp(
+		kyun_target,
+		delta * parallax_smoothing
+	)
+
+	# =========================
+	# CHARACTER
+	# =========================
+	var char_target = _char_base_position
+	char_target += -mouse_offset * char_parallax_strength
+	char_target.y += sin(
+		_time_accum * float_speed + phase_offset
+	) * char_float_amplitude
+
+	charAnim.position = charAnim.position.lerp(
+		char_target,
+		delta * parallax_smoothing
+	)
+	
+	charAnim.rotation_degrees = lerp(
+		charAnim.rotation_degrees,
+		-mouse_offset.x * 2.0,
+		delta * 4.0
+	)

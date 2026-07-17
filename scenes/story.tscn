@@ -16,6 +16,11 @@
 [ext_resource type="Texture2D" uid="uid://dpcp8ijbh7axy" path="res://assets/event/Bird Strike/Untitled955_20260317231237.png" id="14_hh1af"]
 [ext_resource type="Texture2D" uid="uid://jh5rbxq3fwqe" path="res://assets/event/Bird Strike/Untitled955_20260317231243.png" id="15_ryyjj"]
 [ext_resource type="Texture2D" uid="uid://b4ndexbrt8jlw" path="res://assets/story/Illust/Baku_s room/Untitled1044_20260426123928.png" id="16_b7c87"]
+[ext_resource type="Texture2D" uid="uid://ch68bogfmdu2r" path="res://assets/story/Illust/First Encounter/Untitled1184_20260716174608.png" id="16_bkjpi"]
+[ext_resource type="Texture2D" uid="uid://d2anvt6s0it3l" path="res://assets/story/Illust/First Encounter/Untitled1184_20260716180547.png" id="17_kfho1"]
+[ext_resource type="Texture2D" uid="uid://bnv6asg78lowj" path="res://assets/story/Illust/First Encounter/Untitled1184_20260716180504.png" id="18_qjfsy"]
+[ext_resource type="Texture2D" uid="uid://ss2j3nii52c2" path="res://assets/story/Illust/First Encounter/Untitled1184_20260716222033.png" id="19_bkjpi"]
+[ext_resource type="Texture2D" uid="uid://cr56hespi3ces" path="res://assets/story/Illust/First Encounter/Untitled1184_20260716174632.png" id="20_b1hqr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bkjpi"]
 animations = [{
@@ -126,6 +131,15 @@ frame_progress = 1.0
 [node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=1932973805]
 layer = 0
 
+[node name="Overlay2" type="ColorRect" parent="CanvasLayer3" unique_id=924195945]
+visible = false
+offset_left = -16.0
+offset_top = -32.0
+offset_right = 1360.0
+offset_bottom = 736.0
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
 [node name="Overlay" type="ColorRect" parent="CanvasLayer3" unique_id=800023489]
 visible = false
 offset_left = -8.0
@@ -135,6 +149,32 @@ offset_bottom = 752.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
+
+[node name="FirstEncounter" type="Node2D" parent="." unique_id=18963551]
+visible = false
+z_index = 30
+position = Vector2(641, 369)
+scale = Vector2(0.67, 0.67)
+
+[node name="Sky" type="Sprite2D" parent="FirstEncounter" unique_id=259884736]
+position = Vector2(0, 129.85074)
+texture = ExtResource("16_bkjpi")
+
+[node name="Building" type="Sprite2D" parent="FirstEncounter" unique_id=1967963233]
+position = Vector2(-80.597015, 10.447762)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("17_kfho1")
+
+[node name="Land" type="Sprite2D" parent="FirstEncounter" unique_id=660933672]
+texture = ExtResource("18_qjfsy")
+
+[node name="Char" type="Sprite2D" parent="FirstEncounter" unique_id=1341400214]
+position = Vector2(-5.9701495, -17.910446)
+scale = Vector2(0.96, 0.96)
+texture = ExtResource("19_bkjpi")
+
+[node name="Grass" type="Sprite2D" parent="FirstEncounter" unique_id=2108140547]
+texture = ExtResource("20_b1hqr")
 
 [node name="BakusRoom" type="Sprite2D" parent="." unique_id=1219872368]
 visible = false
