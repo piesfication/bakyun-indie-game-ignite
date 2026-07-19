@@ -1,0 +1,204 @@
+[gd_scene format=3 uid="uid://bl3yg1y23rrsb"]
+
+[ext_resource type="Script" uid="uid://cmmgisquf6363" path="res://scripts/ui/menus/endless_menu.gd" id="1_eih1a"]
+[ext_resource type="Texture2D" uid="uid://c3ts52ooahjmo" path="res://assets/endless/Screen/Untitled1172_20260706150226.png" id="2_p3hxn"]
+[ext_resource type="Texture2D" uid="uid://borp0ql6x3ejh" path="res://assets/endless/Screen/new1 (1).png" id="3_4j0gv"]
+[ext_resource type="Texture2D" uid="uid://clt33j1epa6gt" path="res://assets/endless/Screen/new1 (2).png" id="4_fqk0y"]
+[ext_resource type="FontFile" uid="uid://dcs4tsec8f7yd" path="res://assets/font/zrtw-hackynote-personal-use/ZRTW-HackynotePersonalUse.otf" id="5_rwr8y"]
+[ext_resource type="Script" uid="uid://b4usntkl3nx1l" path="res://scripts/ui/menus/story_click.gd" id="6_jctmt"]
+[ext_resource type="Script" uid="uid://bcusm1g8yw0rb" path="res://scripts/ui/menus/tutorial_click.gd" id="7_vl3nv"]
+[ext_resource type="Script" uid="uid://dtppdsewryec4" path="res://scripts/ui/menus/back_click.gd" id="8_d3sku"]
+[ext_resource type="PackedScene" uid="uid://ipsj4qvblc3m" path="res://scenes/ui/level_confirmation.tscn" id="9_at6q0"]
+[ext_resource type="Script" uid="uid://dgxvxmitrd13o" path="res://scripts/ui/parallax_background.gd" id="10_wwl1x"]
+[ext_resource type="Texture2D" uid="uid://71fsdc8fl4jf" path="res://assets/title/Untitled977_20260324075141.png" id="11_gxwfk"]
+[ext_resource type="Script" uid="uid://b57hbvyj18rxn" path="res://scripts/ui/parallax_background_2.gd" id="12_lusvx"]
+[ext_resource type="Texture2D" uid="uid://bnb2i1hptn828" path="res://assets/endless/Display/Untitled1172_20260706224355.png" id="13_4j0gv"]
+[ext_resource type="Texture2D" uid="uid://cectxh8yyo2he" path="res://assets/endless/Display/Untitled1172_20260706224737.png" id="14_fqk0y"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ojubo"]
+font = ExtResource("5_rwr8y")
+font_size = 30
+font_color = Color(0.5803922, 0.75686276, 0.64705884, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cabf2"]
+size = Vector2(85.00001, 56.000004)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qgpns"]
+size = Vector2(107, 56.000004)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cabf2"]
+font = ExtResource("5_rwr8y")
+font_size = 30
+font_color = Color(1, 0.56078434, 0.5568628, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2jpff"]
+size = Vector2(88, 56)
+
+[node name="Menu" type="Control" unique_id=1585951233]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -3.0
+offset_right = 1280.0
+offset_bottom = 717.0
+mouse_filter = 2
+script = ExtResource("1_eih1a")
+
+[node name="Sky" type="Sprite2D" parent="." unique_id=573508185]
+position = Vector2(608, 401.6)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("2_p3hxn")
+
+[node name="Subway" type="Sprite2D" parent="." unique_id=166079098]
+position = Vector2(638.4, 401.6)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("3_4j0gv")
+
+[node name="Char" type="Sprite2D" parent="." unique_id=1668377979]
+position = Vector2(577, 401.6)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("4_fqk0y")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1155190879]
+
+[node name="Story" type="Node2D" parent="CanvasLayer" unique_id=1369356507]
+position = Vector2(985, 40.999992)
+
+[node name="Story" type="Label" parent="CanvasLayer/Story" unique_id=2017714116]
+anchors_preset = -1
+anchor_left = -0.26065162
+anchor_top = 0.1521739
+anchor_right = -0.26065162
+anchor_bottom = 0.1521739
+offset_left = -86.99994
+offset_top = 6.0000076
+offset_right = -19.999939
+offset_bottom = 52.000008
+text = "Story"
+label_settings = SubResource("LabelSettings_ojubo")
+metadata/_edit_use_anchors_ = true
+
+[node name="StoryClick" type="Area2D" parent="CanvasLayer/Story" unique_id=1586479902]
+position = Vector2(-112.99994, 7.6293945e-06)
+script = ExtResource("6_jctmt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Story/StoryClick" unique_id=2090479058]
+position = Vector2(59.5, 24)
+shape = SubResource("RectangleShape2D_cabf2")
+
+[node name="Tutorial" type="Node2D" parent="CanvasLayer" unique_id=1340248497]
+position = Vector2(998, 40.999992)
+
+[node name="Tutorial" type="Label" parent="CanvasLayer/Tutorial" unique_id=1942248230]
+anchors_preset = -1
+anchor_left = -0.26065162
+anchor_top = 0.1521739
+anchor_right = -0.26065162
+anchor_bottom = 0.1521739
+offset_left = 1.000061
+offset_top = 6.0000076
+offset_right = 93.00006
+offset_bottom = 52.000008
+text = "Tutorial"
+label_settings = SubResource("LabelSettings_ojubo")
+
+[node name="StoryClick" type="Area2D" parent="CanvasLayer/Tutorial" unique_id=1435139694]
+position = Vector2(-22.999939, 7.6293945e-06)
+script = ExtResource("7_vl3nv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Tutorial/StoryClick" unique_id=1605570528]
+position = Vector2(70.5, 24)
+shape = SubResource("RectangleShape2D_qgpns")
+
+[node name="Back" type="Node2D" parent="CanvasLayer" unique_id=2097886787]
+position = Vector2(998, 40.999992)
+
+[node name="Back" type="Label" parent="CanvasLayer/Back" unique_id=417619319]
+anchors_preset = -1
+anchor_left = 0.81875
+anchor_top = 0.055555556
+anchor_right = 0.81875
+anchor_bottom = 0.055555556
+offset_left = 132.00006
+offset_top = 6.0000076
+offset_right = 195.00006
+offset_bottom = 52.000008
+text = "Back "
+label_settings = SubResource("LabelSettings_cabf2")
+
+[node name="BackClick" type="Area2D" parent="CanvasLayer/Back" unique_id=1814281100]
+position = Vector2(132.00006, 3.0000076)
+script = ExtResource("8_d3sku")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Back/BackClick" unique_id=1345201154]
+position = Vector2(28, 21)
+shape = SubResource("RectangleShape2D_2jpff")
+
+[node name="Overlay" type="ColorRect" parent="CanvasLayer" unique_id=1184622653]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.70000005)
+
+[node name="LevelConfirmationContainer" type="Control" parent="CanvasLayer" unique_id=1708909206]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LevelConfirmation" parent="CanvasLayer/LevelConfirmationContainer" unique_id=1301659965 instance=ExtResource("9_at6q0")]
+visible = false
+position = Vector2(640, 384.00003)
+scale = Vector2(0.65, 0.65)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1645921214]
+layer = 0
+script = ExtResource("10_wwl1x")
+scroll_speed = 40
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1113743473]
+z_index = 50
+position = Vector2(0, 52)
+motion_mirroring = Vector2(1286.4, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=807635914]
+position = Vector2(640, 369)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("11_gxwfk")
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="." unique_id=59984192]
+layer = 0
+script = ExtResource("12_lusvx")
+scroll_speed = 40
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2" unique_id=751928325]
+position = Vector2(-16, -56)
+motion_mirroring = Vector2(1286.4, 0)
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer" unique_id=63856301]
+position = Vector2(640, 416.00003)
+rotation = -3.1415925
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("11_gxwfk")
+
+[node name="Best" type="Sprite2D" parent="ParallaxBackground2" unique_id=1528430296]
+z_index = 50
+position = Vector2(623.2, 312.8)
+scale = Vector2(0.62, 0.62)
+texture = ExtResource("13_4j0gv")
+
+[node name="Start" type="Sprite2D" parent="ParallaxBackground2" unique_id=1676389328]
+z_index = 50
+position = Vector2(624.00006, 313)
+scale = Vector2(0.62, 0.62)
+texture = ExtResource("14_fqk0y")

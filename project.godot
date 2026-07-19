@@ -22,62 +22,62 @@ config/icon="res://icon.svg"
 
 [audio]
 
-buses/default_bus_layout="res://audio/audio_bus_layout.tres"
+buses/default_bus_layout="res://resources/audio/audio_bus_layout.tres"
 
 [autoload]
 
-LevelData="*res://data/LevelData.gd"
-LoadingDialogue="*res://script/loading_dialogue.gd"
-LoadingManager="*res://script/loading_manager.gd"
-Transition="*res://scenes/transition.tscn"
-MusicManager="res://scenes/music_manager.tscn"
+LevelData="*res://scripts/autoload/level_data.gd"
+LoadingDialogue="*res://scripts/autoload/loading_dialogue.gd"
+LoadingManager="*res://scripts/autoload/loading_manager.gd"
+Transition="*res://scenes/core/transition.tscn"
+MusicManager="res://scenes/core/music_manager.tscn"
 Dialogic="*uid://ds2q0uclmolvu"
-StoryProgress="*res://script/story_progress.gd"
-AudioManager="*res://audio/world_audio_manager.tscn"
+StoryProgress="*res://scripts/autoload/story_progress.gd"
+AudioManager="*res://scenes/core/world_audio_manager.tscn"
 Current="*uid://dospdvoh7w2xl"
 CardDatabase="*uid://7seytnrea6sn"
-EnhancementManager="*res://script/enhancement_manager.gd"
+EnhancementManager="*res://scripts/autoload/enhancement_manager.gd"
 
 [dialogic]
 
 directories/dch_directory={
-"baku": "res://char/baku.dch",
-"narrator": "res://char/narrator.dch",
-"unknown": "res://char/unknown.dch",
-"yuna": "res://char/yuna.dch"
+"baku": "res://dialogue/characters/baku.dch",
+"narrator": "res://dialogue/characters/narrator.dch",
+"unknown": "res://dialogue/characters/unknown.dch",
+"yuna": "res://dialogue/characters/yuna.dch"
 }
 directories/dtl_directory={
-"introduction": "res://timeline_tutorial/introduction.dtl",
-"outro": "res://timeline_tutorial/outro.dtl",
-"prologue": "res://additional story/prologue.dtl",
-"timeline": "res://timeline/timeline.dtl",
-"timeline_2": "res://timeline/timeline_2.dtl",
-"timeline_3": "res://timeline/timeline_3.dtl",
-"timeline_4": "res://timeline/timeline_4.dtl",
-"timeline_41": "res://timeline/timeline_41.dtl",
-"timeline_411_yuokai": "res://timeline/timeline_411_yuokai.dtl",
-"timeline_411_yuokai_confession": "res://timeline/timeline_411_yuokai_confession.dtl",
-"timeline_411_yuokai_phase2": "res://timeline/timeline_411_yuokai_phase2.dtl",
-"timeline_411_yuokai_post": "res://timeline/timeline_411_yuokai_post.dtl",
-"timeline_412_bakumono": "res://timeline/timeline_412_bakumono.dtl",
-"timeline_412_bakumono_confession": "res://timeline/timeline_412_bakumono_confession.dtl",
-"timeline_412_bakumono_phase2": "res://timeline/timeline_412_bakumono_phase2.dtl",
-"timeline_412_bakumono_post": "res://timeline/timeline_412_bakumono_post.dtl",
-"timeline_5": "res://timeline/timeline_5.dtl",
-"tut_chain": "res://timeline_tutorial/tut_chain.dtl",
-"tut_nova": "res://timeline_tutorial/tut_nova.dtl",
-"tut_overdrive": "res://timeline_tutorial/tut_overdrive.dtl",
-"tut_pierce": "res://timeline_tutorial/tut_pierce.dtl",
-"tut_practice": "res://timeline_tutorial/tut_practice.dtl",
-"tut_ultimate": "res://timeline_tutorial/tut_ultimate.dtl"
+"introduction": "res://dialogue/tutorials/introduction.dtl",
+"outro": "res://dialogue/tutorials/outro.dtl",
+"prologue": "res://dialogue/story/prologue.dtl",
+"timeline": "res://dialogue/story/timeline.dtl",
+"timeline_2": "res://dialogue/story/timeline_2.dtl",
+"timeline_3": "res://dialogue/story/timeline_3.dtl",
+"timeline_4": "res://dialogue/story/timeline_4.dtl",
+"timeline_41": "res://dialogue/story/timeline_41.dtl",
+"timeline_411_yuokai": "res://dialogue/story/timeline_411_yuokai.dtl",
+"timeline_411_yuokai_confession": "res://dialogue/story/timeline_411_yuokai_confession.dtl",
+"timeline_411_yuokai_phase2": "res://dialogue/story/timeline_411_yuokai_phase2.dtl",
+"timeline_411_yuokai_post": "res://dialogue/story/timeline_411_yuokai_post.dtl",
+"timeline_412_bakumono": "res://dialogue/story/timeline_412_bakumono.dtl",
+"timeline_412_bakumono_confession": "res://dialogue/story/timeline_412_bakumono_confession.dtl",
+"timeline_412_bakumono_phase2": "res://dialogue/story/timeline_412_bakumono_phase2.dtl",
+"timeline_412_bakumono_post": "res://dialogue/story/timeline_412_bakumono_post.dtl",
+"timeline_5": "res://dialogue/story/timeline_5.dtl",
+"tut_chain": "res://dialogue/tutorials/tut_chain.dtl",
+"tut_nova": "res://dialogue/tutorials/tut_nova.dtl",
+"tut_overdrive": "res://dialogue/tutorials/tut_overdrive.dtl",
+"tut_pierce": "res://dialogue/tutorials/tut_pierce.dtl",
+"tut_practice": "res://dialogue/tutorials/tut_practice.dtl",
+"tut_ultimate": "res://dialogue/tutorials/tut_ultimate.dtl"
 }
 layout/style_directory={
-"": "res://style/style_1.tres",
-"style_1": "res://style/style_1.tres"
+"": "res://themes/dialogic/style_1.tres",
+"style_1": "res://themes/dialogic/style_1.tres"
 }
 glossary/default_case_sensitive=true
-layout/style_list=["res://style/style_1.tres"]
-layout/default_style="res://style/style_1.tres"
+layout/style_list=["res://themes/dialogic/style_1.tres"]
+layout/default_style="res://themes/dialogic/style_1.tres"
 variables={
 "ChapChoose": {
 "Chap1Choose": 0,
@@ -145,6 +145,14 @@ window/stretch/aspect="ignore"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://assets/": "red",
+"res://scenes/": "green",
+"res://scripts/": "blue"
+}
 
 [input]
 

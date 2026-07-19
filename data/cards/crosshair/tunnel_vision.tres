@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://ds0pwlm5dfm4n"]
+
+[ext_resource type="Texture2D" uid="uid://cf8j3s5xibn15" path="res://assets/endless/Card/Test/crosshair card.png" id="1_rsh1e"]
+[ext_resource type="Script" uid="uid://bolgbl1crff4s" path="res://scripts/resources/card_data.gd" id="1_yogt7"]
+[ext_resource type="Texture2D" uid="uid://bsd2kv0kfgvo6" path="res://assets/ui/Card/Baku/Idle/3/Untitled741_20260125142045.png" id="2_71j4c"]
+
+[resource]
+script = ExtResource("1_yogt7")
+card_name = "Tunnel Vision"
+front_texture = ExtResource("2_71j4c")
+back_texture = ExtResource("1_rsh1e")
+metadata/_custom_type_script = "uid://bolgbl1crff4s"
