@@ -9,9 +9,11 @@ extends Node2D
 @onready var skill_blue3_effect: AnimatedSprite2D = $SkillBlue3Effect
 @onready var hitvis := $HitVisual
 @onready var hitbox_area: Area2D = $Hitbox
+@onready var alert_visual: AnimatedSprite2D = get_node_or_null("Alert")
 var original_modulate: Color
 var _health_base_scale: Vector2 = Vector2.ONE
 var _health_squash_tween: Tween
+var _alert_base_offset: Vector2 = Vector2.ZERO
 
 var _pending_nova_pull = null
 
@@ -82,11 +84,15 @@ var nova_pull_arrive_distance := 10.0
 @export var can_attack: bool = true
 @export var explode_on_close: bool = false
 @export var explode_close_damage: int = 1
+@export_range(0.0, 1.0, 0.01) var alert_depth_threshold: float = 0.25
 
 var player_node: Node2D
 var attack_timer: float = 0.0
 var is_attacking: bool = false
 var _close_explode_triggered: bool = false
+var _alert_started: bool = false
+var _alert_closing: bool = false
+var _enemy_visual_flipped: bool = false
 
 # ===========================
 var base_y : float = 0.0
@@ -131,6 +137,7 @@ var _my_spawn_order: int = 0
 @export var approach_target_random_y: float = 18.0
 @export var approach_target_min_y: float = 395.0
 @export var flip_when_moving_right: bool = false
+@export var flip_velocity_threshold: float = 0.05
 
 var approach_direction: Vector2
 var curve_time: float = 0.0
@@ -210,6 +217,7 @@ func _ready():
 	_probe_shape.radius = 1.0
 	skill_red3_effect.visible = false
 	skill_red3_effect.animation_finished.connect(_on_skill_red3_effect_finished)
+	_setup_alert_visual()
 	_resolve_trigger_zorder_nodes()
 	has_entered_trigger_zorder = false
 	_resolve_target_before_drift_nodes()
@@ -336,6 +344,7 @@ func _process(delta: float):
 
 	if player_node:
 		attack_timer -= sim_delta
+		_update_alert_state()
 		if depth == 0 and not is_attacking:
 			if explode_on_close:
 				_trigger_close_explode()
@@ -383,7 +392,70 @@ func _trigger_close_explode() -> void:
 		if player_node.has_method("take_damage"):
 			player_node.take_damage(max(explode_close_damage, 0))
 
+	_play_alert_out()
 	die()
+
+func _setup_alert_visual() -> void:
+	if alert_visual == null:
+		return
+	_alert_base_offset = alert_visual.offset
+	alert_visual.visible = false
+	alert_visual.stop()
+	if not alert_visual.animation_finished.is_connected(_on_alert_animation_finished):
+		alert_visual.animation_finished.connect(_on_alert_animation_finished)
+	_sync_alert_flip_offset()
+
+func _update_alert_state() -> void:
+	if alert_visual == null:
+		return
+	if is_dead or _close_explode_triggered:
+		return
+	if _alert_started or _alert_closing:
+		return
+	if depth <= alert_depth_threshold:
+		_play_alert_start()
+
+func _play_alert_start() -> void:
+	if alert_visual == null or alert_visual.sprite_frames == null:
+		return
+	_alert_started = true
+	_alert_closing = false
+	alert_visual.visible = true
+	alert_visual.frame = 0
+	alert_visual.frame_progress = 0.0
+	if alert_visual.sprite_frames.has_animation(&"start"):
+		alert_visual.play(&"start")
+	elif alert_visual.sprite_frames.has_animation(&"loop"):
+		alert_visual.play(&"loop")
+
+func _play_alert_out() -> void:
+	if alert_visual == null or alert_visual.sprite_frames == null:
+		return
+	if not _alert_started and not alert_visual.visible:
+		return
+	_alert_started = false
+	_alert_closing = true
+	alert_visual.visible = true
+	if alert_visual.sprite_frames.has_animation(&"start"):
+		alert_visual.play_backwards(&"start")
+	else:
+		_hide_alert_visual()
+
+func _hide_alert_visual() -> void:
+	if alert_visual == null:
+		return
+	alert_visual.stop()
+	alert_visual.visible = false
+	_alert_closing = false
+
+func _on_alert_animation_finished() -> void:
+	if alert_visual == null:
+		return
+	if _alert_closing:
+		_hide_alert_visual()
+		return
+	if _alert_started and alert_visual.sprite_frames != null and alert_visual.sprite_frames.has_animation(&"loop"):
+		alert_visual.play(&"loop")
 
 @export var idle_amplitude := 8.0  # Dikurangi karena flapping sudah handle naik turun
 @export var idle_speed := 2.5
@@ -522,13 +594,27 @@ func update_movement(delta):
 
 
 func update_flip():
-	if abs(last_velocity.x) < 1.0:
+	if abs(last_velocity.x) < flip_velocity_threshold:
 		return
 
+	var should_flip := false
 	if flip_when_moving_right:
-		visual.flip_h = last_velocity.x > 0
+		should_flip = last_velocity.x > 0
 	else:
-		visual.flip_h = last_velocity.x < 0
+		should_flip = last_velocity.x < 0
+
+	_enemy_visual_flipped = should_flip
+	if visual != null:
+		visual.flip_h = _enemy_visual_flipped
+	_sync_alert_flip_offset()
+
+func _sync_alert_flip_offset() -> void:
+	if alert_visual == null:
+		return
+
+	alert_visual.offset = _alert_base_offset
+	if _enemy_visual_flipped:
+		alert_visual.offset.x = -_alert_base_offset.x
 	
 
 func update_curved_approach(delta):
@@ -1177,6 +1263,7 @@ func die():
 	is_attacking = false
 	_close_explode_triggered = true
 	AudioManager.start_ui_sfx("res://music/sfx/glitch/delon_boomkin-glitch-explosion-422490.wav", [0.9, 1.2], 5)
+	_play_alert_out()
 
 	if hitbox_area:
 		hitbox_area.monitoring = false
