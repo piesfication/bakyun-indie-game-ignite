@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://dy2gct8m0xalq"]
+
+[ext_resource type="Script" uid="uid://8fbr3lrwt5u4" path="res://scripts/ui/menus/endless_gacha.gd" id="1_df80c"]
+[ext_resource type="PackedScene" uid="uid://dya2rgdbj704i" path="res://scenes/ui/endless_card.tscn" id="2_o7bt6"]
+[ext_resource type="Script" uid="uid://dgxvxmitrd13o" path="res://scripts/ui/parallax_background.gd" id="3_wdiim"]
+[ext_resource type="Texture2D" uid="uid://71fsdc8fl4jf" path="res://assets/title/Untitled977_20260324075141.png" id="4_vtb4a"]
+[ext_resource type="Script" uid="uid://b57hbvyj18rxn" path="res://scripts/ui/parallax_background_2.gd" id="5_i7bao"]
+[ext_resource type="FontFile" uid="uid://bjisq025387gx" path="res://assets/font/zrtw-hackynote-personal-use/ZRTW-HackynotePersonalUse.ttf" id="6_vtb4a"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i7bao"]
+font = ExtResource("6_vtb4a")
+font_size = 25
+
+[node name="EndlessGacha" type="Control" unique_id=2098883361]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_df80c")
+card_scene = ExtResource("2_o7bt6")
+
+[node name="CardContainer" type="Control" parent="." unique_id=352605615]
+anchors_preset = 0
+offset_left = -216.0
+offset_right = -176.0
+offset_bottom = 40.0
+
+[node name="ClickArea" type="Control" parent="." unique_id=1901092602]
+anchors_preset = 0
+offset_left = -7.0
+offset_top = 101.0
+offset_right = 1287.0
+offset_bottom = 692.0
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1645031284]
+layer = 0
+script = ExtResource("3_wdiim")
+scroll_speed = 40
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=939896579]
+z_index = 50
+position = Vector2(0, 52)
+motion_mirroring = Vector2(1286.4, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=1980201634]
+position = Vector2(640, 369)
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("4_vtb4a")
+
+[node name="ParallaxBackground2" type="ParallaxBackground" parent="." unique_id=620325111]
+layer = 0
+script = ExtResource("5_i7bao")
+scroll_speed = 40
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground2" unique_id=1938842544]
+position = Vector2(-16, -56)
+motion_mirroring = Vector2(1286.4, 0)
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground2/ParallaxLayer" unique_id=1756910797]
+position = Vector2(640, 416.00003)
+rotation = -3.1415925
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("4_vtb4a")
+
+[node name="Label" type="Label" parent="." unique_id=375480794]
+layout_mode = 0
+offset_left = 535.0
+offset_top = 568.0
+offset_right = 726.0
+offset_bottom = 601.0
+text = "Click to Start Spin!"
+label_settings = SubResource("LabelSettings_i7bao")

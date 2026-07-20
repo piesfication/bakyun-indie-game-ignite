@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cj82qr1jkpvb7"]
+
+[ext_resource type="Script" uid="uid://bolgbl1crff4s" path="res://scripts/resources/card_data.gd" id="1_cjdtl"]
+[ext_resource type="Texture2D" uid="uid://c5jwxyi3mixpp" path="res://assets/endless/Card/Test/Untitled1124_20260620130810.png" id="1_p0hiv"]
+[ext_resource type="Texture2D" uid="uid://bsd2kv0kfgvo6" path="res://assets/ui/Card/Baku/Idle/3/Untitled741_20260125142045.png" id="2_1jpjh"]
+
+[resource]
+script = ExtResource("1_cjdtl")
+card_name = "Our Own Colors"
+front_texture = ExtResource("2_1jpjh")
+back_texture = ExtResource("1_p0hiv")
+metadata/_custom_type_script = "uid://bolgbl1crff4s"

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://blughlotcafg6"]
+
+[ext_resource type="Script" uid="uid://dey3s7bavehms" path="res://scripts/ui/menus/map_icon.gd" id="1_2yqxl"]
+[ext_resource type="Texture2D" uid="uid://b0gpmk0etos3" path="res://assets/map/New Icon/Endless.png" id="1_eykmu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2yqxl"]
+radius = 196.57314
+
+[node name="MapIcon" type="Area2D" unique_id=1017151573]
+script = ExtResource("1_2yqxl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=435413369]
+texture = ExtResource("1_eykmu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1928477864]
+position = Vector2(0, 18)
+shape = SubResource("CircleShape2D_2yqxl")

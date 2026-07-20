@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://csulmqh55eov6"]
+
+[ext_resource type="Script" uid="uid://bolgbl1crff4s" path="res://scripts/resources/card_data.gd" id="1_5wsfj"]
+[ext_resource type="Texture2D" uid="uid://cbqxlhowtan6v" path="res://assets/endless/Card/Test/danger card.png" id="1_g3t6e"]
+[ext_resource type="Texture2D" uid="uid://bsd2kv0kfgvo6" path="res://assets/ui/Card/Baku/Idle/3/Untitled741_20260125142045.png" id="2_eph8r"]
+
+[resource]
+script = ExtResource("1_5wsfj")
+card_name = "Flock Season"
+front_texture = ExtResource("2_eph8r")
+back_texture = ExtResource("1_g3t6e")
+metadata/_custom_type_script = "uid://bolgbl1crff4s"
