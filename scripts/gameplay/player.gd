@@ -14,6 +14,7 @@ var invulnerable: bool = false
 var current_weapon: Node2D
 var input_locked: bool = false
 var switch_locked: bool = false
+var weapon_motion_locked: bool = false
 
 @export var damage_shake_duration: float = 0.24
 @export var damage_shake_strength: float = 26.0
@@ -152,6 +153,13 @@ func set_input_locked(locked: bool) -> void:
 
 func set_switch_locked(locked: bool) -> void:
 	switch_locked = locked
+
+func set_weapon_motion_locked(locked: bool) -> void:
+	weapon_motion_locked = locked
+	if baku != null and is_instance_valid(baku):
+		baku.set_process(not locked)
+	if yuna != null and is_instance_valid(yuna):
+		yuna.set_process(not locked)
 
 func set_invulnerable(enabled: bool) -> void:
 	invulnerable = enabled

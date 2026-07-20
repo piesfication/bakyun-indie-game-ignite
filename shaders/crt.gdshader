@@ -40,6 +40,7 @@ uniform float static_noise_intensity : hint_range(0.0, 1.0) = 0.06;
 uniform float aberration : hint_range(-1.0, 1.0) = 0.03; // Chromatic aberration, a distortion on each color channel.
 uniform float brightness = 1.4; // When adding scanline gaps and grille the image can get very dark. Brightness tries to compensate for that.
 uniform bool discolor = true; // Add a discolor effect simulating a VHS
+uniform float grayscale_amount : hint_range(0.0, 1.0) = 0.0;
 
 uniform float warp_amount :hint_range(0.0, 5.0) = 1.0; // Warp the texture edges simulating the curved glass of a CRT monitor or old TV.
 uniform bool clip_warp = false;
@@ -224,6 +225,11 @@ void fragment()
 		// Contrast
 		float midpoint = pow(0.5, 2.2);
 		text.rgb = (text.rgb - vec3(midpoint)) * contrast + midpoint;
+	}
+	if (grayscale_amount > 0.0)
+	{
+		float luminance = dot(text.rgb, vec3(0.299, 0.587, 0.114));
+		text.rgb = mix(text.rgb, vec3(luminance), grayscale_amount);
 	}
 	
 	COLOR = text;

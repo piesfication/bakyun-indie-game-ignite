@@ -5,6 +5,7 @@ extends Node2D
 
 const PIERCE_PROJECTILE_SCENE = preload("res://scenes/gameplay/projectiles/pierce_projectile.tscn")
 const CHAIN_PROJECTILE_SCENE = preload("res://scenes/gameplay/projectiles/chain_projectile.tscn")
+const CROSSHAIR_GRAYSCALE_SHADER = preload("res://shaders/crosshair_grayscale.gdshader")
 
 enum SkillShot {
 	NONE,
@@ -73,6 +74,8 @@ var aim_state := AimState.NONE
 
 var state := State.IDLE
 @onready var sprite: AnimatedSprite2D = $Visual/AnimatedSprite2D
+var _sprite_base_material: Material = null
+var _grayscale_material: ShaderMaterial = null
 var _pierce_burst_token_counter: int = 0
 var _pierce_burst_used_tokens: Dictionary = {}
 
@@ -80,10 +83,27 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	current_mode = CharacterMode.CHAR_BAKU
 	state = State.IDLE
+	_sprite_base_material = sprite.material
+	_setup_grayscale_material()
 	if indicator.has_signal("skill_casted"):
 		indicator.connect("skill_casted", Callable(self, "_on_skill_casted"))
 	update_crosshair_visual()
 	#current_mode = CharacterMode.CHAR_BAKU
+
+func _setup_grayscale_material() -> void:
+	_grayscale_material = ShaderMaterial.new()
+	_grayscale_material.shader = CROSSHAIR_GRAYSCALE_SHADER
+	_grayscale_material.set_shader_parameter("grayscale_amount", 1.0)
+
+func set_visual_grayscale(enabled: bool) -> void:
+	if sprite == null or not is_instance_valid(sprite):
+		return
+	if enabled:
+		if _grayscale_material == null:
+			_setup_grayscale_material()
+		sprite.material = _grayscale_material
+	else:
+		sprite.material = _sprite_base_material
 
 func set_state(new_state: State):
 	if state == new_state:
