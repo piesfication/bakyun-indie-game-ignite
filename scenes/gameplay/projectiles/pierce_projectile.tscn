@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bbbto12dwewrj"]
+[gd_scene format=3 uid="uid://bbbto12dwewrj"]
 
 [ext_resource type="Script" uid="uid://dff4dr1n010w3" path="res://scripts/gameplay/projectiles/pierce_projectile.gd" id="1_pierce"]
 [ext_resource type="Texture2D" uid="uid://bcjliqc1s11ba" path="res://assets/skill/Red_2_Blue_1/Untitled993_20260324183238.png" id="2_3doht"]
@@ -43,10 +43,10 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="PierceProjectile" type="Area2D"]
+[node name="PierceProjectile" type="Area2D" unique_id=549270027]
 script = ExtResource("1_pierce")
 
-[node name="Visual" type="AnimatedSprite2D" parent="."]
+[node name="Visual" type="AnimatedSprite2D" parent="." unique_id=87945991]
 rotation = 3.1415927
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_qsedi")

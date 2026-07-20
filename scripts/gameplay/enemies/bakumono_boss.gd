@@ -1383,7 +1383,7 @@ func _update_random_movement(delta: float) -> void:
 		# Reduce speed during weakness phase for more stable movement
 		if weakness_active:
 			speed *= weakness_move_speed_factor
-		
+
 		global_position += dir * speed * delta
 		#_update_facing(dx)
 
