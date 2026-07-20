@@ -9,6 +9,7 @@ var _crt_default_params: Dictionary = {}
 var _crt_burst_active: bool = false
 var _crt_burst_hold_duration: float = 0.22
 var _crt_burst_restore_duration: float = 0.11
+var _crt_grayscale_tween: Tween = null
 
 func _ready():
 	bakutitle.visible = false
@@ -79,15 +80,40 @@ func fade_in():
 	await tween2.finished
 
 func set_crt_discolor(enabled: bool) -> void:
-	pass
-	#if crt_rect == null or not is_instance_valid(crt_rect):
-		#return
-#
-	#var shader_material := crt_rect.material as ShaderMaterial
-	#if shader_material == null:
-		#return
-#
-	#shader_material.set_shader_parameter("discolor", enabled)
+	if crt_rect == null or not is_instance_valid(crt_rect):
+		return
+
+	var shader_material := crt_rect.material as ShaderMaterial
+	if shader_material == null:
+		return
+
+	shader_material.set_shader_parameter("discolor", enabled)
+	shader_material.set_shader_parameter("grayscale_amount", 1.0 if enabled else 0.0)
+
+func play_crt_grayscale_transition(duration: float = 0.7) -> void:
+	if crt_rect == null or not is_instance_valid(crt_rect):
+		return
+
+	var shader_material := crt_rect.material as ShaderMaterial
+	if shader_material == null:
+		return
+
+	var burst_wait_time := 1.0
+	while _crt_burst_active and burst_wait_time > 0.0:
+		await get_tree().process_frame
+		burst_wait_time -= get_process_delta_time()
+
+	if _crt_grayscale_tween != null and _crt_grayscale_tween.is_valid():
+		_crt_grayscale_tween.kill()
+
+	shader_material.set_shader_parameter("discolor", false)
+	shader_material.set_shader_parameter("grayscale_amount", 0.0)
+	_crt_grayscale_tween = create_tween()
+	_crt_grayscale_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_crt_grayscale_tween.tween_method(func(value: float) -> void:
+		shader_material.set_shader_parameter("grayscale_amount", value)
+	, 0.0, 1.0, maxf(duration, 0.01))
+	await _crt_grayscale_tween.finished
 
 func play_crt_glitch_burst() -> void:
 	if _crt_burst_active:
@@ -148,6 +174,7 @@ func _cache_crt_defaults() -> void:
 		"aberration": shader_material.get_shader_parameter("aberration"),
 		"brightness": shader_material.get_shader_parameter("brightness"),
 		"discolor": shader_material.get_shader_parameter("discolor"),
+		"grayscale_amount": shader_material.get_shader_parameter("grayscale_amount"),
 		"warp_amount": shader_material.get_shader_parameter("warp_amount"),
 		"vignette_intensity": shader_material.get_shader_parameter("vignette_intensity"),
 		"vignette_opacity": shader_material.get_shader_parameter("vignette_opacity"),
