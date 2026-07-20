@@ -44,6 +44,7 @@ extends Node2D
 
 @onready var visual: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox: Area2D = $Area2D
+@onready var alert_visual: AnimatedSprite2D = get_node_or_null("Alert")
 
 enum OrbColor {
 	RED,
@@ -52,6 +53,7 @@ enum OrbColor {
 
 @export var randomize_color_on_spawn: bool = true
 @export var fixed_orb_color: OrbColor = OrbColor.RED
+@export_range(0.0, 1.0, 0.01) var alert_depth_threshold: float = 0.25
 
 var hp: int = 1
 var is_dead: bool = false
@@ -61,6 +63,10 @@ var neutralized: bool = false
 var orb_color: OrbColor = OrbColor.RED
 var spawn_anim_done: bool = false
 var exploding: bool = false
+var _alert_started: bool = false
+var _alert_closing: bool = false
+var _free_after_alert_out: bool = false
+var _explode_animation_finished: bool = false
 
 var depth: float = 1.0
 var drift_origin: Vector2 = Vector2.ZERO
@@ -100,6 +106,7 @@ func _ready() -> void:
 		if not visual.animation_finished.is_connected(_on_visual_animation_finished):
 			visual.animation_finished.connect(_on_visual_animation_finished)
 		_play_spawn_animation()
+	_setup_alert_visual()
 
 func setup(target_player: Node2D, target_follow: Node2D = null) -> void:
 	player_node = target_player
@@ -126,6 +133,7 @@ func _process(delta: float) -> void:
 
 	var t := smoothstep(0.0, 1.0, 1.0 - depth)
 	scale = Vector2.ONE * lerpf(min_scale, max_scale, t)
+	_update_alert_state()
 
 	if follow_target != null and is_instance_valid(follow_target):
 		var to_leader := follow_target.global_position - global_position
@@ -277,6 +285,7 @@ func _neutralize_anchor() -> void:
 
 	neutralized = true
 	exploding = true
+	_explode_animation_finished = false
 	lifetime = 0.0
 	hp = 0
 	marked = false
@@ -290,6 +299,7 @@ func _neutralize_anchor() -> void:
 	if is_in_group("enemy_nodes"):
 		remove_from_group("enemy_nodes")
 
+	_play_alert_out()
 	_play_explode_animation()
 
 func die() -> void:
@@ -299,7 +309,73 @@ func die() -> void:
 	if hitbox:
 		hitbox.monitoring = false
 		hitbox.monitorable = false
+	if _play_alert_out():
+		_free_after_alert_out = true
+		return
 	queue_free()
+
+func _setup_alert_visual() -> void:
+	if alert_visual == null:
+		return
+	alert_visual.visible = false
+	alert_visual.stop()
+	if not alert_visual.animation_finished.is_connected(_on_alert_animation_finished):
+		alert_visual.animation_finished.connect(_on_alert_animation_finished)
+
+func _update_alert_state() -> void:
+	if alert_visual == null:
+		return
+	if neutralized or exploding or is_dead:
+		return
+	if _alert_started or _alert_closing:
+		return
+	if depth <= alert_depth_threshold:
+		_play_alert_start()
+
+func _play_alert_start() -> void:
+	if alert_visual == null or alert_visual.sprite_frames == null:
+		return
+	_alert_started = true
+	_alert_closing = false
+	alert_visual.visible = true
+	alert_visual.frame = 0
+	alert_visual.frame_progress = 0.0
+	if alert_visual.sprite_frames.has_animation(&"start"):
+		alert_visual.play(&"start")
+	elif alert_visual.sprite_frames.has_animation(&"loop"):
+		alert_visual.play(&"loop")
+
+func _play_alert_out() -> bool:
+	if alert_visual == null or alert_visual.sprite_frames == null:
+		return false
+	if not _alert_started and not alert_visual.visible:
+		return false
+	_alert_started = false
+	_alert_closing = true
+	alert_visual.visible = true
+	if alert_visual.sprite_frames.has_animation(&"start"):
+		alert_visual.play_backwards(&"start")
+		return true
+	_hide_alert_visual()
+	return false
+
+func _hide_alert_visual() -> void:
+	if alert_visual == null:
+		return
+	alert_visual.stop()
+	alert_visual.visible = false
+	_alert_closing = false
+
+func _on_alert_animation_finished() -> void:
+	if alert_visual == null:
+		return
+	if _alert_closing:
+		_hide_alert_visual()
+		if _free_after_alert_out or (exploding and _explode_animation_finished):
+			queue_free()
+		return
+	if _alert_started and alert_visual.sprite_frames != null and alert_visual.sprite_frames.has_animation(&"loop"):
+		alert_visual.play(&"loop")
 
 func _pick_orb_color() -> OrbColor:
 	if not randomize_color_on_spawn:
@@ -338,7 +414,9 @@ func _play_spawn_animation() -> void:
 
 func _play_explode_animation() -> void:
 	if visual == null or visual.sprite_frames == null:
-		queue_free()
+		_explode_animation_finished = true
+		if not _alert_closing:
+			queue_free()
 		return
 
 	var explode_anim := _explode_anim_name()
@@ -346,7 +424,9 @@ func _play_explode_animation() -> void:
 		visual.play(explode_anim)
 		return
 
-	queue_free()
+	_explode_animation_finished = true
+	if not _alert_closing:
+		queue_free()
 
 func _on_visual_animation_finished() -> void:
 	if visual == null:
@@ -362,7 +442,9 @@ func _on_visual_animation_finished() -> void:
 		return
 
 	if visual.animation == _explode_anim_name():
-		queue_free()
+		_explode_animation_finished = true
+		if not _alert_closing:
+			queue_free()
 
 func _can_take_damage_from_current_character() -> bool:
 	if player_node == null or not is_instance_valid(player_node):

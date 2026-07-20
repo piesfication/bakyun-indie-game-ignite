@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://xagbf7jd1fhf"]
+[gd_scene format=3 uid="uid://xagbf7jd1fhf"]
 
 [ext_resource type="Texture2D" uid="uid://bhpqv4qqud1c3" path="res://assets/enemy/Orb/Blue/Spawn/Untitled1022_20260409103636.png" id="4_yb70x"]
 [ext_resource type="Texture2D" uid="uid://d2vaco6aksnhq" path="res://assets/enemy/Orb/Blue/Spawn/Untitled1022_20260409103851.png" id="6_ol664"]
@@ -16,9 +16,19 @@
 [ext_resource type="Texture2D" uid="uid://t1a4r0p14dxx" path="res://assets/enemy/boss/Summon/ColoredOrb/Red/Explode/Untitled945_20260317082749.png" id="17_ovljg"]
 [ext_resource type="Texture2D" uid="uid://51d2guj3d6j8" path="res://assets/enemy/Orb/Red/Explode/Untitled1023_20260409093107.png" id="19_5eu5h"]
 [ext_resource type="Texture2D" uid="uid://cx0t08c6drfa2" path="res://assets/enemy/boss/Summon/ColoredOrb/Red/Explode/Untitled945_20260317083106.png" id="19_bufc1"]
+[ext_resource type="Texture2D" uid="uid://cte7p0jottn2t" path="res://assets/event/Alert/Loop/alertloop1.png" id="20_7fypm"]
 [ext_resource type="Texture2D" uid="uid://cdgoniw6y2ffm" path="res://assets/enemy/Orb/Red/Explode/Untitled1023_20260409093109.png" id="20_fh2bp"]
+[ext_resource type="Texture2D" uid="uid://caps8jgnnlsb1" path="res://assets/event/Alert/Loop/alertloop2.png" id="21_8nstn"]
 [ext_resource type="Texture2D" uid="uid://br3iaj0hdy51d" path="res://assets/enemy/Orb/Red/Explode/Untitled1023_20260409093112.png" id="21_qdpk0"]
 [ext_resource type="Texture2D" uid="uid://d3u1c4komfx4n" path="res://assets/enemy/Orb/Red/Explode/Untitled1023_20260409102956.png" id="22_pl7bc"]
+[ext_resource type="Texture2D" uid="uid://27wh4ihtg2d" path="res://assets/event/Alert/Loop/alertloop3.png" id="22_vtpx7"]
+[ext_resource type="Texture2D" uid="uid://dxoaus1t0o0g0" path="res://assets/event/Alert/Loop/alertloop4.png" id="23_qvqwk"]
+[ext_resource type="Texture2D" uid="uid://cujkcmrdujt6v" path="res://assets/event/Alert/Start/alert1.png" id="24_0oxbw"]
+[ext_resource type="Texture2D" uid="uid://c6lqhc5tu757l" path="res://assets/event/Alert/Start/alert2.png" id="25_6cjex"]
+[ext_resource type="Texture2D" uid="uid://ci22y355fqsto" path="res://assets/event/Alert/Start/alert3.png" id="26_cw56g"]
+[ext_resource type="Texture2D" uid="uid://bioykk7s3uwtb" path="res://assets/event/Alert/Start/alert4.png" id="27_4k0sd"]
+[ext_resource type="Texture2D" uid="uid://csya2vymbbytv" path="res://assets/event/Alert/Start/alert5.png" id="28_xi5fb"]
+[ext_resource type="Texture2D" uid="uid://312wdrgukuts" path="res://assets/event/Alert/Start/alert6.png" id="29_rdb8f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l855h"]
 radius = 169.70563
@@ -128,7 +138,90 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="HomingOrb" type="Node2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ne4rw"]
+atlas = ExtResource("20_7fypm")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xq4m6"]
+atlas = ExtResource("21_8nstn")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xj61y"]
+atlas = ExtResource("22_vtpx7")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywvaa"]
+atlas = ExtResource("23_qvqwk")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s161c"]
+atlas = ExtResource("24_0oxbw")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2uy6q"]
+atlas = ExtResource("25_6cjex")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ir4c4"]
+atlas = ExtResource("26_cw56g")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wfqu"]
+atlas = ExtResource("27_4k0sd")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gxrb5"]
+atlas = ExtResource("28_xi5fb")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lf5gd"]
+atlas = ExtResource("29_rdb8f")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_owsyb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ne4rw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xq4m6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xj61y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywvaa")
+}],
+"loop": true,
+"name": &"loop",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s161c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2uy6q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ir4c4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6wfqu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gxrb5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lf5gd")
+}],
+"loop": false,
+"name": &"start",
+"speed": 10.0
+}]
+
+[node name="HomingOrb" type="Node2D" unique_id=54946579]
 scale = Vector2(0.4, 0.4)
 script = ExtResource("11_orbsc")
 drift_speed = 3.0
@@ -136,14 +229,19 @@ drift_move_speed = 350.0
 leader_wave_frequency = 3.0
 leader_wander_strength = 1.0
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=805063361]
 scale = Vector2(0.99999994, 0.99999994)
 collision_layer = 2
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=478214841]
 shape = SubResource("CircleShape2D_l855h")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=378849894]
 sprite_frames = SubResource("SpriteFrames_nvgyg")
-animation = &"enlarge_blue"
+animation = &"moving_red"
+
+[node name="Alert" type="AnimatedSprite2D" parent="." unique_id=616773555]
+scale = Vector2(0.7, 0.7)
+sprite_frames = SubResource("SpriteFrames_owsyb")
+animation = &"loop"
