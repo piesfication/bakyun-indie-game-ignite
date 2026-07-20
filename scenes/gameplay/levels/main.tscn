@@ -42,19 +42,26 @@
 [ext_resource type="Texture2D" uid="uid://dmu72xvl3bv20" path="res://assets/event/Mission Clear/Untitled983_20260426162628.png" id="18_kmcm6"]
 [ext_resource type="Texture2D" uid="uid://bba112slcr6kw" path="res://assets/hando/Revised_yuna/Untitled755_20260125101554.png" id="18_ro3en"]
 [ext_resource type="Texture2D" uid="uid://dtt6fu4scae1j" path="res://assets/ui/Mahou-meter (template)/Size revised/Untitled748_20260124095928.png" id="18_yc10j"]
+[ext_resource type="Texture2D" uid="uid://81dhbittt66e" path="res://assets/event/Mission Failed/mission_failed1.png" id="19_bngay"]
 [ext_resource type="Texture2D" uid="uid://dvhyjn7iqk6xw" path="res://assets/ui/Mahou-meter (template)/Size revised/Untitled748_20260124095934.png" id="19_jscy8"]
+[ext_resource type="Texture2D" uid="uid://bc5fhbl5ov40a" path="res://assets/event/Mission Failed/mission_failed2.png" id="20_b0cvg"]
 [ext_resource type="Texture2D" uid="uid://com0djy5n7lo5" path="res://assets/ui/Mahou-meter (template)/Size revised/Untitled748_20260124095937.png" id="20_pm3ni"]
 [ext_resource type="Texture2D" uid="uid://inkaltnponon" path="res://assets/crosshair_revised/Baku/Aim/Untitled700_20260122214839.png" id="20_xrs0c"]
+[ext_resource type="Texture2D" uid="uid://wqkxjcw0ldwj" path="res://assets/event/Mission Failed/mission_failed3.png" id="21_oho0q"]
 [ext_resource type="Texture2D" uid="uid://ex2gkaong76j" path="res://assets/crosshair_revised/Baku/Aim/Untitled700_20260122214705.png" id="21_xljpf"]
 [ext_resource type="Texture2D" uid="uid://cnim5kwajc2ng" path="res://assets/ui/Mahou-meter (template)/Size revised/Untitled748_20260124095931.png" id="21_y6deb"]
+[ext_resource type="Texture2D" uid="uid://cvdy27uueyq8h" path="res://assets/event/Mission Failed/mission_failed4.png" id="22_eh56v"]
 [ext_resource type="Texture2D" uid="uid://b6y43xiv7ttaf" path="res://assets/crosshair_revised/Baku/Weakness/Untitled700_20260122214857.png" id="22_j4bwh"]
 [ext_resource type="Texture2D" uid="uid://3i4li4mekuax" path="res://assets/ui/Mahou-meter (revised)/Untitled736_20260122193218.png" id="22_og1vs"]
 [ext_resource type="Texture2D" uid="uid://c0oqowivafsit" path="res://assets/ui/Mahou-meter (revised)/Untitled736_20260122193344.png" id="23_2wyq8"]
 [ext_resource type="Texture2D" uid="uid://xuqvfphddht3" path="res://assets/crosshair_revised/Baku/Weakness/Untitled700_20260122214844.png" id="23_ksmap"]
+[ext_resource type="Texture2D" uid="uid://txsqmoc2trfl" path="res://assets/event/Mission Failed/mission_failed5.png" id="23_uo0wc"]
+[ext_resource type="Texture2D" uid="uid://calunqgnbeh0y" path="res://assets/event/Mission Failed/mission_failed6.png" id="24_4myww"]
 [ext_resource type="Texture2D" uid="uid://nyouqdc56u8e" path="res://assets/ui/Mahou-meter (revised)/Untitled736_20260122193308.png" id="24_vxglm"]
 [ext_resource type="Texture2D" uid="uid://ctbtpx0fijwcv" path="res://assets/crosshair_revised/Yuna/Weakness/Untitled700_20260122214553.png" id="24_ygd8o"]
 [ext_resource type="Texture2D" uid="uid://3mm5mntnuq57" path="res://assets/ui/Mahou-meter (revised)/Untitled736_20260122193257.png" id="25_2f3dj"]
 [ext_resource type="Texture2D" uid="uid://chn7lh4jgdgnd" path="res://assets/crosshair_revised/Yuna/Weakness/Untitled700_20260122214258.png" id="25_2s0kr"]
+[ext_resource type="Texture2D" uid="uid://ba3d1gfysejd0" path="res://assets/event/Mission Failed/mission_failed7.png" id="25_nw13v"]
 [ext_resource type="Texture2D" uid="uid://i04fippoq1pl" path="res://assets/crosshair_revised/Yuna/Aim/Untitled700_20260122214213.png" id="26_xaipn"]
 [ext_resource type="Script" uid="uid://ddrlomumxynia" path="res://scripts/gameplay/koisuru_meter.gd" id="27_cjqg0"]
 [ext_resource type="Texture2D" uid="uid://fb71scvtv1k7" path="res://assets/crosshair_revised/Yuna/Aim/Untitled700_20260122213306.png" id="27_ndrjj"]
@@ -232,6 +239,84 @@ animations = [{
 }],
 "loop": false,
 "name": &"clear",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kmxc"]
+atlas = ExtResource("19_bngay")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ook5"]
+atlas = ExtResource("20_b0cvg")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bbcx"]
+atlas = ExtResource("21_oho0q")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdhux"]
+atlas = ExtResource("22_eh56v")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8amx"]
+atlas = ExtResource("23_uo0wc")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ixu6"]
+atlas = ExtResource("24_4myww")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_372s1"]
+atlas = ExtResource("25_nw13v")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4or16"]
+atlas = ExtResource("23_uo0wc")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfoj1"]
+atlas = ExtResource("20_b0cvg")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64rev"]
+atlas = ExtResource("19_bngay")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_swat5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kmxc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ook5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bbcx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdhux")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8amx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ixu6")
+}, {
+"duration": 7.0,
+"texture": SubResource("AtlasTexture_372s1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4or16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfoj1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64rev")
+}],
+"loop": false,
+"name": &"default",
 "speed": 10.0
 }]
 
@@ -1047,6 +1132,11 @@ sprite_frames = SubResource("SpriteFrames_8jwmc")
 animation = &"clear"
 frame = 9
 frame_progress = 1.0
+
+[node name="MissionFailed" type="AnimatedSprite2D" parent="." unique_id=28878242]
+z_index = 500
+position = Vector2(640, 369)
+sprite_frames = SubResource("SpriteFrames_swat5")
 
 [node name="BirdStrikeAlert" type="AnimatedSprite2D" parent="." unique_id=501589456]
 z_index = 500

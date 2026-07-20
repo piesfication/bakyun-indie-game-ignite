@@ -18,12 +18,19 @@
 [ext_resource type="Texture2D" uid="uid://jab0wykiecd8" path="res://assets/event/Mission Clear/Untitled983_20260426162625.png" id="16_t7xh5"]
 [ext_resource type="Texture2D" uid="uid://ceo6pab7npcn0" path="res://assets/event/Mission Clear/Untitled983_20260426162627.png" id="17_evnv1"]
 [ext_resource type="Texture2D" uid="uid://dmu72xvl3bv20" path="res://assets/event/Mission Clear/Untitled983_20260426162628.png" id="18_om1ry"]
+[ext_resource type="Texture2D" uid="uid://81dhbittt66e" path="res://assets/event/Mission Failed/mission_failed1.png" id="19_fpiij"]
 [ext_resource type="Texture2D" uid="uid://3wdskvbgu0ay" path="res://assets/event/Notification/Untitled976_20260319232216.png" id="19_ventp"]
 [ext_resource type="Texture2D" uid="uid://c2hm2cby8red6" path="res://assets/event/Notification/Untitled976_20260319232220.png" id="20_37uyq"]
+[ext_resource type="Texture2D" uid="uid://bc5fhbl5ov40a" path="res://assets/event/Mission Failed/mission_failed2.png" id="20_fdd1a"]
 [ext_resource type="Texture2D" uid="uid://xiubl204nqj8" path="res://assets/event/Notification/Untitled976_20260319232225.png" id="21_rgdvl"]
+[ext_resource type="Texture2D" uid="uid://wqkxjcw0ldwj" path="res://assets/event/Mission Failed/mission_failed3.png" id="21_x25sy"]
 [ext_resource type="Texture2D" uid="uid://cnu13dtg7564a" path="res://assets/event/Notification/Untitled976_20260319232228.png" id="22_3xhwj"]
+[ext_resource type="Texture2D" uid="uid://cvdy27uueyq8h" path="res://assets/event/Mission Failed/mission_failed4.png" id="22_epgu6"]
 [ext_resource type="Texture2D" uid="uid://b7w8e5idmv8g1" path="res://assets/event/Notification/Untitled976_20260319232249.png" id="23_ri0xl"]
+[ext_resource type="Texture2D" uid="uid://txsqmoc2trfl" path="res://assets/event/Mission Failed/mission_failed5.png" id="23_s3ptw"]
+[ext_resource type="Texture2D" uid="uid://calunqgnbeh0y" path="res://assets/event/Mission Failed/mission_failed6.png" id="24_fnxl7"]
 [ext_resource type="Texture2D" uid="uid://cxa12ffm1nqgx" path="res://assets/event/Notification/Untitled976_20260319232259.png" id="24_kiupp"]
+[ext_resource type="Texture2D" uid="uid://ba3d1gfysejd0" path="res://assets/event/Mission Failed/mission_failed7.png" id="25_o0dot"]
 [ext_resource type="Script" uid="uid://bjx0kjvqvauq1" path="res://scripts/ui/background.gd" id="25_rna72"]
 [ext_resource type="Texture2D" uid="uid://i5asanwmdtcp" path="res://assets/level/sea/Untitled694_20260115180850.png" id="26_16fvb"]
 [ext_resource type="Texture2D" uid="uid://4wksodnvgnvv" path="res://assets/level/sea/Untitled694_20260115181335.png" id="27_76fxv"]
@@ -235,6 +242,84 @@ animations = [{
 }],
 "loop": false,
 "name": &"clear",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kmxc"]
+atlas = ExtResource("19_fpiij")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ook5"]
+atlas = ExtResource("20_fdd1a")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bbcx"]
+atlas = ExtResource("21_x25sy")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdhux"]
+atlas = ExtResource("22_epgu6")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8amx"]
+atlas = ExtResource("23_s3ptw")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ixu6"]
+atlas = ExtResource("24_fnxl7")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_372s1"]
+atlas = ExtResource("25_o0dot")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4or16"]
+atlas = ExtResource("23_s3ptw")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfoj1"]
+atlas = ExtResource("20_fdd1a")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64rev"]
+atlas = ExtResource("19_fpiij")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sbf2q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kmxc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ook5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bbcx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdhux")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8amx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ixu6")
+}, {
+"duration": 7.0,
+"texture": SubResource("AtlasTexture_372s1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4or16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfoj1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64rev")
+}],
+"loop": false,
+"name": &"default",
 "speed": 10.0
 }]
 
@@ -1046,6 +1131,12 @@ sprite_frames = SubResource("SpriteFrames_8jwmc")
 animation = &"clear"
 frame = 9
 frame_progress = 1.0
+
+[node name="MissionFailed" type="AnimatedSprite2D" parent="." unique_id=2104403476]
+z_index = 500
+position = Vector2(640, 369)
+sprite_frames = SubResource("SpriteFrames_sbf2q")
+animation = &"clear"
 
 [node name="BirdStrikeAlert" type="AnimatedSprite2D" parent="." unique_id=501589456]
 z_index = 500

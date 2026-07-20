@@ -14,6 +14,7 @@ signal level_finished
 @onready var koisuru_meter_node: Node = $UIKoisuruMeter/KoisuruMeter
 @onready var ultimate_anim_node: AnimatedSprite2D = $UltimateAnim
 @onready var mission_clear_node: AnimatedSprite2D = $MissionClear
+@onready var mission_failed_node: AnimatedSprite2D = get_node_or_null("MissionFailed") as AnimatedSprite2D
 @onready var level_end_overlay_layer: CanvasLayer = $LevelEndOverlay
 @onready var level_end_overlay: ColorRect = $LevelEndOverlay/ColorRect
 @onready var combo_counter_node: Node = $LevelEndOverlay/ComboCounter
@@ -39,6 +40,8 @@ signal level_finished
 @export_range(0.0, 10.0, 0.05, "suffix:s") var level_end_mission_clear_post_delay_seconds: float = 0.45
 @export_range(0.1, 5.0, 0.05, "suffix:s") var level_end_lose_fade_duration: float = 1.5
 @export_range(0.0, 5.0, 0.05, "suffix:s") var level_end_lose_hold_seconds: float = 2.0
+@export_range(0.0, 3.0, 0.05, "suffix:s") var level_end_grayscale_duration: float = 0.7
+@export_range(0, 60, 1) var mission_failed_grayscale_start_frame: int = 6
 @export var shot_hit_sfx_path: String = "res://music/sfx/shooting/u_qoe8xdq7hm-beam-fire-282361.wav"
 @export var shot_miss_sfx_path: String = "res://music/sfx/shooting/zehendrew-infinity-castle-gate-opening-sound-muzan-463491.wav"
 @export_range(0.5, 3.0, 0.01, "suffix:x") var shot_hit_pitch_start: float = 0.85
@@ -123,6 +126,10 @@ func _setup_main_runtime_systems() -> void:
 	if mission_clear_node != null:
 		mission_clear_node.stop()
 		mission_clear_node.visible = false
+
+	if mission_failed_node != null:
+		mission_failed_node.stop()
+		mission_failed_node.visible = false
 
 	if koisuru_meter_node != null and koisuru_meter_node.has_signal("ultimate_casted"):
 		if not koisuru_meter_node.is_connected("ultimate_casted", Callable(self, "_on_ultimate_casted")):
@@ -221,7 +228,8 @@ func _spawn_enemy_instance(scene_to_spawn: PackedScene) -> bool:
 
 
 func _process(delta):
-	if level_ended:
+	if level_end_sequence_running or level_ended:
+		_set_bird_strike_allowed(false, true, true, true)
 		_ensure_bird_strike_alert_hidden_when_idle()
 		return
 
@@ -293,10 +301,14 @@ func _begin_level_end_sequence(is_loss: bool) -> void:
 	_set_crosshair_visible(false)
 	_set_combat_cast_locked(true)
 	_set_player_input_locked(true)
+	_set_player_weapon_motion_locked(true)
 	if level_end_overlay != null and is_instance_valid(level_end_overlay):
 		level_end_overlay.visible = true
 		level_end_overlay.color = Color(0, 0, 0, 1) if is_loss else Color(1, 1, 1, 1)
 		level_end_overlay.modulate = Color(1, 1, 1, 0)
+
+	if is_loss:
+		await _play_loss_grayscale_then_mission_failed()
 
 	var total_delay := level_end_lose_delay_seconds if is_loss else level_end_win_delay_seconds
 	total_delay = maxf(total_delay, 0.0)
@@ -332,6 +344,7 @@ func _begin_level_end_sequence(is_loss: bool) -> void:
 	elif (Current.getcurrentmode() == "Level"):
 		LoadingManager.set_target_scene("res://scenes/menus/level_menu.tscn")
 	await AudioManager.stop_bgm(5)
+	_set_transition_crt_discolor(false)
 	get_tree().change_scene_to_file("res://scenes/core/loading_screen.tscn")
 
 func _play_level_end_screen_fade(target_color: Color) -> void:
@@ -377,6 +390,56 @@ func _play_mission_clear_sequence() -> void:
 	var post_delay := maxf(level_end_mission_clear_post_delay_seconds, 0.0)
 	if post_delay > 0.0:
 		await get_tree().create_timer(post_delay).timeout
+
+func _play_mission_failed_sequence() -> void:
+	if mission_failed_node == null or not is_instance_valid(mission_failed_node):
+		return
+
+	mission_failed_node.visible = true
+	mission_failed_node.frame = 0
+	mission_failed_node.frame_progress = 0.0
+
+	var fail_anim := StringName("default")
+	if mission_failed_node.sprite_frames != null and mission_failed_node.sprite_frames.has_animation(fail_anim):
+		mission_failed_node.play(fail_anim)
+		await _wait_for_mission_failed_grayscale_frame()
+		_start_loss_grayscale_transition()
+		await mission_failed_node.animation_finished
+	elif mission_failed_node.animation != StringName(""):
+		mission_failed_node.play(mission_failed_node.animation)
+		await _wait_for_mission_failed_grayscale_frame()
+		_start_loss_grayscale_transition()
+		await mission_failed_node.animation_finished
+
+	mission_failed_node.stop()
+	mission_failed_node.visible = false
+
+func _play_loss_grayscale_then_mission_failed() -> void:
+	_set_transition_crt_discolor(false)
+	await _play_mission_failed_sequence()
+
+func _wait_for_mission_failed_grayscale_frame() -> void:
+	if mission_failed_node == null or not is_instance_valid(mission_failed_node):
+		return
+
+	var target_frame: int = max(mission_failed_grayscale_start_frame, 0)
+	if mission_failed_node.sprite_frames != null and mission_failed_node.animation != StringName(""):
+		var frame_count: int = mission_failed_node.sprite_frames.get_frame_count(mission_failed_node.animation)
+		if frame_count > 0:
+			target_frame = mini(target_frame, frame_count - 1)
+	if mission_failed_node.frame >= target_frame:
+		return
+
+	while is_instance_valid(mission_failed_node) and mission_failed_node.is_playing():
+		await mission_failed_node.frame_changed
+		if mission_failed_node.frame >= target_frame:
+			return
+
+func _start_loss_grayscale_transition() -> void:
+	if Transition != null and Transition.has_method("play_crt_grayscale_transition"):
+		Transition.play_crt_grayscale_transition(level_end_grayscale_duration)
+	else:
+		_set_transition_crt_discolor(true)
 
 func _ensure_bird_strike_alert_hidden_when_idle() -> void:
 	if bird_strike_alert_node == null or not is_instance_valid(bird_strike_alert_node):
@@ -429,6 +492,8 @@ func combo_counter_fade_out() -> void:
 			combo_counter_node.fade_out()
 
 func _try_trigger_bird_strike_event() -> void:
+	if level_end_sequence_running or level_ended:
+		return
 	if ultimate_in_progress:
 		return
 	if bird_strike_active:
@@ -441,6 +506,9 @@ func _try_trigger_bird_strike_event() -> void:
 	_play_bird_strike_alert_then_strike()
 
 func _play_bird_strike_alert_then_strike() -> void:
+	if level_end_sequence_running or level_ended:
+		_set_bird_strike_allowed(false, true, true, true)
+		return
 	if bird_strike_alert_node != null and is_instance_valid(bird_strike_alert_node):
 		bird_strike_alert_node.visible = true
 		bird_strike_alert_node.play("popup")
@@ -452,12 +520,19 @@ func _on_bird_strike_alert_animation_finished() -> void:
 	if bird_strike_alert_node != null and is_instance_valid(bird_strike_alert_node):
 		bird_strike_alert_node.visible = false
 
+	if level_end_sequence_running or level_ended:
+		_set_bird_strike_allowed(false, true, true, true)
+		return
+
 	if not bird_strike_active:
 		return
 
 	_start_bird_strike_now()
 
 func _start_bird_strike_now() -> void:
+	if level_end_sequence_running or level_ended:
+		_set_bird_strike_allowed(false, true, true, true)
+		return
 	if bird_strike_node != null:
 		bird_strike_node.visible = true
 		bird_strike_node.frame = 0
@@ -465,6 +540,9 @@ func _start_bird_strike_now() -> void:
 		bird_strike_node.play("strike")
 
 func _on_bird_strike_frame_changed() -> void:
+	if level_end_sequence_running or level_ended:
+		_set_bird_strike_allowed(false, true, true, true)
+		return
 	if not bird_strike_active or bird_strike_effect_started:
 		return
 	if bird_strike_node == null or not is_instance_valid(bird_strike_node):
@@ -489,6 +567,9 @@ func _on_bird_strike_frame_changed() -> void:
 func _on_bird_strike_animation_finished() -> void:
 	if bird_strike_node != null:
 		bird_strike_node.visible = false
+	if level_end_sequence_running or level_ended:
+		_set_bird_strike_allowed(false, true, true, true)
+		return
 	if bird_strike_lock_timer <= 0.0:
 		bird_strike_active = false
 		bird_strike_effect_started = false
@@ -513,6 +594,10 @@ func _set_crosshair_visible(visible_state: bool) -> void:
 func _set_player_input_locked(locked: bool) -> void:
 	if player_node != null and is_instance_valid(player_node) and player_node.has_method("set_input_locked"):
 		player_node.set_input_locked(locked)
+
+func _set_player_weapon_motion_locked(locked: bool) -> void:
+	if player_node != null and is_instance_valid(player_node) and player_node.has_method("set_weapon_motion_locked"):
+		player_node.set_weapon_motion_locked(locked)
 
 func _on_ultimate_casted() -> void:
 	if not level_running or level_ended:
@@ -608,7 +693,7 @@ func _set_combat_cast_locked(locked: bool) -> void:
 	if koisuru_meter_node != null and is_instance_valid(koisuru_meter_node) and koisuru_meter_node.has_method("set_ultimate_locked"):
 		koisuru_meter_node.set_ultimate_locked(locked)
 
-func _set_bird_strike_allowed(allowed: bool, preserve_input_state: bool = false, preserve_damage_hud_state: bool = false) -> void:
+func _set_bird_strike_allowed(allowed: bool, preserve_input_state: bool = false, preserve_damage_hud_state: bool = false, preserve_crt_state: bool = false) -> void:
 	if allowed:
 		return
 
@@ -619,7 +704,8 @@ func _set_bird_strike_allowed(allowed: bool, preserve_input_state: bool = false,
 		_set_combat_cast_locked(false)
 	if not preserve_damage_hud_state:
 		_set_player_damage_hud_forced(false)
-	_set_transition_crt_discolor(false)
+	if not preserve_crt_state:
+		_set_transition_crt_discolor(false)
 	if bird_strike_alert_node != null and is_instance_valid(bird_strike_alert_node):
 		bird_strike_alert_node.stop()
 		bird_strike_alert_node.visible = false

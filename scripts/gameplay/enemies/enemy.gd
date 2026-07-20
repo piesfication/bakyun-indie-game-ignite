@@ -343,6 +343,13 @@ func _process(delta: float):
 		player_node = _find_player_node()
 
 	if player_node:
+		if _is_player_dead():
+			_play_alert_out()
+			is_attacking = false
+			if state == State.ATTACK:
+				set_state(State.MOVING)
+			return
+
 		attack_timer -= sim_delta
 		_update_alert_state()
 		if depth == 0 and not is_attacking:
@@ -377,6 +384,9 @@ func _find_player_node() -> Node2D:
 func start_attack():
 	if is_dead or not can_attack:
 		return
+	if _is_player_dead():
+		_play_alert_out()
+		return
 
 	is_attacking = true
 	attack_timer = randf_range(min_attack_cd, max_attack_cd)
@@ -385,6 +395,9 @@ func start_attack():
 
 func _trigger_close_explode() -> void:
 	if _close_explode_triggered or is_dead:
+		return
+	if _is_player_dead():
+		_play_alert_out()
 		return
 	_close_explode_triggered = true
 
@@ -1371,6 +1384,19 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 			return
 		if player_node == null or not is_instance_valid(player_node):
 			return
+		if _is_player_dead():
+			_play_alert_out()
+			is_attacking = false
+			set_state(State.MOVING)
+			return
 		print("aww!")
 		player_node.take_damage(attack_damage)
 	pass # Replace with function body.
+
+func _is_player_dead() -> bool:
+	if player_node == null or not is_instance_valid(player_node):
+		return false
+	for prop in player_node.get_property_list():
+		if String(prop.get("name", "")) == "current_hp":
+			return int(player_node.get("current_hp")) <= 0
+	return false
