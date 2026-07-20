@@ -250,9 +250,9 @@ func _process(delta):
 		bird_strike_lock_timer = maxf(bird_strike_lock_timer - delta, 0.0)
 		if bird_strike_lock_timer <= 0.0:
 			_set_crosshair_shoot_enabled(true)
+			_set_crosshair_visual_grayscale(false)
 			_set_combat_cast_locked(false)
 			_set_player_damage_hud_forced(false)
-			_set_transition_crt_discolor(false)
 			bird_strike_active = false
 			bird_strike_effect_started = false
 
@@ -298,6 +298,7 @@ func _begin_level_end_sequence(is_loss: bool) -> void:
 
 	_set_bird_strike_allowed(false, true, true)
 	_set_crosshair_shoot_enabled(false)
+	_set_crosshair_visual_grayscale(false)
 	_set_crosshair_visible(false)
 	_set_combat_cast_locked(true)
 	_set_player_input_locked(true)
@@ -555,12 +556,11 @@ func _on_bird_strike_frame_changed() -> void:
 	bird_strike_effect_started = true
 	bird_strike_lock_timer = maxf(bird_strike_shoot_lock_duration, 0.0)
 	_set_crosshair_shoot_enabled(false)
+	_set_crosshair_visual_grayscale(true)
 	_set_combat_cast_locked(true)
 	_set_player_damage_hud_forced(true)
-	_set_transition_crt_discolor(false)
 	if Transition != null and Transition.has_method("play_crt_glitch_burst"):
 		Transition.play_crt_glitch_burst()
-	_schedule_transition_discolor_after_impact()
 	if player_node != null and is_instance_valid(player_node) and player_node.has_method("trigger_screen_shake"):
 		player_node.trigger_screen_shake()
 
@@ -573,7 +573,7 @@ func _on_bird_strike_animation_finished() -> void:
 	if bird_strike_lock_timer <= 0.0:
 		bird_strike_active = false
 		bird_strike_effect_started = false
-		_set_transition_crt_discolor(false)
+		_set_crosshair_visual_grayscale(false)
 
 func _set_crosshair_shoot_enabled(enabled: bool) -> void:
 	if crosshair_node != null and is_instance_valid(crosshair_node) and crosshair_node.has_method("set_shoot_enabled"):
@@ -589,6 +589,10 @@ func _set_crosshair_visible(visible_state: bool) -> void:
 
 	if crosshair_node is CanvasItem:
 		(crosshair_node as CanvasItem).visible = visible_state
+
+func _set_crosshair_visual_grayscale(enabled: bool) -> void:
+	if crosshair_node != null and is_instance_valid(crosshair_node) and crosshair_node.has_method("set_visual_grayscale"):
+		crosshair_node.set_visual_grayscale(enabled)
 
 
 func _set_player_input_locked(locked: bool) -> void:
@@ -712,6 +716,7 @@ func _set_bird_strike_allowed(allowed: bool, preserve_input_state: bool = false,
 	if bird_strike_node != null and is_instance_valid(bird_strike_node):
 		bird_strike_node.stop()
 		bird_strike_node.visible = false
+	_set_crosshair_visual_grayscale(false)
 	if not preserve_input_state:
 		_set_crosshair_shoot_enabled(true)
 
@@ -733,7 +738,7 @@ func _on_bird_strike_impact_window_finished() -> void:
 		return
 	if bird_strike_lock_timer <= 0.0:
 		return
-	_set_transition_crt_discolor(true)
+	_set_crosshair_visual_grayscale(true)
 
 func _get_transition_crt_burst_duration() -> float:
 	if Transition != null and Transition.has_method("get_crt_glitch_burst_duration"):
