@@ -48,6 +48,9 @@ func _process(delta: float) -> void:
 
 
 func on_dialogic_signal(arg: String):
+	if arg == "dialogue_skip_requested":
+		await StorySkipHelper.skip_chapter_and_return(self, 5.0)
+		return
 
 	if (arg == "level menu") :
 		if has_node("/root/StoryProgress"):

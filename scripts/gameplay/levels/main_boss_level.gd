@@ -82,6 +82,10 @@ func animate_node(node: CanvasItem, duration := 0.5, mode := AnimMode.MOVE_AND_F
 @onready var alphadevour = get_node_or_null("CanvasLayer/BossAnim/DevourAnim")
 
 func on_dialogic_signal(arg: String):
+	if arg == "dialogue_skip_requested":
+		await _skip_current_dialog_safely()
+		return
+
 	if _should_resume_first_combat_from_signal(arg):
 		await _resume_first_combat_from_timeline()
 		return
@@ -158,6 +162,29 @@ func on_dialogic_signal(arg: String):
 	
 	if (arg == "glad"):
 		AudioManager.play_bgm("res://music/bgm/story/Cecily Renns - Blast Damage Days Soundtrack - 11 Ending.wav", 1, false, false)
+
+func _skip_current_dialog_safely() -> void:
+	if Dialogic.current_timeline == null:
+		return
+	Dialogic.current_state_info["skip_request_handled"] = true
+
+	if _phase_transition_waiting_resume:
+		await Dialogic.end_timeline(true)
+		await _resume_phase_two_combat_from_timeline()
+		return
+
+	if _post_boss_sequence_started:
+		return
+
+	if not boss_spawned:
+		await Dialogic.end_timeline(true)
+		_spawn_boss_once()
+		await _resume_first_combat_from_timeline()
+		return
+
+	if not _first_combat_started and _timeline_mode_active:
+		await Dialogic.end_timeline(true)
+		await _resume_first_combat_from_timeline()
 
 func _start_intro_timeline_or_spawn_fallback() -> void:
 	var intro := intro_timeline.strip_edges()

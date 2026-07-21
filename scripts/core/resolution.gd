@@ -99,6 +99,9 @@ func _ready():
 	base_pos[flyingtogether] = flyingtogether.position
 
 func on_dialogic_signal(arg: String):
+	if arg == "dialogue_skip_requested":
+		await StorySkipHelper.skip_chapter_and_return(self, 0.0)
+		return
 	
 	if (arg == "bt rt") :
 		bakuChar.visible = true

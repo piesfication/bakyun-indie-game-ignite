@@ -34,6 +34,9 @@ func _process(delta):
 		flyingtogether.position.y = base_pos[flyingtogether].y + sin(time * 2) * 20
 
 func on_dialogic_signal(arg: String):
+	if arg == "dialogue_skip_requested":
+		await StorySkipHelper.skip_chapter_and_return(self, 4.0)
+		return
 	
 	if (arg == "back to city") :
 		overlay.modulate.a = 0.0

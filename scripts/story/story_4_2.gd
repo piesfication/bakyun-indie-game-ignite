@@ -46,6 +46,9 @@ func _process(delta: float) -> void:
 
 
 func on_dialogic_signal(arg: String):
+	if arg == "dialogue_skip_requested":
+		await StorySkipHelper.skip_chapter_and_return(self, 5.0)
+		return
 	
 	if (arg == "water"):
 		AudioManager.start_ui_sfx("res://music/sfx/etc/universfield-water-splash-199583.mp3", [0.8,1.2], 15)
