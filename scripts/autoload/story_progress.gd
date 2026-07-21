@@ -10,6 +10,7 @@ var highest_visible_chapter: int = 1
 var mission_progress: int = 0
 var dialogic_saved_variables: Dictionary = {}
 var dialogic_saved_from_chapter: int = 0
+var completed_chapters: Dictionary = {}
 
 func _ready() -> void:
 	_load_state()
@@ -49,6 +50,9 @@ func get_confirm_button_text(chapter_number: int) -> String:
 		return "LOCKED"
 	return "WE BALL!"
 
+func is_chapter_completed(chapter_number: int) -> bool:
+	return bool(completed_chapters.get(str(chapter_number), false))
+
 func record_mission_win() -> void:
 	if highest_visible_chapter <= 1:
 		return
@@ -60,7 +64,10 @@ func record_mission_win() -> void:
 	progress_changed.emit()
 
 func mark_chapter_completed(chapter_number: int) -> void:
+	completed_chapters[str(chapter_number)] = true
 	if chapter_number != highest_visible_chapter:
+		_save_state()
+		progress_changed.emit()
 		return
 	_capture_dialogic_variables(chapter_number)
 	if highest_visible_chapter < MAX_CHAPTERS:
@@ -74,6 +81,7 @@ func reset_progress() -> void:
 	mission_progress = 0
 	dialogic_saved_variables.clear()
 	dialogic_saved_from_chapter = 0
+	completed_chapters.clear()
 	_reset_dialogic_variables_to_default()
 	_save_state()
 	progress_changed.emit()
@@ -116,6 +124,11 @@ func _load_state() -> void:
 
 	highest_visible_chapter = int(config.get_value("story", "highest_visible_chapter", 1))
 	mission_progress = int(config.get_value("story", "mission_progress", 0))
+	var loaded_completed_chapters: Variant = config.get_value("story", "completed_chapters", {})
+	if typeof(loaded_completed_chapters) == TYPE_DICTIONARY:
+		completed_chapters = (loaded_completed_chapters as Dictionary).duplicate(true)
+	else:
+		completed_chapters = {}
 	var loaded_dialogic_vars: Variant = config.get_value("dialogic", "saved_variables", {})
 	if typeof(loaded_dialogic_vars) == TYPE_DICTIONARY:
 		dialogic_saved_variables = (loaded_dialogic_vars as Dictionary).duplicate(true)
@@ -125,11 +138,19 @@ func _load_state() -> void:
 	highest_visible_chapter = clampi(highest_visible_chapter, 1, MAX_CHAPTERS)
 	mission_progress = clampi(mission_progress, 0, REQUIRED_WINS_PER_CHAPTER)
 	dialogic_saved_from_chapter = clampi(dialogic_saved_from_chapter, 0, MAX_CHAPTERS)
+	_migrate_completed_chapters_from_visibility()
 
 func _save_state() -> void:
 	var config := ConfigFile.new()
 	config.set_value("story", "highest_visible_chapter", highest_visible_chapter)
 	config.set_value("story", "mission_progress", mission_progress)
+	config.set_value("story", "completed_chapters", completed_chapters)
 	config.set_value("dialogic", "saved_variables", dialogic_saved_variables)
 	config.set_value("dialogic", "saved_from_chapter", dialogic_saved_from_chapter)
 	config.save(SAVE_PATH)
+
+func _migrate_completed_chapters_from_visibility() -> void:
+	for chapter_number in range(1, highest_visible_chapter):
+		completed_chapters[str(chapter_number)] = true
+	if dialogic_saved_from_chapter >= MAX_CHAPTERS:
+		completed_chapters[str(MAX_CHAPTERS)] = true

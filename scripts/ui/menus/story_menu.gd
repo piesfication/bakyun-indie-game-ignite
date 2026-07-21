@@ -6,9 +6,9 @@ extends "res://scripts/ui/menus/level_menu_float.gd"
 @onready var _confirmation: Node2D = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation
 @onready var _confirmation_title: Label = $"CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Sprite2D/Level Title"
 @onready var _confirmation_text: Label = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Sprite2D/confirmationText
-@onready var _confirm_button: BaseButton = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button
-@onready var _cancel_button: BaseButton = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button2
-@onready var _confirm_button_label: Label = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button/Label2
+@onready var _cancel_button: BaseButton = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button
+@onready var _confirm_button: BaseButton = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button2
+@onready var _confirm_button_label: Label = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button2/Label2
 @onready var _note: Node2D = $CanvasLayer2/ChapterDetail
 @onready var _ui_layer: CanvasLayer = $CanvasLayer2
 
@@ -230,6 +230,7 @@ func _refresh_chapter_visibility() -> void:
 		if chapter_number <= 0:
 			continue
 		if chapter_number <= visible_limit:
+			_apply_story_icon_completion(icon, chapter_number)
 			if icon.has_method("activate"):
 				icon.visible = false
 			else:
@@ -255,6 +256,7 @@ func _play_story_icon_intro_sequence() -> void:
 		var icon := get_node_or_null("StorySelectionIcon/Chapter%d" % chapter_number)
 		if icon == null or not icon.has_method("activate"):
 			continue
+		_apply_story_icon_completion(icon, chapter_number)
 		icon.visible = false
 		await icon.activate()
 		if chapter_number < visible_limit and story_icon_intro_stagger_delay > 0.0:
@@ -276,6 +278,14 @@ func _get_chapter_number(icon_name: String) -> int:
 	if not icon_name.begins_with("Chapter"):
 		return -1
 	return int(icon_name.trim_prefix("Chapter"))
+
+func _apply_story_icon_completion(icon: Node, chapter_number: int) -> void:
+	if icon == null or not icon.has_method("set_completed"):
+		return
+	var completed := false
+	if has_node("/root/StoryProgress"):
+		completed = StoryProgress.is_chapter_completed(chapter_number)
+	icon.set_completed(completed)
 
 func _on_chapter_selected(chapter_name: String) -> void:
 	_apply_chapter(chapter_name)
