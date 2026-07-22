@@ -432,8 +432,6 @@ position = Vector2(0, 106.66667)
 scale = Vector2(2.3, 2.3)
 sprite_frames = SubResource("SpriteFrames_5lniq")
 animation = &"hit_blue"
-frame = 4
-frame_progress = 1.0
 
 [node name="Alert" type="AnimatedSprite2D" parent="." unique_id=2130465876]
 position = Vector2(0, 166.66666)

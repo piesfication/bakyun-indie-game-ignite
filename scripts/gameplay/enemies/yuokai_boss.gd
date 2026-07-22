@@ -88,6 +88,14 @@ const ORB_COLOR_BLUE := 1
 @export var dead_flap_amplitude_scale: float = 0.45
 @export var dead_flap_frequency_scale: float = 0.55
 
+@export_group("Hit Impact")
+@export var hit_flash_color: Color = Color(1.0, 0.34, 0.38, 1.0)
+@export_range(1.0, 1.4, 0.01, "suffix:x") var hit_punch_scale_up: float = 1.08
+@export_range(0.7, 1.0, 0.01, "suffix:x") var hit_punch_scale_down: float = 0.96
+@export_range(0.01, 0.2, 0.01, "suffix:s") var hit_punch_up_duration: float = 0.05
+@export_range(0.01, 0.2, 0.01, "suffix:s") var hit_punch_down_duration: float = 0.05
+@export_range(0.01, 0.3, 0.01, "suffix:s") var hit_punch_recover_duration: float = 0.08
+
 @onready var body_anim: AnimatedSprite2D = $Node2D/BodyAnim
 @onready var hand_anim: AnimatedSprite2D = $Node2D/HandAnim
 
@@ -123,6 +131,9 @@ var _flap_time: float = 0.0
 var _prev_flap_y: float = 0.0
 var _flap_amplitude_runtime: float = 0.0
 var _flap_frequency_runtime: float = 0.0
+var _body_base_scale: Vector2 = Vector2.ONE
+var _body_base_modulate: Color = Color.WHITE
+var _hit_impact_tween: Tween = null
 var _container_turn: int = 0
 var _template_weak_shapes: Array[Node2D] = []
 var _template_to_required_character: Dictionary = {}
@@ -223,6 +234,8 @@ func _ready() -> void:
 	current_layer = layer_count
 
 	if body_anim != null:
+		_body_base_scale = body_anim.scale
+		_body_base_modulate = body_anim.modulate
 		_play_body_default_animation()
 		if not body_anim.frame_changed.is_connected(Callable(self, "_on_body_anim_frame_changed")):
 			body_anim.frame_changed.connect(Callable(self, "_on_body_anim_frame_changed"))
@@ -1003,9 +1016,27 @@ func _play_body_damaged_animation() -> void:
 
 	if body_anim.sprite_frames.has_animation("damaged"):
 		body_anim.play("damaged")
+		_play_hit_impact()
 		AudioManager.play_ui_sfx_with_pitch("res://music/sfx/glitch/virtual_vibes-digital-glitch-noise-hd-379465.wav")
 	else:
 		_play_body_default_animation()
+
+func _play_hit_impact() -> void:
+	if body_anim == null or not is_instance_valid(body_anim):
+		return
+	if _hit_impact_tween != null and _hit_impact_tween.is_valid():
+		_hit_impact_tween.kill()
+
+	body_anim.scale = _body_base_scale
+	body_anim.modulate = hit_flash_color
+
+	_hit_impact_tween = create_tween()
+	_hit_impact_tween.set_trans(Tween.TRANS_QUAD)
+	_hit_impact_tween.set_ease(Tween.EASE_OUT)
+	_hit_impact_tween.tween_property(body_anim, "scale", _body_base_scale * hit_punch_scale_up, hit_punch_up_duration)
+	_hit_impact_tween.parallel().tween_property(body_anim, "modulate", _body_base_modulate, hit_punch_up_duration)
+	_hit_impact_tween.tween_property(body_anim, "scale", _body_base_scale * hit_punch_scale_down, hit_punch_down_duration)
+	_hit_impact_tween.tween_property(body_anim, "scale", _body_base_scale, hit_punch_recover_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 var active_orbs: Array[Node2D] = []
