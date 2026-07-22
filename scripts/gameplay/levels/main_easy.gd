@@ -27,6 +27,9 @@ func spawn_enemy():
 	# Keep compatibility if another flow still calls spawn_enemy directly.
 	_spawn_enemy_instance(_pick_random_enemy_scene())
 
+func _get_mission_difficulty() -> String:
+	return "medium"
+
 func _process(delta: float) -> void:
 	if _batch_cooldown_timer > 0.0:
 		_batch_cooldown_timer = maxf(_batch_cooldown_timer - delta, 0.0)

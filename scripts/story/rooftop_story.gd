@@ -43,6 +43,9 @@ func _process(delta: float) -> void:
 	pass
 
 func on_dialogic_signal(arg: String):
+	if arg == "dialogue_skip_requested":
+		await StorySkipHelper.skip_chapter_and_return(self, 6.0)
+		return
 	
 	if (arg == "pause"):
 		AudioManager.pause_bgm(1)

@@ -10,7 +10,13 @@ extends Node2D
 @onready var hitvis := $HitVisual
 @onready var hitbox_area: Area2D = $Hitbox
 @onready var alert_visual: AnimatedSprite2D = get_node_or_null("Alert")
+const HIT_FLASH_SHADER: Shader = preload("res://shaders/enemy_hit_flash.gdshader")
 var original_modulate: Color
+var _hit_impact_tween: Tween = null
+var _hit_flash_tween: Tween = null
+var _hit_flash_material: ShaderMaterial = null
+var _visual_base_material: Material = null
+var _hit_punch_scale: Vector2 = Vector2.ONE
 var _health_base_scale: Vector2 = Vector2.ONE
 var _health_squash_tween: Tween
 var _alert_base_offset: Vector2 = Vector2.ZERO
@@ -52,6 +58,14 @@ func set_state(new_state: State):
 var hp := max_hp
 var is_dead := false
 var marked := false
+@export_group("Hit Impact")
+@export var hit_flash_color: Color = Color.WHITE
+@export_range(0.01, 0.3, 0.01, "suffix:s") var hit_flash_duration: float = 0.14
+@export var hit_punch_stretch_scale: Vector2 = Vector2(1.35, 0.78)
+@export var hit_punch_squash_scale: Vector2 = Vector2(0.88, 1.18)
+@export_range(0.01, 0.2, 0.01, "suffix:s") var hit_punch_up_duration: float = 0.06
+@export_range(0.01, 0.2, 0.01, "suffix:s") var hit_punch_down_duration: float = 0.06
+@export_range(0.01, 0.3, 0.01, "suffix:s") var hit_punch_recover_duration: float = 0.12
 @export_range(0.1, 20.0, 0.1, "suffix:s") var mark_duration: float = 3.0
 var mark_time_left: float = 0.0
 var slow_timer := 0.0
@@ -236,7 +250,11 @@ func _ready():
 		weak_area.collision_mask = 0
 		weak_area.remove_from_group("weak_point")
 	#attack_timer = randf_range(0.0, attack_cooldown)
-	original_modulate = self.modulate 
+	if visual != null:
+		original_modulate = visual.modulate
+		visual.self_modulate = Color.WHITE
+		_visual_base_material = visual.material
+		_setup_hit_flash_material()
 	set_state(State.MOVING)
 
 	player_node = _find_player_node()
@@ -495,7 +513,7 @@ func update_depth(delta):
 
 func update_scale():
 	var scale_factor = lerpf(max_scale, min_scale, smoothstep(0.0, 1.0, depth))
-	scale = Vector2.ONE * scale_factor
+	scale = Vector2(scale_factor * _hit_punch_scale.x, scale_factor * _hit_punch_scale.y)
 	
 
 func update_drift_blend(delta):
@@ -1031,6 +1049,7 @@ func apply_damage(amount: int, from_nova_shared_damage: bool = false) -> void:
 		return
 
 	set_state(State.DAMAGED)
+	_play_hit_impact()
 	hp -= amount
 	AudioManager.play_ui_sfx_with_pitch("res://music/sfx/glitch/virtual_vibes-digital-glitch-noise-hd-379465.wav")
 	
@@ -1195,10 +1214,49 @@ func _apply_visual_modulate() -> void:
 		return
 
 	match state:
-		State.DAMAGED, State.DEATH:
+		State.DEATH:
 			visual.modulate = Color(1.0, 0.804, 0.815, 1.0)
 		_:
 			visual.modulate = original_modulate
+
+func _setup_hit_flash_material() -> void:
+	if visual == null or not is_instance_valid(visual):
+		return
+
+	_hit_flash_material = ShaderMaterial.new()
+	_hit_flash_material.shader = HIT_FLASH_SHADER
+	_hit_flash_material.set_shader_parameter("flash_color", hit_flash_color)
+	_hit_flash_material.set_shader_parameter("flash_amount", 1.0)
+
+func _play_hit_impact() -> void:
+	if visual == null or not is_instance_valid(visual):
+		return
+
+	if _hit_impact_tween != null and _hit_impact_tween.is_valid():
+		_hit_impact_tween.kill()
+	if _hit_flash_tween != null and _hit_flash_tween.is_valid():
+		_hit_flash_tween.kill()
+
+	if _hit_flash_material == null:
+		_setup_hit_flash_material()
+	if _hit_flash_material != null:
+		_hit_flash_material.set_shader_parameter("flash_color", hit_flash_color)
+		_hit_flash_material.set_shader_parameter("flash_amount", 1.0)
+		visual.material = _hit_flash_material
+		_hit_flash_tween = create_tween()
+		_hit_flash_tween.tween_interval(hit_flash_duration)
+		_hit_flash_tween.tween_callback(func():
+			if visual != null and is_instance_valid(visual):
+				visual.material = _visual_base_material
+		)
+
+	_hit_punch_scale = Vector2.ONE
+	_hit_impact_tween = create_tween()
+	_hit_impact_tween.set_trans(Tween.TRANS_QUAD)
+	_hit_impact_tween.set_ease(Tween.EASE_OUT)
+	_hit_impact_tween.tween_property(self, "_hit_punch_scale", hit_punch_stretch_scale, hit_punch_up_duration)
+	_hit_impact_tween.tween_property(self, "_hit_punch_scale", hit_punch_squash_scale, hit_punch_down_duration)
+	_hit_impact_tween.tween_property(self, "_hit_punch_scale", Vector2.ONE, hit_punch_recover_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func play_bluehit_effect() -> float:
 	

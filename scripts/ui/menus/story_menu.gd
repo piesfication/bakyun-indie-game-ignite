@@ -6,9 +6,9 @@ extends "res://scripts/ui/menus/level_menu_float.gd"
 @onready var _confirmation: Node2D = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation
 @onready var _confirmation_title: Label = $"CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Sprite2D/Level Title"
 @onready var _confirmation_text: Label = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Sprite2D/confirmationText
-@onready var _confirm_button: BaseButton = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button
-@onready var _cancel_button: BaseButton = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button2
-@onready var _confirm_button_label: Label = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button/Label2
+@onready var _cancel_button: BaseButton = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button
+@onready var _confirm_button: BaseButton = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button2
+@onready var _confirm_button_label: Label = $CanvasLayer2/LevelConfirmationContainer/LevelConfirmation/Button2/Label2
 @onready var _note: Node2D = $CanvasLayer2/ChapterDetail
 @onready var _ui_layer: CanvasLayer = $CanvasLayer2
 
@@ -46,6 +46,8 @@ var _pending_chapter_number: int = 1
 var _pending_chapter_title: String = ""
 var _pending_locked: bool = false
 var _debug_reset_button: Button = null
+var _debug_reset_exp_button: Button = null
+var _exp_debug_label: Label = null
 
 var _chapter_config: Dictionary = {
 	"Chapter1": {
@@ -163,6 +165,8 @@ func _ready() -> void:
 		note_position = _note.position
 		
 	_setup_debug_reset_button()
+	_setup_debug_reset_exp_button()
+	_setup_exp_debug_label()
 	_connect_story_icons()
 	if _chapter_detail.has_signal("start_pressed") and not _chapter_detail.start_pressed.is_connected(_on_start_pressed):
 		_chapter_detail.start_pressed.connect(_on_start_pressed)
@@ -173,6 +177,7 @@ func _ready() -> void:
 	if has_node("/root/StoryProgress") and not StoryProgress.progress_changed.is_connected(_refresh_chapter_visibility):
 		StoryProgress.progress_changed.connect(_refresh_chapter_visibility)
 	_refresh_chapter_visibility()
+	_update_exp_debug_label()
 	
 	var initial_chapter_name := _get_last_unlocked_chapter_name()
 	if not initial_chapter_name.is_empty():
@@ -203,6 +208,58 @@ func _setup_debug_reset_button() -> void:
 	_debug_reset_button.pressed.connect(_on_debug_reset_story_pressed)
 	_ui_layer.add_child(_debug_reset_button)
 
+func _setup_debug_reset_exp_button() -> void:
+	# Editor-only helper for playtest; excluded from exported builds.
+	if not OS.has_feature("editor"):
+		return
+	if _ui_layer == null or not is_instance_valid(_ui_layer):
+		return
+	if _debug_reset_exp_button != null and is_instance_valid(_debug_reset_exp_button):
+		return
+
+	_debug_reset_exp_button = Button.new()
+	_debug_reset_exp_button.name = "DebugResetExpButton"
+	_debug_reset_exp_button.text = "DEBUG: RESET LV/EXP"
+	_debug_reset_exp_button.tooltip_text = "Reset level dan EXP untuk playtest"
+	_debug_reset_exp_button.focus_mode = Control.FOCUS_NONE
+	_debug_reset_exp_button.size = Vector2(230, 40)
+	_debug_reset_exp_button.position = Vector2(238, 18)
+	_debug_reset_exp_button.modulate = Color(0.76, 0.86, 1.0, 0.95)
+	_debug_reset_exp_button.pressed.connect(_on_debug_reset_exp_pressed)
+	_ui_layer.add_child(_debug_reset_exp_button)
+
+func _setup_exp_debug_label() -> void:
+	if _ui_layer == null or not is_instance_valid(_ui_layer):
+		return
+	if _exp_debug_label != null and is_instance_valid(_exp_debug_label):
+		return
+
+	_exp_debug_label = Label.new()
+	_exp_debug_label.name = "DebugExpLabel"
+	_exp_debug_label.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_exp_debug_label.offset_left = -320.0
+	_exp_debug_label.offset_top = 18.0
+	_exp_debug_label.offset_right = -18.0
+	_exp_debug_label.offset_bottom = 58.0
+	_exp_debug_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_exp_debug_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_exp_debug_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_exp_debug_label.add_theme_font_size_override(&"font_size", 28)
+	_exp_debug_label.add_theme_color_override(&"font_color", Color(0.58, 0.76, 0.65, 1.0))
+	_exp_debug_label.add_theme_color_override(&"font_shadow_color", Color(0.0, 0.0, 0.0, 0.75))
+	_exp_debug_label.add_theme_constant_override(&"shadow_offset_x", 2)
+	_exp_debug_label.add_theme_constant_override(&"shadow_offset_y", 2)
+	_ui_layer.add_child(_exp_debug_label)
+	_update_exp_debug_label()
+
+func _update_exp_debug_label() -> void:
+	if _exp_debug_label == null or not is_instance_valid(_exp_debug_label):
+		return
+	if has_node("/root/StoryProgress"):
+		_exp_debug_label.text = StoryProgress.get_exp_debug_text()
+	else:
+		_exp_debug_label.text = "LV 1  EXP 0/60"
+
 func _on_debug_reset_story_pressed() -> void:
 	if not has_node("/root/StoryProgress"):
 		return
@@ -213,6 +270,13 @@ func _on_debug_reset_story_pressed() -> void:
 	if _chapter_config.has("Chapter1"):
 		_apply_chapter("Chapter1")
 
+func _on_debug_reset_exp_pressed() -> void:
+	if not has_node("/root/StoryProgress"):
+		return
+
+	StoryProgress.reset_level_exp()
+	_update_exp_debug_label()
+
 func _connect_story_icons() -> void:
 	for icon in $StorySelectionIcon.get_children():
 		if not icon.has_signal("chapter_selected"):
@@ -221,6 +285,7 @@ func _connect_story_icons() -> void:
 			icon.chapter_selected.connect(_on_chapter_selected)
 
 func _refresh_chapter_visibility() -> void:
+	_update_exp_debug_label()
 	var visible_limit := 1
 	if has_node("/root/StoryProgress"):
 		visible_limit = max(1, StoryProgress.get_visible_chapter_limit())
@@ -230,6 +295,7 @@ func _refresh_chapter_visibility() -> void:
 		if chapter_number <= 0:
 			continue
 		if chapter_number <= visible_limit:
+			_apply_story_icon_completion(icon, chapter_number)
 			if icon.has_method("activate"):
 				icon.visible = false
 			else:
@@ -255,6 +321,7 @@ func _play_story_icon_intro_sequence() -> void:
 		var icon := get_node_or_null("StorySelectionIcon/Chapter%d" % chapter_number)
 		if icon == null or not icon.has_method("activate"):
 			continue
+		_apply_story_icon_completion(icon, chapter_number)
 		icon.visible = false
 		await icon.activate()
 		if chapter_number < visible_limit and story_icon_intro_stagger_delay > 0.0:
@@ -276,6 +343,14 @@ func _get_chapter_number(icon_name: String) -> int:
 	if not icon_name.begins_with("Chapter"):
 		return -1
 	return int(icon_name.trim_prefix("Chapter"))
+
+func _apply_story_icon_completion(icon: Node, chapter_number: int) -> void:
+	if icon == null or not icon.has_method("set_completed"):
+		return
+	var completed := false
+	if has_node("/root/StoryProgress"):
+		completed = StoryProgress.is_chapter_completed(chapter_number)
+	icon.set_completed(completed)
 
 func _on_chapter_selected(chapter_name: String) -> void:
 	_apply_chapter(chapter_name)

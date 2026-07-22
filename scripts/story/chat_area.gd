@@ -80,10 +80,10 @@ func _ready():
 			if level_confirmation:
 				level_confirmation_base_scale = level_confirmation.scale
 				level_confirmation_base_pos = level_confirmation.position
-				var confirm_button := level_confirmation.get_node_or_null("Button") as BaseButton
+				var confirm_button := level_confirmation.get_node_or_null("Button2") as BaseButton
 				if confirm_button and not confirm_button.pressed.is_connected(Callable(self, "_on_level_confirmation_button_pressed")):
 					confirm_button.pressed.connect(Callable(self, "_on_level_confirmation_button_pressed"))
-				var cancel_button := level_confirmation.get_node_or_null("Button2") as BaseButton
+				var cancel_button := level_confirmation.get_node_or_null("Button") as BaseButton
 				if cancel_button and not cancel_button.pressed.is_connected(Callable(self, "_on_level_confirmation_button2_pressed")):
 					cancel_button.pressed.connect(Callable(self, "_on_level_confirmation_button2_pressed"))
 			break

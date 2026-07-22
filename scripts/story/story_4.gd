@@ -15,6 +15,9 @@ func _process(delta: float) -> void:
 	pass
 
 func on_dialogic_signal(arg: String):
+	if arg == "dialogue_skip_requested":
+		await StorySkipHelper.go_to_scene(self, "res://scenes/gameplay/levels/main_boss.tscn", 3.0)
+		return
 	
 	if (arg == "boss fight"):
 		LoadingManager.set_target_scene("res://scenes/gameplay/levels/main_boss.tscn")

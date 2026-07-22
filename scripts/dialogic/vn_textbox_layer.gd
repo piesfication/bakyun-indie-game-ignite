@@ -18,6 +18,7 @@ extends DialogicLayoutLayer
 ## remove or add # (commenting) to the method line.
 
 
+@onready var anchor: Control = $Anchor
 
 enum Alignments {LEFT, CENTER, RIGHT}
 
@@ -45,6 +46,9 @@ enum AnimationsNewText {NONE, WIGGLE}
 
 
 @export_group("Box")
+
+@export_subgroup("Layout")
+@export var preserve_scene_layout: bool = true
 
 @export_subgroup("Panel")
 @export_file("*.tres") var box_panel: String = this_folder.path_join("vn_textbox_default_panel.tres")
@@ -116,6 +120,44 @@ enum AnimationsNewText {NONE, WIGGLE}
 @export var typing_sounds_ignore_characters: String = " .,!?"
 
 
+@export_group("Skip")
+@export var skip_button_enabled: bool = true
+@export var skip_request_signal: String = "dialogue_skip_requested"
+@export_file("*.tscn") var skip_confirmation_scene: String = "res://scenes/ui/level_confirmation.tscn"
+@export var skip_confirmation_title: String = "Skip Story?"
+@export_multiline var skip_confirmation_generic_text: String = "Skip this dialogue?"
+@export_multiline var skip_confirmation_unread_text: String = "Sure you want to skip? This won't count as finished."
+@export_multiline var skip_confirmation_read_text: String = "You've read this one before. Skip ahead?"
+@export var skip_confirmation_confirm_text: String = "SKIP IT"
+@export var skip_confirmation_cancel_text: String = "Stay"
+var _skip_requested: bool = false
+var _skip_confirmation_open: bool = false
+var _skip_confirmation_layer: CanvasLayer = null
+var _skip_confirmation_overlay: ColorRect = null
+var _skip_confirmation_popup: Node2D = null
+var _skip_confirmation_base_scale: Vector2 = Vector2.ONE
+
+
+func _ready() -> void:
+	if has_node("/root/Dialogic") and not Dialogic.signal_event.is_connected(_on_dialogic_signal):
+		Dialogic.signal_event.connect(_on_dialogic_signal)
+	_setup_skip_button()
+
+
+func _exit_tree() -> void:
+	if _skip_confirmation_layer != null and is_instance_valid(_skip_confirmation_layer):
+		_skip_confirmation_layer.queue_free()
+
+
+func _on_dialogic_signal(arg: String) -> void:
+	if anchor == null:
+		return
+	if arg == "move":
+		anchor.global_position = Vector2(378, 636)
+	if arg == "start grass field" or arg == "together" or arg == "grassfield" or arg == "center":
+		anchor.global_position = Vector2(609, 670)
+
+
 func _apply_export_overrides() -> void:
 	if !is_inside_tree():
 		await ready
@@ -145,6 +187,193 @@ func _apply_export_overrides() -> void:
 	## TYPING SOUNDS
 	_apply_sounds_settings()
 
+	_setup_skip_button()
+
+
+func _setup_skip_button() -> void:
+	var skip_button: BaseButton = find_child("SkipButton", true, false) as BaseButton
+	if skip_button == null:
+		return
+	skip_button.disabled = not skip_button_enabled
+	if not skip_button.pressed.is_connected(_on_skip_button_pressed):
+		skip_button.pressed.connect(_on_skip_button_pressed)
+
+
+func _on_skip_button_pressed() -> void:
+	if _skip_requested:
+		return
+	if not skip_button_enabled:
+		return
+	if not has_node("/root/Dialogic"):
+		return
+	if Dialogic.current_timeline == null:
+		return
+
+	_open_skip_confirmation()
+
+
+func _open_skip_confirmation() -> void:
+	if _skip_confirmation_open:
+		return
+	if not ResourceLoader.exists(skip_confirmation_scene):
+		await _skip_current_timeline()
+		return
+
+	_skip_confirmation_open = true
+	var skip_button: BaseButton = find_child("SkipButton", true, false) as BaseButton
+	if skip_button != null:
+		skip_button.disabled = true
+
+	_skip_confirmation_layer = CanvasLayer.new()
+	_skip_confirmation_layer.name = "SkipConfirmationLayer"
+	_skip_confirmation_layer.layer = 200
+	get_tree().root.add_child(_skip_confirmation_layer)
+
+	_skip_confirmation_overlay = ColorRect.new()
+	_skip_confirmation_overlay.name = "Overlay"
+	_skip_confirmation_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_skip_confirmation_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	_skip_confirmation_overlay.color = Color(0.0, 0.0, 0.0, 0.0)
+	_skip_confirmation_layer.add_child(_skip_confirmation_overlay)
+
+	var container: Control = Control.new()
+	container.name = "LevelConfirmationContainer"
+	container.set_anchors_preset(Control.PRESET_FULL_RECT)
+	container.mouse_filter = Control.MOUSE_FILTER_PASS
+	_skip_confirmation_layer.add_child(container)
+
+	var packed_scene: PackedScene = load(skip_confirmation_scene) as PackedScene
+	if packed_scene == null:
+		_close_skip_confirmation()
+		await _skip_current_timeline()
+		return
+
+	_skip_confirmation_popup = packed_scene.instantiate() as Node2D
+	if _skip_confirmation_popup == null:
+		_close_skip_confirmation()
+		await _skip_current_timeline()
+		return
+
+	container.add_child(_skip_confirmation_popup)
+	_skip_confirmation_popup.visible = true
+	_skip_confirmation_popup.position = get_viewport().get_visible_rect().size * 0.5 + Vector2(0.0, 24.0)
+	_skip_confirmation_base_scale = Vector2(0.65, 0.65)
+	_skip_confirmation_popup.scale = Vector2(_skip_confirmation_base_scale.x * 1.08, _skip_confirmation_base_scale.y * 0.88)
+	_skip_confirmation_popup.modulate.a = 0.0
+	_apply_skip_confirmation_text()
+	_connect_skip_confirmation_buttons()
+
+	var overlay_tween: Tween = create_tween()
+	overlay_tween.tween_property(_skip_confirmation_overlay, "color:a", 0.5, 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+	var popup_tween: Tween = create_tween()
+	popup_tween.set_parallel(true)
+	popup_tween.tween_property(_skip_confirmation_popup, "modulate:a", 1.0, 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	popup_tween.tween_property(_skip_confirmation_popup, "scale", _skip_confirmation_base_scale, 0.18).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
+
+
+func _apply_skip_confirmation_text() -> void:
+	if _skip_confirmation_popup == null:
+		return
+
+	var title_label: Label = _skip_confirmation_popup.get_node_or_null("Sprite2D/Level Title") as Label
+	if title_label != null:
+		title_label.text = "\" %s \"" % skip_confirmation_title
+
+	var message_label: Label = _skip_confirmation_popup.get_node_or_null("Sprite2D/confirmationText") as Label
+	if message_label != null:
+		message_label.text = _get_skip_confirmation_text()
+
+	var confirm_label: Label = _skip_confirmation_popup.get_node_or_null("Button2/Label2") as Label
+	if confirm_label != null:
+		confirm_label.text = skip_confirmation_confirm_text
+
+	var cancel_label: Label = _skip_confirmation_popup.get_node_or_null("Button/Label2") as Label
+	if cancel_label != null:
+		cancel_label.text = skip_confirmation_cancel_text
+
+
+func _get_skip_confirmation_text() -> String:
+	var chapter_number: int = _get_current_story_chapter_number()
+	if chapter_number <= 0:
+		return skip_confirmation_generic_text
+	if not has_node("/root/StoryProgress"):
+		return skip_confirmation_unread_text
+	if StoryProgress.is_chapter_completed(chapter_number):
+		return skip_confirmation_read_text
+	return skip_confirmation_unread_text
+
+
+func _get_current_story_chapter_number() -> int:
+	var current_scene: Node = get_tree().current_scene
+	if current_scene == null:
+		return 0
+
+	match current_scene.scene_file_path:
+		"res://scenes/story/story_1.tscn":
+			return 1
+		"res://scenes/story/story_2.tscn":
+			return 2
+		"res://scenes/story/story_3.tscn":
+			return 3
+		"res://scenes/story/story_4.tscn", "res://scenes/story/story_4_1.tscn", "res://scenes/story/story_4_2.tscn":
+			return 4
+		"res://scenes/story/story_5.tscn":
+			return 5
+		_:
+			return 0
+
+
+func _connect_skip_confirmation_buttons() -> void:
+	if _skip_confirmation_popup == null:
+		return
+
+	var confirm_button: BaseButton = _skip_confirmation_popup.get_node_or_null("Button2") as BaseButton
+	if confirm_button != null:
+		confirm_button.disabled = false
+		if not confirm_button.pressed.is_connected(_on_skip_confirmation_confirmed):
+			confirm_button.pressed.connect(_on_skip_confirmation_confirmed)
+
+	var cancel_button: BaseButton = _skip_confirmation_popup.get_node_or_null("Button") as BaseButton
+	if cancel_button != null:
+		cancel_button.disabled = false
+		if not cancel_button.pressed.is_connected(_on_skip_confirmation_canceled):
+			cancel_button.pressed.connect(_on_skip_confirmation_canceled)
+
+
+func _on_skip_confirmation_confirmed() -> void:
+	_close_skip_confirmation()
+	await _skip_current_timeline()
+
+
+func _on_skip_confirmation_canceled() -> void:
+	_close_skip_confirmation()
+
+
+func _close_skip_confirmation() -> void:
+	_skip_confirmation_open = false
+	var skip_button: BaseButton = find_child("SkipButton", true, false) as BaseButton
+	if skip_button != null:
+		skip_button.disabled = not skip_button_enabled
+	if _skip_confirmation_layer != null and is_instance_valid(_skip_confirmation_layer):
+		_skip_confirmation_layer.queue_free()
+	_skip_confirmation_layer = null
+	_skip_confirmation_overlay = null
+	_skip_confirmation_popup = null
+
+
+func _skip_current_timeline() -> void:
+	_skip_requested = true
+	Dialogic.current_state_info["skip_request_handled"] = false
+	Dialogic.signal_event.emit(skip_request_signal)
+	await get_tree().process_frame
+	var skip_request_handled: bool = false
+	if Dialogic.current_timeline != null:
+		skip_request_handled = bool(Dialogic.current_state_info.get("skip_request_handled", false))
+	if Dialogic.current_timeline != null and not skip_request_handled:
+		await Dialogic.end_timeline(true)
+	_skip_requested = false
+
 
 ## Applies all text box settings to the scene.
 ## Except the box animations.
@@ -157,6 +386,9 @@ func _apply_box_settings() -> void:
 		dialog_text_panel.self_modulate = get_global_setting(&'bg_color', box_color_custom)
 	else:
 		dialog_text_panel.self_modulate = box_color_custom
+
+	if preserve_scene_layout:
+		return
 
 	var sizer: Control = %Sizer
 	sizer.size = box_size
@@ -203,13 +435,14 @@ func _apply_name_label_settings() -> void:
 	else:
 		name_label_panel.self_modulate = name_label_box_modulate
 	var dialog_text_panel: PanelContainer = %DialogTextPanel
-	name_label_panel.position = name_label_box_offset+Vector2(0, -40)
-	name_label_panel.position -= Vector2(
-		dialog_text_panel.get_theme_stylebox(&'panel', &'PanelContainer').content_margin_left,
-		dialog_text_panel.get_theme_stylebox(&'panel', &'PanelContainer').content_margin_top)
-	name_label_panel.anchor_left = name_label_alignment/2.0
-	name_label_panel.anchor_right = name_label_alignment/2.0
-	name_label_panel.grow_horizontal = [1, 2, 0][name_label_alignment]
+	if not preserve_scene_layout:
+		name_label_panel.position = name_label_box_offset+Vector2(0, -40)
+		name_label_panel.position -= Vector2(
+			dialog_text_panel.get_theme_stylebox(&'panel', &'PanelContainer').content_margin_left,
+			dialog_text_panel.get_theme_stylebox(&'panel', &'PanelContainer').content_margin_top)
+		name_label_panel.anchor_left = name_label_alignment/2.0
+		name_label_panel.anchor_right = name_label_alignment/2.0
+		name_label_panel.grow_horizontal = [1, 2, 0][name_label_alignment]
 
 
 ## Applies all text settings to the scene.

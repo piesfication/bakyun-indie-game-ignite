@@ -1,7 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://bsqkynsckpvq8"]
+[gd_scene format=3 uid="uid://bsqkynsckpvq8"]
 
-[ext_resource type="Script" uid="uid://bl43m5qw8pso3" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/vn_textbox_layer.gd" id="1_bpydr"]
-[ext_resource type="Script" uid="uid://bfc03rn8slceu" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/animations.gd" id="2_xy7a2"]
+[ext_resource type="Script" uid="uid://bk5q2rbh84up" path="res://scripts/dialogic/vn_textbox_layer.gd" id="1_bpydr"]
+[ext_resource type="Script" uid="uid://c7sdmh37vm0qp" path="res://scripts/dialogic/animations.gd" id="2_xy7a2"]
 [ext_resource type="StyleBox" uid="uid://c0yuwbxlibevg" path="res://themes/dialogic/new_style_box_texture.tres" id="3_0ewhi"]
 [ext_resource type="Script" uid="uid://drhfq6rmdeuri" path="res://addons/dialogic/Modules/Text/node_dialog_text.gd" id="3_4634k"]
 [ext_resource type="Script" uid="uid://dpv2dfiv5dhmr" path="res://addons/dialogic/Modules/Text/node_type_sound.gd" id="4_ma5mw"]
@@ -11,6 +11,9 @@
 [ext_resource type="Script" uid="uid://bak74s0kcr0ao" path="res://addons/dialogic/Modules/Text/node_name_label.gd" id="7_bi7sh"]
 [ext_resource type="StyleBox" uid="uid://m7gyepkysu83" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/vn_textbox_name_label_panel.tres" id="9_yg8ig"]
 [ext_resource type="FontFile" uid="uid://bjisq025387gx" path="res://assets/font/zrtw-hackynote-personal-use/ZRTW-HackynotePersonalUse.ttf" id="10_tu4av"]
+[ext_resource type="Texture2D" uid="uid://cc4vf08u6nskl" path="res://assets/story/Dialogue/Chatbox/skip_button_bot.png" id="12_60jip"]
+[ext_resource type="Texture2D" uid="uid://bdfuuvwsdpbl" path="res://assets/story/Dialogue/Chatbox/skip_button_top.png" id="13_x1cyy"]
+[ext_resource type="Script" uid="uid://cxptyuded16r8" path="res://scripts/ui/animated_button.gd" id="14_25kve"]
 
 [sub_resource type="Animation" id="Animation_au0a2"]
 length = 0.001
@@ -210,7 +213,7 @@ font_color = Color(0.46666667, 0.49803922, 0.3372549, 1)
 outline_size = 1
 outline_color = Color(0.61960787, 0.64705884, 0.49019608, 1)
 
-[node name="VN_TextboxLayer" type="Control"]
+[node name="VN_TextboxLayer" type="Control" unique_id=572624656]
 z_index = 100
 layout_mode = 3
 anchors_preset = 15
@@ -241,15 +244,13 @@ name_label_box_panel = "res://themes/dialogic/visual_novel_textbox/vn_textbox_na
 name_label_box_use_global_color = false
 name_label_box_modulate = Color(0, 0, 0, 1)
 
-[node name="Animations" type="AnimationPlayer" parent="."]
+[node name="Animations" type="AnimationPlayer" parent="." unique_id=2057346390]
 unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_c14kh")
-}
-autoplay = "RESET"
+libraries/ = SubResource("AnimationLibrary_c14kh")
+autoplay = &"RESET"
 script = ExtResource("2_xy7a2")
 
-[node name="Anchor" type="Control" parent="."]
+[node name="Anchor" type="Control" parent="." unique_id=525438885]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -263,7 +264,7 @@ offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="AnimationParent" type="Control" parent="Anchor"]
+[node name="AnimationParent" type="Control" parent="Anchor" unique_id=44320383]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -274,7 +275,7 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="Sizer" type="Control" parent="Anchor/AnimationParent"]
+[node name="Sizer" type="Control" parent="Anchor/AnimationParent" unique_id=1467380404]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
@@ -282,16 +283,16 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -309.0
+offset_left = -267.0
 offset_top = -259.0
-offset_right = 239.0
+offset_right = 281.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.1, 1.1)
 mouse_filter = 2
 
-[node name="DialogTextPanel" type="PanelContainer" parent="Anchor/AnimationParent/Sizer"]
+[node name="DialogTextPanel" type="PanelContainer" parent="Anchor/AnimationParent/Sizer" unique_id=288002699]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(550, 270)
 layout_mode = 1
@@ -304,8 +305,9 @@ mouse_filter = 2
 theme_override_styles/panel = ExtResource("3_0ewhi")
 metadata/_edit_layout_mode = 1
 
-[node name="NextIndicator" type="Control" parent="Anchor/AnimationParent/Sizer/DialogTextPanel"]
+[node name="NextIndicator" type="Control" parent="Anchor/AnimationParent/Sizer/DialogTextPanel" unique_id=1074403946]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
@@ -315,7 +317,7 @@ show_on_questions = true
 texture = ExtResource("6_next")
 metadata/_edit_layout_mode = 1
 
-[node name="AutoAdvanceProgressbar" type="ProgressBar" parent="Anchor/AnimationParent/Sizer/DialogTextPanel"]
+[node name="AutoAdvanceProgressbar" type="ProgressBar" parent="Anchor/AnimationParent/Sizer/DialogTextPanel" unique_id=1271317117]
 unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0.188235)
@@ -329,11 +331,11 @@ value = 0.5
 show_percentage = false
 script = ExtResource("6_07xym")
 
-[node name="NameLabelHolder" type="Control" parent="Anchor/AnimationParent/Sizer/DialogTextPanel"]
+[node name="NameLabelHolder" type="Control" parent="Anchor/AnimationParent/Sizer/DialogTextPanel" unique_id=1990191479]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="NameLabelPanel" type="PanelContainer" parent="Anchor/AnimationParent/Sizer/DialogTextPanel/NameLabelHolder"]
+[node name="NameLabelPanel" type="PanelContainer" parent="Anchor/AnimationParent/Sizer/DialogTextPanel/NameLabelHolder" unique_id=1644045355]
 unique_name_in_owner = true
 self_modulate = Color(0.00784314, 0.00784314, 0.00784314, 0.843137)
 layout_mode = 1
@@ -353,17 +355,18 @@ metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = true
 metadata/_edit_group_ = true
 
-[node name="DialogicNode_DialogText" type="RichTextLabel" parent="Anchor/AnimationParent/Sizer" node_paths=PackedStringArray("textbox_root")]
+[node name="DialogicNode_DialogText" type="RichTextLabel" parent="Anchor/AnimationParent/Sizer" unique_id=910058057 node_paths=PackedStringArray("textbox_root")]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 62.72728
-offset_top = 95.45453
-offset_right = 475.61725
-offset_bottom = 232.45197
+offset_top = 105.454544
+offset_right = 475.6173
+offset_bottom = 253.45454
 rotation = -0.008666299
 mouse_filter = 1
 theme_override_colors/default_color = Color(0.46666667, 0.49803922, 0.3372549, 1)
 theme_override_colors/font_outline_color = Color(0.46666667, 0.49803922, 0.3372549, 1)
+theme_override_constants/line_separation = 3
 theme_override_constants/shadow_outline_size = 0
 theme_override_constants/outline_size = 0
 theme_override_fonts/normal_font = ExtResource("10_tu4av")
@@ -372,24 +375,27 @@ theme_override_font_sizes/bold_font_size = 35
 theme_override_font_sizes/bold_italics_font_size = 15
 theme_override_font_sizes/italics_font_size = 15
 bbcode_enabled = true
-text = "Lorem Ipsum Dolor Sit Amet"
+text = "Lorem Ipsum Dolor Sit Amet
+Lorem Ipsum Dolor Sit Amet
+Lorem Ipsum Dolor Sit Amet
+Lorem Ipsum Dolor Sit Amet "
 visible_characters_behavior = 1
 script = ExtResource("3_4634k")
 alignment = 2
 textbox_root = NodePath("../DialogTextPanel")
 
-[node name="DialogicNode_TypeSounds" type="AudioStreamPlayer" parent="Anchor/AnimationParent/Sizer/DialogicNode_DialogText"]
+[node name="DialogicNode_TypeSounds" type="AudioStreamPlayer" parent="Anchor/AnimationParent/Sizer/DialogicNode_DialogText" unique_id=113673000]
 unique_name_in_owner = true
 script = ExtResource("4_ma5mw")
 play_every_character = 0
 
-[node name="DialogicNode_NameLabel" type="Label" parent="Anchor/AnimationParent/Sizer" node_paths=PackedStringArray("name_label_root")]
+[node name="DialogicNode_NameLabel" type="Label" parent="Anchor/AnimationParent/Sizer" unique_id=2029249716 node_paths=PackedStringArray("name_label_root")]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 351.0554
-offset_top = 8.818176
-offset_right = 427.0554
-offset_bottom = 59.818207
+offset_left = 347.2727
+offset_top = 19.09092
+offset_right = 423.2727
+offset_bottom = 70.09095
 rotation = 0.1502944
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -400,3 +406,26 @@ text = "Baku"
 label_settings = SubResource("LabelSettings_xasce")
 script = ExtResource("7_bi7sh")
 name_label_root = NodePath("../DialogTextPanel/NameLabelHolder/NameLabelPanel")
+
+[node name="SkipButton" type="TextureButton" parent="Anchor/AnimationParent/Sizer" unique_id=1985708206]
+z_index = -1
+layout_mode = 0
+offset_left = 442.7273
+offset_top = -6.3636365
+offset_right = 567.7273
+offset_bottom = 109.636375
+rotation = 0.092282325
+scale = Vector2(0.6, 0.6)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("12_60jip")
+script = ExtResource("14_25kve")
+
+[node name="TextureRect" type="TextureRect" parent="Anchor/AnimationParent/Sizer/SkipButton" unique_id=1474737841]
+z_index = 1
+layout_mode = 0
+offset_right = 117.0
+offset_bottom = 117.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("13_x1cyy")

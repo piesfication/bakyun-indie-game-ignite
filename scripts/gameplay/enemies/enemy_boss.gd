@@ -72,6 +72,13 @@ const ORB_COLOR_BLUE := 1
 
 @export var flap_amplitude: float = 55.0
 @export var flap_frequency: float = 1.6
+@export_group("Hit Impact")
+@export var hit_flash_color: Color = Color(1.0, 0.34, 0.38, 1.0)
+@export_range(1.0, 1.4, 0.01, "suffix:x") var hit_punch_scale_up: float = 1.08
+@export_range(0.7, 1.0, 0.01, "suffix:x") var hit_punch_scale_down: float = 0.96
+@export_range(0.01, 0.2, 0.01, "suffix:s") var hit_punch_up_duration: float = 0.05
+@export_range(0.01, 0.2, 0.01, "suffix:s") var hit_punch_down_duration: float = 0.05
+@export_range(0.01, 0.3, 0.01, "suffix:s") var hit_punch_recover_duration: float = 0.08
 
 @onready var body_anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var action_anim: AnimatedSprite2D = get_node_or_null("AnimateAction") as AnimatedSprite2D
@@ -111,6 +118,9 @@ var weakness_original_scale: Vector2 = Vector2.ONE
 
 var _flap_time: float = 0.0
 var _prev_flap_y: float = 0.0
+var _body_base_scale: Vector2 = Vector2.ONE
+var _body_base_modulate: Color = Color.WHITE
+var _hit_impact_tween: Tween = null
 var _container_turn: int = 0
 var _template_weak_shapes: Array[Node2D] = []
 var _template_to_required_character: Dictionary = {}
@@ -156,6 +166,8 @@ func _ready() -> void:
 		health_anim.animation_changed.connect(Callable(self, "_on_health_anim_animation_changed"))
 
 	if body_anim != null:
+		_body_base_scale = body_anim.scale
+		_body_base_modulate = body_anim.modulate
 		body_anim.play("idle")
 	_stop_action_animation()
 
@@ -924,6 +936,7 @@ func _apply_boss_damage(amount: int) -> void:
 	var old_hp := hp
 	hp = max(hp - amount, 0)
 	
+	_play_hit_impact()
 	_play_action_animation("damaged")
 	AudioManager.play_ui_sfx_with_pitch("res://music/sfx/glitch/virtual_vibes-digital-glitch-noise-hd-379465.wav")
 	
@@ -992,6 +1005,23 @@ func _die() -> void:
 
 	emit_signal("boss_defeated")
 	queue_free()
+
+func _play_hit_impact() -> void:
+	if body_anim == null or not is_instance_valid(body_anim):
+		return
+	if _hit_impact_tween != null and _hit_impact_tween.is_valid():
+		_hit_impact_tween.kill()
+
+	body_anim.scale = _body_base_scale
+	body_anim.modulate = hit_flash_color
+
+	_hit_impact_tween = create_tween()
+	_hit_impact_tween.set_trans(Tween.TRANS_QUAD)
+	_hit_impact_tween.set_ease(Tween.EASE_OUT)
+	_hit_impact_tween.tween_property(body_anim, "scale", _body_base_scale * hit_punch_scale_up, hit_punch_up_duration)
+	_hit_impact_tween.parallel().tween_property(body_anim, "modulate", _body_base_modulate, hit_punch_up_duration)
+	_hit_impact_tween.tween_property(body_anim, "scale", _body_base_scale * hit_punch_scale_down, hit_punch_down_duration)
+	_hit_impact_tween.tween_property(body_anim, "scale", _body_base_scale, hit_punch_recover_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _move_to_death_center() -> void:
 	var viewport_rect := get_viewport_rect()

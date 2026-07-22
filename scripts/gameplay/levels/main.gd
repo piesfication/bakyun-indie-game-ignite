@@ -47,6 +47,7 @@ signal level_finished
 @export_range(0.5, 3.0, 0.01, "suffix:x") var shot_hit_pitch_start: float = 0.85
 @export_range(0.01, 1.0, 0.01, "suffix:x") var shot_hit_pitch_step: float = 0.2
 @export_range(0.5, 3.0, 0.01, "suffix:x") var shot_hit_pitch_max: float = 2
+@export_enum("easy", "medium", "hard") var mission_difficulty: String = "easy"
 
 var current_enemy_count: int = 0
 var spawn_timer := 0.0
@@ -329,7 +330,7 @@ func _begin_level_end_sequence(is_loss: bool) -> void:
 	
 	else:
 		if has_node("/root/StoryProgress"):
-			StoryProgress.record_mission_win()
+			StoryProgress.record_mission_win(_get_mission_difficulty())
 		await _play_mission_clear_sequence()
 		await _play_level_end_screen_fade(Color(1, 1, 1, 1))
 
@@ -418,6 +419,9 @@ func _play_mission_failed_sequence() -> void:
 func _play_loss_grayscale_then_mission_failed() -> void:
 	_set_transition_crt_discolor(false)
 	await _play_mission_failed_sequence()
+
+func _get_mission_difficulty() -> String:
+	return mission_difficulty
 
 func _wait_for_mission_failed_grayscale_frame() -> void:
 	if mission_failed_node == null or not is_instance_valid(mission_failed_node):
