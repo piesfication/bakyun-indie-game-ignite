@@ -40,6 +40,9 @@ func _process(delta: float) -> void:
 	_try_spawn_hard_boss_when_clear()
 	super._process(delta)
 
+func _get_mission_difficulty() -> String:
+	return "hard"
+
 func _try_spawn_hard_boss_when_clear() -> void:
 	if not _hard_boss_phase_active:
 		return

@@ -255,3 +255,9 @@ mouse_filter = 2
 visible = false
 position = Vector2(640, 384.00003)
 scale = Vector2(0.65, 0.65)
+
+[node name="DebugButton" type="HBoxContainer" parent="." unique_id=1627741673]
+layout_mode = 0
+offset_left = 63.0
+offset_right = 103.0
+offset_bottom = 40.0
